@@ -17,9 +17,30 @@ end
 
 
 
-println("\nRecursive NaN test");
+println("\nDownload artifacts");
 @testset "JuliaUtility --- Artifact" begin
     predownload_artifact("clumping_index_2X_1Y_PFT", "example.toml");
+    @test true;
+end
+
+
+
+
+println("\nPretty display");
+@testset "JuliaUtility --- Display" begin
+    xxx = [
+        "a"    => "a",
+        "asa"  => "asdasda",
+        "haha" => [
+                   "a"    => "a",
+                   "asa"  => "asdasda",
+                   "haha" => [
+                              1   => "a",
+                              "a" => "asdasda",
+                             ],
+                  ],
+    ];
+    pretty_display(xxx);
     @test true;
 end
 
