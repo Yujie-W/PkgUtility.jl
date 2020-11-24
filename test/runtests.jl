@@ -17,6 +17,15 @@ end
 
 
 
+println("\nRecursive NaN test");
+@testset "JuliaUtility --- Artifact" begin
+    predownload_artifact("clumping_index_2X_1Y_PFT", "example.toml");
+    @test true;
+end
+
+
+
+
 println("\nRecursive FT test");
 @testset "JuliaUtility --- FT test" begin
     for FT in [Float32, Float64]

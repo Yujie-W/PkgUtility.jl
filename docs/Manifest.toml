@@ -40,7 +40,7 @@ uuid = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
 version = "0.21.1"
 
 [[JuliaUtility]]
-deps = ["Pkg"]
+deps = ["Pkg", "Test"]
 path = ".."
 uuid = "0d262f2c-28e9-492c-8e19-d7a5c4f11611"
 version = "0.1.0"
