@@ -1,5 +1,5 @@
 using Documenter
-using JuliaUtility
+using PkgUtility
 
 
 
@@ -58,10 +58,10 @@ format = Documenter.HTML(
 
 # build the docs
 makedocs(
-    sitename = "JuliaUtility",
+    sitename = "PkgUtility",
     format = format,
     clean = false,
-    modules = [JuliaUtility],
+    modules = [PkgUtility],
     pages = pages,
 )
 
@@ -70,7 +70,7 @@ makedocs(
 
 # deploy the docs to Github gh-pages
 deploydocs(
-    repo = "github.com/Yujie-W/JuliaUtility.jl.git",
+    repo = "github.com/Yujie-W/PkgUtility.jl.git",
     target = "build",
     devbranch = "main",
     push_preview = true,

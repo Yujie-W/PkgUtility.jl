@@ -1,4 +1,4 @@
-# JuliaUtility.jl
+# PkgUtility.jl
 
 Utility functions for Julia.
 
@@ -9,5 +9,5 @@ Utility functions for Julia.
 ## Installation
 ```julia
 julia> using Pkg;
-julia> Pkg.add("JuliaUtility");
+julia> Pkg.add("PkgUtility");
 ```

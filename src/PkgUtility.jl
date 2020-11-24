@@ -1,4 +1,4 @@
-module JuliaUtility
+module PkgUtility
 
 using Pkg.Artifacts
 
