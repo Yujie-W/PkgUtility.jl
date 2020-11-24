@@ -1,0 +1,30 @@
+name: Documentation
+on:
+  push:
+    branches:
+      - main
+      - staging
+      - trying
+    tags: '*'
+  pull_request:
+
+jobs:
+  docs-build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Set up Actions
+        uses: actions/checkout@v1
+      - name: Install matplotlib
+        run: sudo apt install python3-matplotlib
+      - name: Set up Julia
+        uses: julia-actions/setup-julia@v1
+        with:
+          version: "1.5"
+      - name: Force update registry
+        run: julia -e 'using Pkg; Pkg.Registry.rm("General"); Pkg.Registry.add(RegistrySpec(url="https://github.com/JuliaRegistries/General"))'
+      - name: Install Dependencies
+        run: julia --project=docs/ -e 'using Pkg; Pkg.instantiate();'
+      - name: Build and deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: julia --project=docs/ docs/make.jl
