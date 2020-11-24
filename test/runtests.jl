@@ -1,4 +1,4 @@
-using JuliaUtility
+using PkgUtility
 using Test
 
 
@@ -18,7 +18,7 @@ end
 
 
 println("\nDownload artifacts");
-@testset "JuliaUtility --- Artifact" begin
+@testset "PkgUtility --- Artifact" begin
     predownload_artifact("clumping_index_2X_1Y_PFT", "example.toml");
     @test true;
 end
@@ -27,7 +27,7 @@ end
 
 
 println("\nPretty display");
-@testset "JuliaUtility --- Display" begin
+@testset "PkgUtility --- Display" begin
     xxx = [
         "a"    => "a",
         "asa"  => "asdasda",
@@ -48,7 +48,7 @@ end
 
 
 println("\nRecursive FT test");
-@testset "JuliaUtility --- FT test" begin
+@testset "PkgUtility --- FT test" begin
     for FT in [Float32, Float64]
         sa = TestStruct(ones(FT,5), 2);
         @test FT_test(ones(FT,5), FT);
@@ -66,7 +66,7 @@ end
 
 
 println("\nRecursive NaN test");
-@testset "JuliaUtility --- NaN test" begin
+@testset "PkgUtility --- NaN test" begin
     for FT in [Float32, Float64]
         sa = TestStruct(ones(FT,5), 2);
         @test NaN_test(ones(FT,5));

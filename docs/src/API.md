@@ -1,6 +1,6 @@
 # API
 ```@meta
-CurrentModule = JuliaUtility
+CurrentModule = PkgUtility
 ```
 
 

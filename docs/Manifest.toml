@@ -39,12 +39,6 @@ git-tree-sha1 = "81690084b6198a2e1da36fcfda16eeca9f9f24e4"
 uuid = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
 version = "0.21.1"
 
-[[JuliaUtility]]
-deps = ["Pkg", "Test"]
-path = ".."
-uuid = "0d262f2c-28e9-492c-8e19-d7a5c4f11611"
-version = "0.1.0"
-
 [[LibGit2]]
 deps = ["Printf"]
 uuid = "76f85450-5226-5b5a-8eaa-529ad045b433"
@@ -71,6 +65,12 @@ version = "1.0.12"
 [[Pkg]]
 deps = ["Dates", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "UUIDs"]
 uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
+
+[[PkgUtility]]
+deps = ["Pkg", "Test"]
+path = ".."
+uuid = "0d262f2c-28e9-492c-8e19-d7a5c4f11611"
+version = "0.1.0"
 
 [[Printf]]
 deps = ["Unicode"]
