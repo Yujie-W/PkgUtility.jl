@@ -6,7 +6,8 @@ using Pkg.Artifacts
 
 
 # export public functions --- artifact
-export predownload_artifact
+export deploy_artifact,
+       predownload_artifact
 
 # export public functions --- display
 export pretty_display
@@ -18,6 +19,7 @@ export FT_test,
 
 
 
+include("artifact/deploy.jl"  )
 include("artifact/download.jl")
 
 include("display/recursive.jl")

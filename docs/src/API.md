@@ -9,6 +9,7 @@ CurrentModule = PkgUtility
 ## Artifacts
 
 ```@docs
+deploy_artifact
 predownload_artifact
 ```
 
