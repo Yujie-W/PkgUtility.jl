@@ -12,6 +12,12 @@
                 art_tarf::String,
                 art_urls::Array{String,1};
                 new_file::Array{String,1} = art_file)
+    deploy_artifact(
+                art_toml::String,
+                art_name::String,
+                art_locf::String,
+                art_tarf::String,
+                art_urls::Array{String,1})
 
 Deploy the artifact, given
 - `art_toml` Artifact TOML file location
@@ -68,6 +74,29 @@ function deploy_artifact(
     else
         println("\nArtifact $(art_name) already exists, skip it");
     end
+
+    return nothing
+end
+
+
+
+
+function deploy_artifact(
+            art_toml::String,
+            art_name::String,
+            art_locf::String,
+            art_tarf::String,
+            art_urls::Array{String,1}
+)
+    # querry all the files in the folder
+    art_file = String[];
+    for _file in readdir(art_locf)
+        push!(art_file, _file);
+    end
+
+    # deploy the artifact
+    deploy_artifact(art_toml, art_name, art_locf,
+                    art_file, art_tarf, art_urls);
 
     return nothing
 end
