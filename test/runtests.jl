@@ -1,3 +1,4 @@
+using Pkg.Artifacts
 using PkgUtility
 using Test
 
@@ -19,6 +20,33 @@ end
 
 println("\nDownload artifacts");
 @testset "PkgUtility --- Artifact" begin
+    # deploy an artifact
+    cp("example.toml", "test_1.txt"; force=true);
+    cp("example.toml", "test_2.txt"; force=true);
+    deploy_artifact("TempArtifacts.toml",
+                    "example_artifact",
+                    "$(pwd())",
+                    ["test_1.txt", "test_2.txt"],
+                    "$(pwd())",
+                    ["url_1", "url_2"]);
+    deploy_artifact("TempArtifacts.toml",
+                    "example_artifact",
+                    "$(pwd())",
+                    ["test_1.txt", "test_2.txt"],
+                    "$(pwd())",
+                    ["url_1", "url_2"]);
+
+    # remove temp files
+    meta = artifact_meta("example_artifact", "TempArtifacts.toml");
+    hash = meta["git-tree-sha1"];
+    rm("$(homedir())/.julia/artifacts/$(hash)"; recursive=true);
+    rm("example_artifact.tar.gz");
+    rm("test_1.txt");
+    rm("test_2.txt");
+    rm("TempArtifacts.toml");
+    @test true;
+
+    # predownload the artifact directly from the given URL
     predownload_artifact("clumping_index_2X_1Y_PFT", "example.toml");
     @test true;
 end
