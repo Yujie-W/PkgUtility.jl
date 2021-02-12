@@ -1,5 +1,10 @@
 # This file is machine-generated - editing it directly is not advised
 
+[[ArgTools]]
+git-tree-sha1 = "bdf73eec6a88885256f282d48eafcad25d7de494"
+uuid = "0dad84c5-d112-42e6-8d28-ef12dabb789f"
+version = "1.1.1"
+
 [[Base64]]
 uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
 
@@ -19,9 +24,9 @@ version = "0.8.3"
 
 [[Documenter]]
 deps = ["Base64", "Dates", "DocStringExtensions", "IOCapture", "InteractiveUtils", "JSON", "LibGit2", "Logging", "Markdown", "REPL", "Test", "Unicode"]
-git-tree-sha1 = "a4875e0763112d6d017126f3944f4133abb342ae"
+git-tree-sha1 = "b7715ae18be02110a8cf9cc8ed2ccdb1e3e3aba2"
 uuid = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
-version = "0.25.5"
+version = "0.26.1"
 
 [[IOCapture]]
 deps = ["Logging"]
@@ -58,19 +63,19 @@ uuid = "a63ad114-7e13-5084-954f-fe012c677804"
 
 [[Parsers]]
 deps = ["Dates"]
-git-tree-sha1 = "b417be52e8be24e916e34b3d70ec2da7bdf56a68"
+git-tree-sha1 = "50c9a9ed8c714945e01cd53a21007ed3865ed714"
 uuid = "69de0a69-1ddd-5017-9359-2bf0b02dc9f0"
-version = "1.0.12"
+version = "1.0.15"
 
 [[Pkg]]
 deps = ["Dates", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "UUIDs"]
 uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 
 [[PkgUtility]]
-deps = ["Pkg", "Test"]
+deps = ["Dates", "Pkg", "Tar", "Test"]
 path = ".."
 uuid = "0d262f2c-28e9-492c-8e19-d7a5c4f11611"
-version = "0.1.1"
+version = "0.1.2"
 
 [[Printf]]
 deps = ["Unicode"]
@@ -92,6 +97,12 @@ uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
 
 [[Sockets]]
 uuid = "6462fe0b-24de-5631-8697-dd941f90decc"
+
+[[Tar]]
+deps = ["ArgTools", "SHA"]
+git-tree-sha1 = "c4b3a3a28f72ce90866d8a0fce2c61b201d1b693"
+uuid = "a4e569a6-e804-4fa4-b0f3-eef7a1d5b13e"
+version = "1.9.0"
 
 [[Test]]
 deps = ["Distributed", "InteractiveUtils", "Logging", "Random"]
