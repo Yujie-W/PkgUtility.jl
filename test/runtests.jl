@@ -18,7 +18,6 @@ end
 
 
 
-println("\nDownload artifacts");
 @testset "PkgUtility --- Artifact" begin
     # deploy an artifact
     mkdir("temp");
@@ -52,7 +51,14 @@ end
 
 
 
-println("\nPretty display");
+@testset "PkgUtility --- Date" begin
+    @test typeof(doy_to_int(2000, 100)) == String;
+    @test typeof(int_to_doy("20000201")) == Int;
+end
+
+
+
+
 @testset "PkgUtility --- Display" begin
     xxx = [
         "a"    => "a",
@@ -73,7 +79,6 @@ end
 
 
 
-println("\nRecursive FT test");
 @testset "PkgUtility --- FT test" begin
     for FT in [Float32, Float64]
         sa = TestStruct(ones(FT,5), 2);
@@ -91,7 +96,6 @@ end
 
 
 
-println("\nRecursive NaN test");
 @testset "PkgUtility --- NaN test" begin
     for FT in [Float32, Float64]
         sa = TestStruct(ones(FT,5), 2);
