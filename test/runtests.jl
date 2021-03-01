@@ -51,14 +51,18 @@ end
 
 
 
+println();
 @testset "PkgUtility --- Date" begin
-    @test typeof(doy_to_int(2000, 100)) == String;
-    @test typeof(int_to_doy("20000201")) == Int;
+    @test doy_to_int(2000, 100) == "20000409";
+    @test doy_to_int(2001, 100) == "20010410";
+    @test int_to_doy("20000401") == 92;
+    @test int_to_doy("20010401") == 91;
 end
 
 
 
 
+println();
 @testset "PkgUtility --- Display" begin
     xxx = [
         "a"    => "a",
@@ -79,6 +83,42 @@ end
 
 
 
+println();
+@testset "PkgUtility --- Math" begin
+    # test integral function
+    numerical∫(rand(5), rand(5));
+    numerical∫(rand(5), rand(6));
+    numerical∫(rand(5), 0.1);
+    @test true;
+
+    # test quadratic solvers
+    for FT in [Float32, Float64]
+        @test lower_quadratic(FT( 1), FT(-3), FT( 2)) == FT(1);
+        @test lower_quadratic(FT(-1), FT( 3), FT(-2)) == FT(1);
+        @test isnan(lower_quadratic(FT( 1), FT(-3), FT(10)));
+        @test upper_quadratic(FT( 1), FT(-3), FT( 2)) == FT(2);
+        @test upper_quadratic(FT(-1), FT( 3), FT(-2)) == FT(2);
+        @test isnan(upper_quadratic(FT( 1), FT(-3), FT(10)));
+    end
+
+    # test statistics
+    xx = rand(10); xx[1]=NaN;
+    yy = rand(10);
+    nanmax(xx);
+    nanmean(xx);
+    nanmin(xx);
+    nanstd(xx);
+    mae(xx, yy);
+    mape(xx, yy);
+    mase(xx, yy);
+    rmse(xx, yy);
+    @test true;
+end
+
+
+
+
+println();
 @testset "PkgUtility --- FT test" begin
     for FT in [Float32, Float64]
         sa = TestStruct(ones(FT,5), 2);
@@ -91,14 +131,18 @@ end
         @test FT_test("a", FT);
         @test FT_test(sa, FT);
     end
+    @test FT_test([1f0,2f0], Float64) == false;
+    @test FT_test([[1,2],2f0], Float64) == false;
 end
 
 
 
 
+println();
 @testset "PkgUtility --- NaN test" begin
     for FT in [Float32, Float64]
         sa = TestStruct(ones(FT,5), 2);
+        sb = TestStruct(ones(FT,5), NaN);
         @test NaN_test(ones(FT,5));
         @test NaN_test(f);
         @test NaN_test(Test);
@@ -106,5 +150,9 @@ end
         @test NaN_test(1);
         @test NaN_test("a");
         @test NaN_test(sa);
+        @test NaN_test(NaN) == false;
+        @test NaN_test([1,2,NaN]) == false;
+        @test NaN_test([[1,2,NaN], 2]) == false;
+        @test NaN_test(sb) == false;
     end
 end
