@@ -28,6 +28,7 @@ export lower_quadratic,
        nanmean,
        nanmin,
        nanstd,
+       numerical∫,
        rmse,
        upper_quadratic
 
@@ -45,6 +46,7 @@ include("date/doy.jl")
 
 include("display/recursive.jl")
 
+include("math/integral.jl"  )
 include("math/quadratic.jl" )
 include("math/statistics.jl")
 

@@ -36,6 +36,12 @@ pretty_display
 
 ## Math
 
+### Integral function
+
+```@docs
+numerical∫
+```
+
 ### Quadratic solver
 
 ```@docs

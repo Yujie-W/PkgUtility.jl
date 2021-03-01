@@ -83,8 +83,14 @@ end
 
 println();
 @testset "PkgUtility --- Math" begin
+    # test integral function
+    numerical∫(rand(5), rand(5));
+    numerical∫(rand(5), rand(6));
+    numerical∫(rand(5), 0.1);
+    @test true;
+
+    # test quadratic solvers
     for FT in [Float32, Float64]
-        # test quadratic solvers
         @test lower_quadratic(FT( 1), FT(-3), FT( 2)) == FT(1);
         @test lower_quadratic(FT(-1), FT( 3), FT(-2)) == FT(1);
         @test isnan(lower_quadratic(FT( 1), FT(-3), FT(10)));
