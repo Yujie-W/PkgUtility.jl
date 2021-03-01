@@ -53,8 +53,10 @@ end
 
 println();
 @testset "PkgUtility --- Date" begin
-    @test typeof(doy_to_int(2000, 100)) == String;
-    @test typeof(int_to_doy("20000201")) == Int;
+    @test doy_to_int(2000, 100) == "20000409";
+    @test doy_to_int(2001, 100) == "20010410";
+    @test int_to_doy("20000401") == 92;
+    @test int_to_doy("20010401") == 91;
 end
 
 
@@ -129,6 +131,8 @@ println();
         @test FT_test("a", FT);
         @test FT_test(sa, FT);
     end
+    @test FT_test([1f0,2f0], Float64) == false;
+    @test FT_test([[1,2],2f0], Float64) == false;
 end
 
 
@@ -138,6 +142,7 @@ println();
 @testset "PkgUtility --- NaN test" begin
     for FT in [Float32, Float64]
         sa = TestStruct(ones(FT,5), 2);
+        sb = TestStruct(ones(FT,5), NaN);
         @test NaN_test(ones(FT,5));
         @test NaN_test(f);
         @test NaN_test(Test);
@@ -145,5 +150,9 @@ println();
         @test NaN_test(1);
         @test NaN_test("a");
         @test NaN_test(sa);
+        @test NaN_test(NaN) == false;
+        @test NaN_test([1,2,NaN]) == false;
+        @test NaN_test([[1,2,NaN], 2]) == false;
+        @test NaN_test(sb) == false;
     end
 end
