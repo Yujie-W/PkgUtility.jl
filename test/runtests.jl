@@ -51,6 +51,7 @@ end
 
 
 
+println();
 @testset "PkgUtility --- Date" begin
     @test typeof(doy_to_int(2000, 100)) == String;
     @test typeof(int_to_doy("20000201")) == Int;
@@ -59,6 +60,7 @@ end
 
 
 
+println();
 @testset "PkgUtility --- Display" begin
     xxx = [
         "a"    => "a",
@@ -79,6 +81,22 @@ end
 
 
 
+println();
+@testset "PkgUtility --- Math" begin
+    for FT in [Float32, Float64]
+        @test lower_quadratic(FT( 1), FT(-3), FT( 2)) == FT(1);
+        @test lower_quadratic(FT(-1), FT( 3), FT(-2)) == FT(1);
+        @test isnan(lower_quadratic(FT( 1), FT(-3), FT(10)));
+        @test upper_quadratic(FT( 1), FT(-3), FT( 2)) == FT(2);
+        @test upper_quadratic(FT(-1), FT( 3), FT(-2)) == FT(2);
+        @test isnan(upper_quadratic(FT( 1), FT(-3), FT(10)));
+    end
+end
+
+
+
+
+println();
 @testset "PkgUtility --- FT test" begin
     for FT in [Float32, Float64]
         sa = TestStruct(ones(FT,5), 2);
@@ -96,6 +114,7 @@ end
 
 
 
+println();
 @testset "PkgUtility --- NaN test" begin
     for FT in [Float32, Float64]
         sa = TestStruct(ones(FT,5), 2);
