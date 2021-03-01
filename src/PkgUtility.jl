@@ -3,6 +3,7 @@ module PkgUtility
 using Dates
 using Pkg.Artifacts
 using Pkg.PlatformEngines
+using Statistics
 
 
 
@@ -20,6 +21,14 @@ export pretty_display
 
 # export public functions --- math
 export lower_quadratic,
+       mae,
+       mape,
+       mase,
+       nanmax,
+       nanmean,
+       nanmin,
+       nanstd,
+       rmse,
        upper_quadratic
 
 # export public functions --- test
@@ -36,7 +45,8 @@ include("date/doy.jl")
 
 include("display/recursive.jl")
 
-include("math/quadratic.jl")
+include("math/quadratic.jl" )
+include("math/statistics.jl")
 
 include("test/recursive.jl")
 

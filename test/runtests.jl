@@ -84,6 +84,7 @@ end
 println();
 @testset "PkgUtility --- Math" begin
     for FT in [Float32, Float64]
+        # test quadratic solvers
         @test lower_quadratic(FT( 1), FT(-3), FT( 2)) == FT(1);
         @test lower_quadratic(FT(-1), FT( 3), FT(-2)) == FT(1);
         @test isnan(lower_quadratic(FT( 1), FT(-3), FT(10)));
@@ -91,6 +92,19 @@ println();
         @test upper_quadratic(FT(-1), FT( 3), FT(-2)) == FT(2);
         @test isnan(upper_quadratic(FT( 1), FT(-3), FT(10)));
     end
+
+    # test statistics
+    xx = rand(10); xx[1]=NaN;
+    yy = rand(10);
+    nanmax(xx);
+    nanmean(xx);
+    nanmin(xx);
+    nanstd(xx);
+    mae(xx, yy);
+    mape(xx, yy);
+    mase(xx, yy);
+    rmse(xx, yy);
+    @test true;
 end
 
 

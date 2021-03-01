@@ -34,6 +34,31 @@ pretty_display
 
 
 
+## Math
+
+### Quadratic solver
+
+```@docs
+lower_quadratic
+upper_quadratic
+```
+
+### Statistics extensions
+
+```@docs
+mae
+mape
+mase
+nanmax
+nanmean
+nanmin
+nanstd
+rmse
+```
+
+
+
+
 ## Recursive test
 
 ```@docs
