@@ -44,7 +44,13 @@ end
     @test true;
 
     # predownload the artifact directly from the given URL
-    predownload_artifact("clumping_index_2X_1Y_PFT", "example.toml");
+    predownload_artifact("CI_PFT_2X_1Y_V1", "example.toml");
+    @test true;
+
+    # test the ncread
+    path = artifact_path(artifact_hash("CI_PFT_2X_1Y_V1", "example.toml"));
+    file = path * "/CI_PFT_2X_1Y_V1.nc";
+    data = ncread(Float32, file, "clump");
     @test true;
 end
 
