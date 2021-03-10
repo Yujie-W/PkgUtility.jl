@@ -46,12 +46,6 @@ end
     # predownload the artifact directly from the given URL
     predownload_artifact("CI_PFT_2X_1Y_V1", "example.toml");
     @test true;
-
-    # test the ncread
-    path = artifact_path(artifact_hash("CI_PFT_2X_1Y_V1", "example.toml"));
-    file = path * "/CI_PFT_2X_1Y_V1.nc";
-    data = ncread(Float32, file, "clump");
-    @test true;
 end
 
 
@@ -59,8 +53,8 @@ end
 
 println();
 @testset "PkgUtility --- Date" begin
-    @test doy_to_int(2000, 100) == "20000409";
-    @test doy_to_int(2001, 100) == "20010410";
+    @test parse_date(2000, 100) == "20000409";
+    @test parse_date(2001, 100) == "20010410";
     @test int_to_doy("20000401") == 92;
     @test int_to_doy("20010401") == 91;
 end
@@ -93,6 +87,7 @@ println();
 @testset "PkgUtility --- Math" begin
     # test integral function
     numerical∫(rand(5), rand(5));
+    @info "Expecting dimension mismatch warning here...";
     numerical∫(rand(5), rand(6));
     numerical∫(rand(5), 0.1);
     @test true;
@@ -118,6 +113,18 @@ println();
     mape(xx, yy);
     mase(xx, yy);
     rmse(xx, yy);
+    @test true;
+end
+
+
+
+
+println();
+@testset "PkgUtility --- NetCDF" begin
+    # test the ncread
+    path = artifact_path(artifact_hash("CI_PFT_2X_1Y_V1", "example.toml"));
+    file = path * "/CI_PFT_2X_1Y_V1.nc";
+    data = ncread(Float32, file, "clump");
     @test true;
 end
 
@@ -161,4 +168,14 @@ println();
         @test NaN_test([[1,2,NaN], 2]) == false;
         @test NaN_test(sb) == false;
     end
+end
+
+
+
+
+println();
+@testset "PkgUtility --- Deprecation warnings" begin
+    # deprecated function
+    @info "Expecting deprecation warnings here";
+    @test doy_to_int(2001, 100) == "20010410";
 end
