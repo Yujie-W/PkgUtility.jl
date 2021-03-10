@@ -1,10 +1,7 @@
-[clumping_index_2X_1Y_PFT]
-git-tree-sha1 = "3ac2afe0638bfcc5a0e361a5a63536d1df852bce"
+[CI_PFT_2X_1Y_V1]
+git-tree-sha1 = "5be614cd881ba99d807c03f92a67130ce9c00bb1"
 lazy = true
 
-    [[clumping_index_2X_1Y_PFT.download]]
-    sha256 = "e9a849a731469191f366c5d0fcd21aed8c027824c33da5925b989174accfc9f6"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/CI/clumping_index_2X_1Y_PFT.tar.gz"
-    [[clumping_index_2X_1Y_PFT.download]]
-    sha256 = "e9a849a731469191f366c5d0fcd21aed8c027824c33da5925b989174accfc9f6"
-    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/clumping_index_2X_1Y_PFT.tar.gz"
+    [[CI_PFT_2X_1Y_V1.download]]
+    sha256 = "36205d4c73c015142dd28cb6767993ed281cf4941fb96c8784c3bc4d1f3d27d5"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/CI_PFT_2X_1Y_V1.tar.gz"

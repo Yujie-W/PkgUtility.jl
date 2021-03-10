@@ -1,6 +1,7 @@
 module PkgUtility
 
 using Dates
+using NCDatasets
 using Pkg.Artifacts
 using Pkg.PlatformEngines
 using Statistics
@@ -32,6 +33,9 @@ export lower_quadratic,
        rmse,
        upper_quadratic
 
+# export public functions --- netcdf
+export ncread
+
 # export public functions --- test
 export FT_test,
        NaN_test
@@ -49,6 +53,8 @@ include("display/recursive.jl")
 include("math/integral.jl"  )
 include("math/quadratic.jl" )
 include("math/statistics.jl")
+
+include("netcdf/ncread.jl")
 
 include("test/recursive.jl")
 

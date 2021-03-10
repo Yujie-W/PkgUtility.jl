@@ -65,6 +65,15 @@ rmse
 
 
 
+##
+
+```@docs
+ncread
+```
+
+
+
+
 ## Recursive test
 
 ```@docs
