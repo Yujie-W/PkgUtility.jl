@@ -42,37 +42,37 @@ function deploy_artifact(
 
     # create artifact
     if isnothing(art_hash) || !artifact_exists(art_hash)
-        println("\nArtifact $(art_name) not found, deploy it now...");
+        @info "Artifact $(art_name) not found, deploy it now...";
 
         # copy files to artifact folder
-        println("Copying artifact...");
+        @info "Copying files into artifact folder...";
         art_hash = create_artifact() do artifact_dir
             for i in eachindex(art_file)
                 _in   = art_file[i];
                 _out  = new_file[i];
                 _path = joinpath(art_locf, _in);
-                println("Copying file ", _in);
+                @info "Copying file $(_in)...";
                 cp(_path, joinpath(artifact_dir, _out));
             end
         end
-        @show art_hash;
+        #@show art_hash;
 
         # compress artifact
-        println("Compressing artifact...");
+        @info "Compressing artifact $(art_name)...";
         tar_loc  = "$(art_tarf)/$(art_name).tar.gz";
         tar_hash = archive_artifact(art_hash, tar_loc);
-        @show tar_hash;
+        #@show tar_hash;
 
         # bind artifact to download information
         download_info = [("$(_url)/$(art_name).tar.gz", tar_hash)
                          for _url in art_urls];
-        @show typeof(download_info);
+        #@show typeof(download_info);
         bind_artifact!(art_toml, art_name, art_hash;
                        download_info=download_info,
                        lazy=true,
                        force=true);
     else
-        println("\nArtifact $(art_name) already exists, skip it");
+        @info "Artifact $(art_name) already exists, skip it";
     end
 
     return nothing

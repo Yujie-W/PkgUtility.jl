@@ -27,8 +27,9 @@ export MDAYS,
        MDAYS_LEAP,
        NDAYS,
        NDAYS_LEAP,
-       parse_date,
-       int_to_doy
+       doy_to_int,
+       int_to_doy,
+       parse_date
 
 # export public functions --- display
 export pretty_display
