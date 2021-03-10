@@ -18,7 +18,7 @@ predownload_artifact
 
 ## Date
 ```@docs
-doy_to_int
+parse_date
 int_to_doy
 ```
 

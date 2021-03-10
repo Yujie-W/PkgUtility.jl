@@ -59,8 +59,8 @@ end
 
 println();
 @testset "PkgUtility --- Date" begin
-    @test doy_to_int(2000, 100) == "20000409";
-    @test doy_to_int(2001, 100) == "20010410";
+    @test parse_date(2000, 100) == "20000409";
+    @test parse_date(2001, 100) == "20010410";
     @test int_to_doy("20000401") == 92;
     @test int_to_doy("20010401") == 91;
 end
