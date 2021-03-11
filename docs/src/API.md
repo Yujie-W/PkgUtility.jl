@@ -18,8 +18,10 @@ predownload_artifact
 
 ## Date
 ```@docs
-parse_date
 int_to_doy
+month_days
+month_ind
+parse_date
 ```
 
 

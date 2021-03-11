@@ -154,7 +154,7 @@ uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 deps = ["Dates", "NCDatasets", "Pkg", "Statistics", "Test"]
 path = ".."
 uuid = "0d262f2c-28e9-492c-8e19-d7a5c4f11611"
-version = "0.1.4"
+version = "0.1.5"
 
 [[Printf]]
 deps = ["Unicode"]
