@@ -3,7 +3,9 @@ module PkgUtility
 using Dates:isleapyear
 using NCDatasets:Dataset
 using Pkg.Artifacts: archive_artifact, artifact_exists, artifact_hash,
-            artifact_meta, bind_artifact!, create_artifact
+            artifact_meta, artifact_path, bind_artifact!, create_artifact,
+            download_artifact
+using Pkg.PlatformEngines: unpack
 using Statistics: mean, median, std
 
 

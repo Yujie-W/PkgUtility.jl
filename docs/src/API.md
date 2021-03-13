@@ -59,6 +59,7 @@ mape
 mase
 nanmax
 nanmean
+nanmedian
 nanmin
 nanstd
 rmse
