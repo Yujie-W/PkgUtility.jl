@@ -111,6 +111,7 @@ println();
     yy = rand(10);
     nanmax(xx);
     nanmean(xx);
+    nanmedian(xx);
     nanmin(xx);
     nanstd(xx);
     mae(xx, yy);

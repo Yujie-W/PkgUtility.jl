@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# nanmean, nanstd, nanmax, nanmin
+# nanmean, nanmedian, nanstd, nanmax, nanmin
 #
 ###############################################################################
 """
@@ -10,7 +10,7 @@ Return the maximum of array ommiting the NaN, given
 - `x` Array of numbers, can be NaN
 """
 function nanmax(x::Array)
-    return maximum( x[.!isnan.(x)] )
+    return maximum( filter(!isnan, x) )
 end
 
 
@@ -23,7 +23,20 @@ Return the mean of array by ommiting the NaN, given
 - `x` Array of numbers, can be NaN
 """
 function nanmean(x::Array)
-    return mean( x[.!isnan.(x)] )
+    return mean( filter(!isnan, x) )
+end
+
+
+
+
+"""
+    nanmedian(x::Array)
+
+Return the median of array by ommiting the NaN, given
+- `x` Array of numbers, can be NaN
+"""
+function nanmedian(x::Array)
+    return median( filter(!isnan, x) )
 end
 
 
@@ -36,7 +49,7 @@ Return the maximum of array ommiting the NaN, given
 - `x` Array of numbers, can be NaN
 """
 function nanmin(x::Array)
-    return minimum( x[.!isnan.(x)] )
+    return minimum( filter(!isnan, x) )
 end
 
 
@@ -49,7 +62,7 @@ Return the std of array by ommiting the NaN, given
 - `x` Array of numbers, can be NaN
 """
 function nanstd(x::Array)
-    return std( x[.!isnan.(x)] )
+    return std( filter(!isnan, x) )
 end
 
 

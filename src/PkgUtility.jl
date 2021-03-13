@@ -1,10 +1,12 @@
 module PkgUtility
 
-using Dates
-using NCDatasets
-using Pkg.Artifacts
-using Pkg.PlatformEngines
-using Statistics
+using Dates:isleapyear
+using NCDatasets:Dataset
+using Pkg.Artifacts: archive_artifact, artifact_exists, artifact_hash,
+            artifact_meta, artifact_path, bind_artifact!, create_artifact,
+            download_artifact
+using Pkg.PlatformEngines: unpack
+using Statistics: mean, median, std
 
 
 
@@ -43,6 +45,7 @@ export lower_quadratic,
        mase,
        nanmax,
        nanmean,
+       nanmedian,
        nanmin,
        nanstd,
        numerical∫,
