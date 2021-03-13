@@ -17,7 +17,11 @@ Note that this `ncread` function differs from the NetCDF.ncread in that it
 """
 function ncread(FT, file::String, var::String)
     dset = Dataset(file, "r");
-    data = FT.(dset[var][:,:]);
+    dvar = dset[var][:,:];
+    nvar = replace(dvar, missing=>NaN);
+    data = FT.(nvar);
+    dvar = nothing;
+    nvar = nothing;
     close(dset);
 
     return data

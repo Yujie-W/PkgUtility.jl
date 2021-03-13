@@ -53,10 +53,14 @@ end
 
 println();
 @testset "PkgUtility --- Date" begin
-    @test parse_date(2000, 100) == "20000409";
-    @test parse_date(2001, 100) == "20010410";
     @test int_to_doy("20000401") == 92;
     @test int_to_doy("20010401") == 91;
+    @test month_days(2019, 2) == 28;
+    @test month_days(2020, 2) == 29;
+    @test month_ind(2019, 60) == 3;
+    @test month_ind(2020, 60) == 2;
+    @test parse_date(2000, 100) == "20000409";
+    @test parse_date(2001, 100) == "20010410";
 end
 
 

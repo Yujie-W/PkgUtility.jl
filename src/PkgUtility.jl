@@ -29,6 +29,8 @@ export MDAYS,
        NDAYS_LEAP,
        doy_to_int,
        int_to_doy,
+       month_days,
+       month_ind,
        parse_date
 
 # export public functions --- display
