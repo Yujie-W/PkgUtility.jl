@@ -5,7 +5,7 @@ using PkgUtility
 
 
 # define default docs pages
-pages = Any[
+pages = Pair{Any,Any}[
     "Home" => "index.md",
     "API"  => "API.md"
 ]
@@ -14,14 +14,14 @@ pages = Any[
 
 
 # add example pages
-gen_example = true;
+gen_example = false;
 gen_dir     = joinpath(@__DIR__, "src/generated");
 rm(gen_dir, force=true, recursive=true);
 mkpath(gen_dir);
 
 if gen_example
     # array of example pages
-    ex_pages = Any[];
+    ex_pages = Pair{Any,Any}[];
     for _ex in []
         filename    = joinpath(@__DIR__, "src/examples/$(_ex).jl");
         script      = Literate.script(filename, gen_dir);
@@ -34,7 +34,8 @@ if gen_example
     push!(pages, "Examples" => ex_pages);
 end
 
-@show pages;
+@info "Pages to generate:"
+pretty_display(pages);
 
 
 
