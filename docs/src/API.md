@@ -10,7 +10,13 @@ CurrentModule = PkgUtility
 
 ```@docs
 deploy_artifact
+deploy_artifact(art_toml::String, art_name::String, art_locf::String,
+    art_file::Array{String,1}, art_tarf::String, art_urls::Array{String,1};
+    new_file::Array{String,1} = art_file)
+deploy_artifact(art_toml::String, art_name::String, art_locf::String,
+    art_tarf::String, art_urls::Array{String,1})
 predownload_artifact
+predownload_artifact(art_name::String, artifact_toml::String)
 ```
 
 
@@ -68,7 +74,7 @@ rmse
 
 
 
-##
+## NetCDF extensions
 
 ```@docs
 ncread

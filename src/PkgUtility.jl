@@ -1,6 +1,7 @@
 module PkgUtility
 
 using Dates:isleapyear
+using DocStringExtensions: METHODLIST
 using NCDatasets:Dataset
 using Pkg.Artifacts: archive_artifact, artifact_exists, artifact_hash,
             artifact_meta, artifact_path, bind_artifact!, create_artifact,
@@ -21,43 +22,23 @@ const NDAYS      = [31,28,31,30,31,30,31,31,30,31,30,31];
 
 
 # export public functions --- artifact
-export deploy_artifact,
-       predownload_artifact
+export deploy_artifact, predownload_artifact
 
 # export public functions --- date
-export MDAYS,
-       MDAYS_LEAP,
-       NDAYS,
-       NDAYS_LEAP,
-       doy_to_int,
-       int_to_doy,
-       month_days,
-       month_ind,
-       parse_date
+export doy_to_int, int_to_doy, month_days, month_ind, parse_date
 
 # export public functions --- display
 export pretty_display
 
 # export public functions --- math
-export lower_quadratic,
-       mae,
-       mape,
-       mase,
-       nanmax,
-       nanmean,
-       nanmedian,
-       nanmin,
-       nanstd,
-       numerical∫,
-       rmse,
-       upper_quadratic
+export lower_quadratic, mae, mape, mase, nanmax, nanmean, nanmedian, nanmin,
+            nanstd, numerical∫, rmse, upper_quadratic
 
 # export public functions --- netcdf
 export ncread
 
 # export public functions --- test
-export FT_test,
-       NaN_test
+export FT_test, NaN_test
 
 
 
