@@ -71,40 +71,37 @@ deploy_artifact(
     # querry whether the artifact exists
     _art_hash = artifact_hash(art_name, art_toml);
 
-    # create artifact
-    if isnothing(_art_hash) || !artifact_exists(_art_hash)
-        @info "Artifact $(art_name) not found, deploy it now...";
-
-        # copy files to artifact folder
-        @info "Copying files into artifact folder...";
-        _art_hash = create_artifact() do artifact_dir
-            for i in eachindex(art_file)
-                _in   = art_file[i];
-                _out  = new_file[i];
-                _path = joinpath(art_locf, _in);
-                @info "Copying file $(_in)...";
-                cp(_path, joinpath(artifact_dir, _out));
-            end;
-        end;
-        #@show _art_hash;
-
-        # compress artifact
-        @info "Compressing artifact $(art_name)...";
-        _tar_loc  = "$(art_tarf)/$(art_name).tar.gz";
-        _tar_hash = archive_artifact(_art_hash, _tar_loc);
-        #@show _tar_hash;
-
-        # bind artifact to download information
-        _download_info = [("$(_url)/$(art_name).tar.gz", _tar_hash)
-                          for _url in art_urls];
-        #@show typeof(_download_info);
-        bind_artifact!(art_toml, art_name, _art_hash;
-                       download_info=_download_info, lazy=true, force=true);
-    else
+    # if artifact exists already skip
+    if artifact_exists(_art_hash) && !isnothing(_art_hash)
         @info "Artifact $(art_name) already exists, skip it";
+        return nothing;
     end;
 
-    return nothing
+    # create artifact
+    @info "Artifact $(art_name) not found, deploy it now...";
+    @info "Copying files into artifact folder...";
+    _art_hash = create_artifact() do artifact_dir
+        for i in eachindex(art_file)
+            _in   = art_file[i];
+            _out  = new_file[i];
+            _path = joinpath(art_locf, _in);
+            @info "Copying file $(_in)...";
+            cp(_path, joinpath(artifact_dir, _out));
+        end;
+    end;
+
+    # compress artifact
+    @info "Compressing artifact $(art_name)...";
+    _tar_loc  = "$(art_tarf)/$(art_name).tar.gz";
+    _tar_hash = archive_artifact(_art_hash, _tar_loc);
+
+    # bind artifact to download information
+    _download_info = [("$(_url)/$(art_name).tar.gz", _tar_hash)
+                      for _url in art_urls];
+    bind_artifact!(art_toml, art_name, _art_hash; download_info=_download_info,
+                   lazy=true, force=true);
+
+    return nothing;
 )
 
 
@@ -146,14 +143,11 @@ deploy_artifact(
             art_urls::Array{String,1}) =
 (
     # querry all the files in the folder
-    _art_files = String[];
-    for _file in readdir(art_locf)
-        push!(_art_files, _file);
-    end;
+    _art_files = String[_file for _file in readdir(art_locf)];
 
     # deploy the artifact
     deploy_artifact(art_toml, art_name, art_locf, _art_files, art_tarf,
                     art_urls);
 
-    return nothing
+    return nothing;
 )
