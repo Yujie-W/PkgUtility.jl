@@ -72,7 +72,7 @@ deploy_artifact(
     _art_hash = artifact_hash(art_name, art_toml);
 
     # if artifact exists already skip
-    if artifact_exists(_art_hash) && !isnothing(_art_hash)
+    if !isnothing(_art_hash) && artifact_exists(_art_hash)
         @info "Artifact $(art_name) already exists, skip it";
         return nothing;
     end;

@@ -24,10 +24,12 @@ predownload_artifact(art_name::String, artifact_toml::String)
 
 ## Date
 ```@docs
-int_to_doy
 month_days
 month_ind
-parse_date
+parse_timestamp
+parse_timestamp(time_stamp::Union{Int,String}; in_format::String="YYYYMMDD",
+    out_format::String="DOY")
+parse_timestamp(year::Int, doy::Int, sep::String="")
 ```
 
 

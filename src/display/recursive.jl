@@ -13,10 +13,10 @@ Display array of pairs (dictionary) in recursive manner, given
 - `spaces` Leading spaces
 """
 function pretty_display(
-            para::Union{ Array{Pair{String,String},1},
-                         Array{Pair{String,Any},1},
-                         Array{Pair{Any,String},1},
-                         Array{Pair{Any,Any},1}},
+            para::Union{Array{Pair{String,String},1},
+                        Array{Pair{String,Any},1},
+                        Array{Pair{Any,String},1},
+                        Array{Pair{Any,Any},1}},
             spaces::String = "    "
 )
     # determine the length of the keys
@@ -31,7 +31,7 @@ function pretty_display(
         print( string(p[1]) );
 
         # print spaces after key and arrow
-        print( repeat(" ", max_len-length(string(p[1]))) * " => " );
+        print( repeat(" ", max_len-length(string(p[1]))) * " ⇒ " );
 
         # if the value is array of pairs, recursive display
         if typeof(p[2]) <: Array
