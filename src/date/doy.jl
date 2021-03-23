@@ -44,8 +44,37 @@ The supported outputs are
 
 Convert time stamp, given
 - `time_stamp` Time stamp
-- `in_format` Format of `time_stamp`
-- `out_format` Output format
+- `in_format` Format of `time_stamp`, default is `YYYYMMDD`
+- `out_format` Output format, default is `DOY`
+
+---
+Examples
+```julia
+_inf = "YYYYMMDD";
+for _ts in [20200130, "20200130"]
+    for _outf in ["DATE", "DATETIME", "DOY", "FDOY"]
+        parse_timestamp(_ts; in_format=_inf, out_format=_outf);
+    end
+end
+_inf = "YYYYMMDDhh";
+for _ts in [2020013002, "2020013002"]
+    for _outf in ["DATE", "DATETIME", "DOY", "FDOY"]
+        parse_timestamp(_ts; in_format=_inf, out_format=_outf);
+    end
+end
+_inf = "YYYYMMDDhhmm";
+for _ts in [202001300215, "202001300215"]
+    for _outf in ["DATE", "DATETIME", "DOY", "FDOY"]
+        parse_timestamp(_ts; in_format=_inf, out_format=_outf);
+    end
+end
+_inf = "YYYYMMDDhhmmss";
+for _ts in [20200130021515, "20200130021515"]
+    for _outf in ["DATE", "DATETIME", "DOY", "FDOY"]
+        parse_timestamp(_ts; in_format=_inf, out_format=_outf);
+    end
+end
+```
 """
 parse_timestamp(
             time_stamp::Union{Int,String};
@@ -106,6 +135,14 @@ Convert date to `YYYY(sep)MM(sep)DD` format, given
 - `year` Year
 - `doy` Day of year (typically 1-365, 1-366 for leap years)
 - `sep` String that separates year, month, and day. Default is ""
+
+---
+Examples
+```julia
+parse_timestamp(2020, 100);
+parse_timestamp(2020, 100, "");
+parse_timestamp(2020, 100, ".");
+```
 """
 parse_timestamp(year::Int, doy::Int, sep::String="") =
 (
@@ -125,6 +162,12 @@ parse_timestamp(year::Int, doy::Int, sep::String="") =
 How many days in a month, given
 - `year` Year
 - `month` Month
+
+---
+Examples
+```julia
+month_days(2020, 10);
+```
 """
 function month_days(year::Int, month::Int)
     @assert 1 <= month <= 12;
@@ -141,6 +184,12 @@ end
 Which month does the day of year belongs to, given
 - `year` Year
 - `doy` Day of year (typically 1-365, 1-366 for leap years)
+
+---
+Examples
+```julia
+month_ind(2020, 100);
+```
 """
 function month_ind(year::Int, doy::Int)
     if isleapyear(year)

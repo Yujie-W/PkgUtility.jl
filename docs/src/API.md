@@ -30,6 +30,7 @@ parse_timestamp
 parse_timestamp(time_stamp::Union{Int,String}; in_format::String="YYYYMMDD",
     out_format::String="DOY")
 parse_timestamp(year::Int, doy::Int, sep::String="")
+@tinfo
 ```
 
 
@@ -39,6 +40,10 @@ parse_timestamp(year::Int, doy::Int, sep::String="")
 
 ```@docs
 pretty_display
+pretty_display(dict::Pair, max_len::Int, spaces = "    ")
+pretty_display(dicts::Union{Array{Pair{String,String},1},
+    Array{Pair{String,Any},1}, Array{Pair{Any,String},1},
+    Array{Pair{Any,Any},1}}, spaces::String = "    ")
 ```
 
 
