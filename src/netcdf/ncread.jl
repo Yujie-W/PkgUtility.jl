@@ -26,3 +26,16 @@ function ncread(FT, file::String, var::String)
 
     return data
 end
+
+
+
+
+function ncread(file::String, var::String, indz::Int)
+    dset = Dataset(file, "r");
+    dvar = dset[var][:,:,indz];
+    data = replace(dvar, missing=>NaN);
+    dvar = nothing;
+    close(dset);
+
+    return data
+end

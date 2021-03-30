@@ -15,11 +15,12 @@ pages = Pair{Any,Any}[
 
 # add example pages
 gen_example = false;
-gen_dir     = joinpath(@__DIR__, "src/generated");
-rm(gen_dir, force=true, recursive=true);
-mkpath(gen_dir);
 
 if gen_example
+    gen_dir = joinpath(@__DIR__, "src/generated");
+    rm(gen_dir, force=true, recursive=true);
+    mkpath(gen_dir);
+
     # array of example pages
     ex_pages = Pair{Any,Any}[];
     for _ex in []

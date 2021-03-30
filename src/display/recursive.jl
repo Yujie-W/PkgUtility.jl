@@ -4,49 +4,104 @@
 #
 ###############################################################################
 """
+Display the parameters in a colored way.
+
+$(METHODLIST)
+
+"""
+function pretty_display end
+
+
+
+
+"""
+When a dictionary (a pair of key and item) is passed to the `pretty_display`
+    function, the dictionary will be displayed as `(LEADING_SPACE)key ⇨ item,`.
+    However, if the dictionary item is an array of dictionaries, then the array
+    will be displayed recursively.
+
+    pretty_display(dict::Pair, max_len::Int, spaces = "    ")
+
+Display the key and item in a dictionary (Pair), given
+- `dict` Dictionary to display
+- `max_len` Maximum length of dictionary key (in an array)
+- `spaces` Leading spaces before displaying the dictionary key
+
+---
+Examples
+```julia
+pretty_display("a" => "b", 1);
+pretty_display("a" => "b", 2, "  ");
+```
+"""
+pretty_display(dict::Pair, max_len::Int, spaces = "    ") =
+(
+    # print leading spaces
+    print(spaces);
+
+    # print the key
+    printstyled(string(dict[1]); color=:light_magenta);
+
+    # print spaces after key and arrow
+    print( repeat(" ", max_len-length(string(dict[1]))) * " ⇨ " );
+
+    # if the value is array of pairs, recursive display
+    if typeof(dict[2]) <: Array
+        # display [ and line break
+        print( "[\n" );
+        pretty_display(dict[2], spaces*repeat(" ",max_len+5));
+
+        # display a ] and the next line
+        print(spaces * repeat(" ",max_len+4) * "],\n" );
+
+    # if the value is not array of pair, display it
+    else
+        printstyled(string(dict[2]); color=:cyan);
+        print(",\n" );
+    end;
+
+    return nothing;
+)
+
+
+
+
+"""
+When an array of dictionaries is given, the `pretty_display` function computes
+    the maximum length of the dictionary keys, and then display the
+    dictionaries in a colored and pretty manner
+
     pretty_display(
-                para::Array{Pair{Union{Any},Union{Any}},1},
-                spaces::String = " ")
+                dicts::Union{Array{Pair{String,String},1},
+                             Array{Pair{String,Any},1},
+                             Array{Pair{Any,String},1},
+                             Array{Pair{Any,Any},1}},
+                spaces::String = "    ")
 
 Display array of pairs (dictionary) in recursive manner, given
-- `para` Parameters to display
+- `dicts` Parameters to display
 - `spaces` Leading spaces
+
+---
+Examples
+```julia
+_dicts = ["A" => "b", "d" => "A", "rr" => ["ra" => "rB", "rD" => "ra"]];
+pretty_display(_dicts);
+pretty_display(_dicts, "  ");
+```
 """
-function pretty_display(
-            para::Union{ Array{Pair{String,String},1},
+pretty_display(
+            dicts::Union{Array{Pair{String,String},1},
                          Array{Pair{String,Any},1},
                          Array{Pair{Any,String},1},
                          Array{Pair{Any,Any},1}},
-            spaces::String = "    "
-)
+            spaces::String = "    ") =
+(
     # determine the length of the keys
-    max_len = maximum(length.([string(p[1]) for p in para]));
+    _max_len = maximum(length.([string(p[1]) for p in dicts]));
 
     # display the elements
-    for p in para
-        # print leading spaces
-        print(spaces);
-
-        # print the key
-        print( string(p[1]) );
-
-        # print spaces after key and arrow
-        print( repeat(" ", max_len-length(string(p[1]))) * " => " );
-
-        # if the value is array of pairs, recursive display
-        if typeof(p[2]) <: Array
-            # display [ and line break
-            print( "[\n" );
-            pretty_display(p[2], spaces*repeat(" ",max_len+5));
-
-            # display a ] and the next line
-            print(spaces * repeat(" ",max_len+4) * "],\n" );
-
-        # if the value is not array of pair, display it
-        else
-            print( string(p[2]) * ",\n" );
-        end
-    end
+    pretty_display.(dicts, _max_len, spaces);
 
     return nothing
-end
+)
