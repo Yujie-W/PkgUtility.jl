@@ -73,25 +73,25 @@ deploy_artifact(
 
     # if artifact exists already skip
     if !isnothing(_art_hash) && artifact_exists(_art_hash)
-        @info "Artifact $(art_name) already exists, skip it";
+        @info tinfo("Artifact $(art_name) already exists, skip it");
         return nothing;
     end;
 
     # create artifact
-    @info "Artifact $(art_name) not found, deploy it now...";
-    @info "Copying files into artifact folder...";
+    @info tinfo("Artifact $(art_name) not found, deploy it now...");
+    @info tinfo("Copying files into artifact folder...");
     _art_hash = create_artifact() do artifact_dir
         for i in eachindex(art_file)
             _in   = art_file[i];
             _out  = new_file[i];
             _path = joinpath(art_locf, _in);
-            @info "Copying file $(_in)...";
+            @info tinfo("Copying file $(_in)...");
             cp(_path, joinpath(artifact_dir, _out));
         end;
     end;
 
     # compress artifact
-    @info "Compressing artifact $(art_name)...";
+    @info tinfo("Compressing artifact $(art_name)...");
     _tar_loc  = "$(art_tarf)/$(art_name).tar.gz";
     _tar_hash = archive_artifact(_art_hash, _tar_loc);
 

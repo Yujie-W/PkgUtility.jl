@@ -56,6 +56,8 @@ predownload_artifact(art_name::String, artifact_toml::String) =
     for _entry in _meta["download"]
         _url          = _entry["url"];
         _tarball_hash = _entry["sha256"];
+
+        @info tinfo("Downloading artifact from $(_url)...");
         _succeeded    = download_artifact(_hash, _url, _tarball_hash);
         if _succeeded
             break;
@@ -68,10 +70,12 @@ predownload_artifact(art_name::String, artifact_toml::String) =
     end;
 
     # download and unpack the artifact manually if above fails
-    @info "Install the artifact manually...";
+    @info tinfo("Install the artifact manually...");
     for _entry in _meta["download"]
         _dest_dir  = artifact_path(_hash; honor_overrides=false);
         _url       = _entry["url"];
+
+        @info tinfo("Downloading artifact from $(_url)...");
         _succeeded = download(_url, "temp_artifact.tar.gz");
         if _succeeded == "temp_artifact.tar.gz"
             unpack("temp_artifact.tar.gz", _dest_dir);

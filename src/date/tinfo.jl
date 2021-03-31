@@ -1,23 +1,64 @@
 ###############################################################################
 #
-# A macro to display time in @info
+# Functions to display time in @error @info, and @warn
 #
 ###############################################################################
 """
-A macro to display time and info.
+A function to covert information to time + information
 
-    macro tinfo(info::String)
-    @tinfo info::String
+    terror(info::String)
 
-Display the info with date and time before the given
-- `info` A string to display using `@info` macro
+Display the error info with date and time before the given
+- `info` Infomation to display
 
 ---
 Examples
 ```julia
-@tinfo "This is a infomation with time stamp at the beginning!";
+terror("This is an error with time stamp at the beginning!");
 ```
 """
-macro tinfo(info::String)
-    @info "$(format(now(),"yyyy-mm-dd HH:MM:SS"))  $(info)";
+function terror(info::String)
+    return "$(format(now(),"yyyy-mm-dd HH:MM:SS"))\n       $(info)"
+end
+
+
+
+
+"""
+A function to covert information to time + information
+
+    tinfo(info::String)
+
+Display the error info with date and time before the given
+- `info` Infomation to display
+
+---
+Examples
+```julia
+tinfo("This is an info with time stamp at the beginning!");
+```
+"""
+function tinfo(info::String)
+    return "$(format(now(),"yyyy-mm-dd HH:MM:SS"))\n      $(info)"
+end
+
+
+
+
+"""
+A function to covert information to time + information
+
+    twarn(info::String)
+
+Display the error info with date and time before the given
+- `info` Infomation to display
+
+---
+Examples
+```julia
+twarn("This is an info with time stamp at the beginning!");
+```
+"""
+function twarn(info::String)
+    return "$(format(now(),"yyyy-mm-dd HH:MM:SS"))\n         $(info)"
 end

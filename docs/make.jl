@@ -35,7 +35,7 @@ if gen_example
     push!(pages, "Examples" => ex_pages);
 end
 
-@info "Pages to generate:"
+@info tinfo("Pages to generate:");
 pretty_display(pages);
 
 
