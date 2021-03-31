@@ -33,18 +33,18 @@ Method for this deployment is
                 art_toml::String,
                 art_name::String,
                 art_locf::String,
-                art_file::Array{String,1},
+                art_file::Vector{String},
                 art_tarf::String,
-                art_urls::Array{String,1};
-                new_file::Array{String,1} = art_file)
+                art_urls::Vector{String};
+                new_file::Vector{String} = art_file)
 
 Deploy the artifact, given
 - `art_toml` Artifact `.toml` file location
 - `art_name` Artifact name identitfier
 - `art_locf` Local folder that stores the source files
-- `art_file` Array of the source file names
+- `art_file` Vector of the source file names
 - `art_tarf` Folder location to store the compressed `.tar.gz` file
-- `art_urls` Array of public urls, where the compressed files are to be
+- `art_urls` Vector of public urls, where the compressed files are to be
     uploaded (user need to upload the file manually)
 - `new_file` Optional. New file names of the copied files (same as `art_file`
     by default)
@@ -52,8 +52,10 @@ Deploy the artifact, given
 ---
 Examples
 ```julia
+# deploy art_1.txt and art_2.txt as test_art artifact
 deploy_artifact("Artifacts.toml", "test_art", "./", ["art_1.txt", "art_2.txt],
                 "./", ["https://public.server.url"])
+# deploy art_1.txt and art_2.txt as test_art artifact with new names
 deploy_artifact("Artifacts.toml", "test_art", "./", ["art_1.txt", "art_2.txt],
                 "./", ["https://public.server.url"];
                 new_files=["new_1.txt", "new_2.txt"]);
@@ -63,10 +65,10 @@ deploy_artifact(
             art_toml::String,
             art_name::String,
             art_locf::String,
-            art_file::Array{String,1},
+            art_file::Vector{String},
             art_tarf::String,
-            art_urls::Array{String,1};
-            new_file::Array{String,1} = art_file) =
+            art_urls::Vector{String};
+            new_file::Vector{String} = art_file) =
 (
     # querry whether the artifact exists
     _art_hash = artifact_hash(art_name, art_toml);
@@ -117,7 +119,7 @@ In many cases, one might want to copy all the files in a folder to the target
                 art_name::String,
                 art_locf::String,
                 art_tarf::String,
-                art_urls::Array{String,1})
+                art_urls::Vector{String})
 
 Deploy the artifact, given
 - `art_toml` Artifact `.toml` file location
@@ -125,12 +127,13 @@ Deploy the artifact, given
 - `art_locf` Local folder that stores the source files (all files will be
     copied into the artifact)
 - `art_tarf` Folder location to store the compressed `.tar.gz` file
-- `art_urls` Array of public urls, where the compressed files are to be
+- `art_urls` Vector of public urls, where the compressed files are to be
     uploaded (user need to upload the file manually)
 
 ---
 Examples
 ```julia
+# deploy all files in target folder
 deploy_artifact("Artifacts.toml", "test_art", "./folder", "./",
                 ["https://public.server.url"])
 ```
@@ -140,7 +143,7 @@ deploy_artifact(
             art_name::String,
             art_locf::String,
             art_tarf::String,
-            art_urls::Array{String,1}) =
+            art_urls::Vector{String}) =
 (
     # querry all the files in the folder
     _art_files = String[_file for _file in readdir(art_locf)];

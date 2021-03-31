@@ -50,24 +50,31 @@ Convert time stamp, given
 ---
 Examples
 ```julia
+# if input format is YYYYMMDD
 _inf = "YYYYMMDD";
 for _ts in [20200130, "20200130"]
     for _outf in ["DATE", "DATETIME", "DOY", "FDOY"]
         parse_timestamp(_ts; in_format=_inf, out_format=_outf);
     end
 end
+
+# if input format is YYYYMMDDhh
 _inf = "YYYYMMDDhh";
 for _ts in [2020013002, "2020013002"]
     for _outf in ["DATE", "DATETIME", "DOY", "FDOY"]
         parse_timestamp(_ts; in_format=_inf, out_format=_outf);
     end
 end
+
+# if input format is YYYYMMDDhhmm
 _inf = "YYYYMMDDhhmm";
 for _ts in [202001300215, "202001300215"]
     for _outf in ["DATE", "DATETIME", "DOY", "FDOY"]
         parse_timestamp(_ts; in_format=_inf, out_format=_outf);
     end
 end
+
+# if input format is YYYYMMDDhhss
 _inf = "YYYYMMDDhhmmss";
 for _ts in [20200130021515, "20200130021515"]
     for _outf in ["DATE", "DATETIME", "DOY", "FDOY"]
@@ -139,8 +146,11 @@ Convert date to `YYYY(sep)MM(sep)DD` format, given
 ---
 Examples
 ```julia
+# convert the time to YYYYMMDD format
 parse_timestamp(2020, 100);
 parse_timestamp(2020, 100, "");
+
+# convert the time to YYYY.MM.DD format
 parse_timestamp(2020, 100, ".");
 ```
 """
@@ -166,6 +176,7 @@ How many days in a month, given
 ---
 Examples
 ```julia
+# inquire how many days in 2020 October
 month_days(2020, 10);
 ```
 """
@@ -188,6 +199,7 @@ Which month does the day of year belongs to, given
 ---
 Examples
 ```julia
+# inquire which month it is for 100th day in 2020
 month_ind(2020, 100);
 ```
 """

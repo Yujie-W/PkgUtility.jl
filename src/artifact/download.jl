@@ -39,6 +39,7 @@ Download the artifact from given server if it does not exist, given
 ---
 Examples
 ```julia
+# download the artifact manually if default methods fail
 predownload_artifact("test_artifact", "Artifacts.toml");
 ```
 """

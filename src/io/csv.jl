@@ -28,8 +28,11 @@ Read CSV file as a DataFrame, given
 ---
 Example
 ```julia
+# read CSV without skipping any rows
 df = read_csv("test.csv");
 df = read_csv("test.csv"; skiprows=0);
+
+# skip first 2 rows
 df = read_csv("test.csv"; skiprows=2);
 ```
 """
@@ -68,6 +71,9 @@ function save_csv! end
 
 """
 To save the data as a plain CSV without any attribute information, one may use
+    one of these functions. Note that the sequence of the data frame and file
+    name does not matter as the function will automatically recognize the
+    sequence:
 
     save_csv!(df::DataFrame, file::String)
     save_csv!(file::String, df::DataFrame)
@@ -79,6 +85,7 @@ Save data to CSV file, given
 ---
 Example
 ```julia
+# save data to CSV without any rows to skip
 df = read_csv("in.csv"; skiprows=2);
 save_csv!(df, "out.csv");
 save_csv!("out.csv", df);

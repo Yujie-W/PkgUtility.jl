@@ -33,6 +33,7 @@ Note that the missing data will be labeled as NaN.
 ---
 Example
 ```julia
+# read data labeled as test from test.nc
 data = read_nc("test.nc", "test");
 ```
 """
@@ -64,6 +65,7 @@ Read data from nc file, given
 ---
 Example
 ```julia
+# read data labeled as test from test.nc as Float32
 data = read_nc(Float32, "test.nc", "test");
 ```
 """
@@ -89,6 +91,7 @@ Note that the dataset must be a 3D array to use this method.
 ---
 Example
 ```julia
+# read 1st layer data labeled as test from test.nc
 data = read_nc("test.nc", "test", 1);
 ```
 """
@@ -120,8 +123,40 @@ Read a subset from nc file, given
 ---
 Example
 ```julia
+# read 1st layer data labeled as test from test.nc as Float32
 data = read_nc(Float32, "test.nc", "test", 1);
 ```
 """
 read_nc(FT, file::String, var::String, indz::Int) =
     FT.(read_nc(file, var, indz))
+
+
+
+
+
+
+
+
+###############################################################################
+#
+# save Arrays to NC file
+#
+###############################################################################
+"""
+"""
+function save_nc! end
+
+
+save_nc!(file::String,
+         var_name::String,
+         var_attr::Dict,
+         var_data::Array{FT,N},
+         atts_name::Vector{String},
+         atts_attr::Vector{Dict},
+         atts_data::Vector{Vector{FT}}) where {FT<:AbstractFloat,N} =
+(
+    # make sure the data provided match in dimensions
+    @assert length(atts_attr) == length(atts_data) == length(atts_name) == N;
+
+    return nothing
+)

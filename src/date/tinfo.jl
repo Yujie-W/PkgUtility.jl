@@ -14,7 +14,8 @@ Display the error info with date and time before the given
 ---
 Examples
 ```julia
-terror("This is an error with time stamp at the beginning!");
+# add a time stamp before the message
+@error terror("This is an error with time stamp at the beginning!");
 ```
 """
 function terror(info::String)
@@ -35,7 +36,8 @@ Display the error info with date and time before the given
 ---
 Examples
 ```julia
-tinfo("This is an info with time stamp at the beginning!");
+# add a time stamp before the message
+@info tinfo("This is an info with time stamp at the beginning!");
 ```
 """
 function tinfo(info::String)
@@ -56,7 +58,8 @@ Display the error info with date and time before the given
 ---
 Examples
 ```julia
-twarn("This is an info with time stamp at the beginning!");
+# add a time stamp before the message
+@warn twarn("This is an info with time stamp at the beginning!");
 ```
 """
 function twarn(info::String)

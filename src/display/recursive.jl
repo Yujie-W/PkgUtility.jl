@@ -30,6 +30,7 @@ Display the key and item in a dictionary (Pair), given
 ---
 Examples
 ```julia
+# display the pair in a pretty way (automatic alignments)
 pretty_display("a" => "b", 1);
 pretty_display("a" => "b", 2, "  ");
 ```
@@ -45,8 +46,8 @@ pretty_display(dict::Pair, max_len::Int, spaces = "    ") =
     # print spaces after key and arrow
     print( repeat(" ", max_len-length(string(dict[1]))) * " ⇨ " );
 
-    # if the value is array of pairs, recursive display
-    if typeof(dict[2]) <: Array
+    # if the value is a vetor of pairs, recursive display
+    if typeof(dict[2]) <: Vector
         # display [ and line break
         print( "[\n" );
         pretty_display(dict[2], spaces*repeat(" ",max_len+5));
@@ -72,10 +73,10 @@ When an array of dictionaries is given, the `pretty_display` function computes
     dictionaries in a colored and pretty manner
 
     pretty_display(
-                dicts::Union{Array{Pair{String,String},1},
-                             Array{Pair{String,Any},1},
-                             Array{Pair{Any,String},1},
-                             Array{Pair{Any,Any},1}},
+                dicts::Union{Vector{Pair{String,String}},
+                             Vector{Pair{String,Any}},
+                             Vector{Pair{Any,String}},
+                             Vector{Pair{Any,Any}}},
                 spaces::String = "    ")
 
 Display array of pairs (dictionary) in recursive manner, given
@@ -85,16 +86,17 @@ Display array of pairs (dictionary) in recursive manner, given
 ---
 Examples
 ```julia
+# display the vector of pairs recursively (automatic alignments)
 _dicts = ["A" => "b", "d" => "A", "rr" => ["ra" => "rB", "rD" => "ra"]];
 pretty_display(_dicts);
 pretty_display(_dicts, "  ");
 ```
 """
 pretty_display(
-            dicts::Union{Array{Pair{String,String},1},
-                         Array{Pair{String,Any},1},
-                         Array{Pair{Any,String},1},
-                         Array{Pair{Any,Any},1}},
+            dicts::Union{Vector{Pair{String,String}},
+                         Vector{Pair{String,Any}},
+                         Vector{Pair{Any,String}},
+                         Vector{Pair{Any,Any}}},
             spaces::String = "    ") =
 (
     # determine the length of the keys
