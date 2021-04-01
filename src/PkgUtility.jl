@@ -1,8 +1,5 @@
 module PkgUtility
 
-using Base.CoreLogging: @_sourceinfo, Error, Info, Warn, LogLevel,
-            current_logger_for_env, handle_message, logmsg_code,
-            _invoked_shouldlog, _min_enabled_level
 using CSV: File
 using DataFrames: DataFrame
 using Dates: Date, DateTime, format, isleapyear, now
