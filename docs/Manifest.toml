@@ -15,6 +15,12 @@ git-tree-sha1 = "bca6cb6ee746e6485ca4535f6cc29cf3579a0f20"
 uuid = "179af706-886a-5703-950a-314cd64e0468"
 version = "0.1.1"
 
+[[CLIMAParameters]]
+deps = ["Test"]
+git-tree-sha1 = "d8fc52a3631cc954b5445c7920eda46da650c9e7"
+uuid = "6eacf6c3-8458-43b9-ae03-caf5306d3d53"
+version = "0.1.11"
+
 [[CSV]]
 deps = ["Dates", "Mmap", "Parsers", "PooledArrays", "SentinelArrays", "Tables", "Unicode"]
 git-tree-sha1 = "6d4242ef4cb1539e7ede8e01a47a32365e0a34cd"
@@ -219,10 +225,10 @@ deps = ["Artifacts", "Dates", "Downloads", "LibGit2", "Libdl", "Logging", "Markd
 uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 
 [[PkgUtility]]
-deps = ["CSV", "DataFrames", "Dates", "DocStringExtensions", "NCDatasets", "Pkg", "Statistics", "Test"]
+deps = ["CLIMAParameters", "CSV", "DataFrames", "Dates", "DocStringExtensions", "NCDatasets", "Pkg", "Statistics", "Test"]
 path = ".."
 uuid = "0d262f2c-28e9-492c-8e19-d7a5c4f11611"
-version = "0.1.6"
+version = "0.1.7"
 
 [[PooledArrays]]
 deps = ["DataAPI", "Future"]
