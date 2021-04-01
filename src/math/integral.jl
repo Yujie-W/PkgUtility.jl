@@ -28,13 +28,20 @@ Intergal of given
 
 Note that f and Δx may have different dimensions, and if so a warning will
     display.
+
+---
+Examples
+```julia
+FT = Float32;
+f_sum = numerical∫(FT[1,2,3,4], FT[0.1,0.1,0.2,0.3])
+```
 """
 numerical∫(f::Array{FT,1}, Δx::Array{FT,1}) where {FT<:AbstractFloat} =
 (
     if length(Δx) == length(f)
         return f' * Δx
     else
-        @warn "Dimensions not matching, use the matching parts only";
+        @warn twarn("Dimensions not matching, use the matching parts only...");
         N = min(length(f), length(Δx));
         return adjoint(view(f,1:N)) * view(Δx,1:N)
     end
@@ -53,6 +60,13 @@ The above methods is useful for both evenly and non-evenly distributed `Δx`.
 Intergal of given
 - `f` f(x) for each x
 - `Δx` Δx for x
+
+---
+Examples
+```julia
+FT = Float32;
+f_sum = numerical∫(FT[1,2,3,4], FT(0.1))
+```
 """
 numerical∫(f::Array{FT,1}, Δx::FT) where {FT<:AbstractFloat} =
 (
@@ -68,20 +82,28 @@ We also provide a function to manually solve for the integral of a given
 
     numerical∫(f::Function,
                x_min::FT,
-               x_max::FT;
-               n::Int = 20
+               x_max::FT,
+               n::Int
     ) where {FT<:AbstractFloat}
 
 Intergal of given
 - `f` A function
 - `x_min` Minimum limit of x
 - `x_max` Maximum limit of x
-- `n` Number of points in the x range (evenly stepped). Default is 20.
+- `n` Number of points in the x range (evenly stepped)
+
+---
+Examples
+```julia
+FT = Float32;
+func(x) = x^2;
+f_sum = numerical∫(func, FT(0), FT(2), 20)
+```
 """
 numerical∫(f::Function,
            x_min::FT,
-           x_max::FT;
-           n::Int = 20
+           x_max::FT,
+           n::Int
 ) where {FT<:AbstractFloat} =
 (
     _sum = 0;
@@ -92,4 +114,34 @@ numerical∫(f::Function,
     end;
 
     return _sum * _dx;
+)
+
+
+
+
+numerical∫(f::Function,
+           x_min::FT,
+           x_max::FT,
+           x_tol::FT = sqrt(eps(FT)),
+           y_tol::FT = sqrt(eps(FT))
+) where {FT<:AbstractFloat} =
+(
+    @assert y_tol > 0;
+
+    # _sum_0: sum before halfing steps (_N), _sum_N: sum after halfing steps
+    _sum_0::FT = (f(x_min) + f(x_max)) / 2;
+    _sum_N::FT = 0;
+    _N = 1;
+
+    # continue the steps till the tolerances are reached
+    while true
+        _sum_N = (numerical∫(f, x_min, x_max, _N) + _sum_0) / 2;
+        if abs(_sum_N - _sum_0) < y_tol || 1/_N < x_tol
+            break;
+        end;
+        _sum_0 = _sum_N;
+        _N *= 2;
+    end;
+
+    return _sum_N
 )
