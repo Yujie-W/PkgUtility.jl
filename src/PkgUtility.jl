@@ -1,6 +1,10 @@
 module PkgUtility
 
-using CSV: File
+using CLIMAParameters
+using CLIMAParameters: AbstractEarthParameterSet, gas_constant, k_Boltzmann
+using CLIMAParameters.Planet: LH_v0, R_v, T_freeze, T_triple, cp_l, cp_v,
+            molmass_water, press_triple, ρ_cloud_liq
+using CSV: File, write
 using DataFrames: DataFrame
 using Dates: Date, DateTime, format, isleapyear, now
 using DocStringExtensions: METHODLIST
@@ -59,6 +63,8 @@ include("display/recursive.jl")
 
 include("io/csv.jl")
 include("io/nc.jl" )
+
+include("land/clima.jl")
 
 include("math/integral.jl"  )
 include("math/quadratic.jl" )
