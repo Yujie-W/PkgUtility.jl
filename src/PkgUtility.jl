@@ -7,7 +7,7 @@ using CSV: File
 using DataFrames: DataFrame
 using Dates: Date, DateTime, format, isleapyear, now
 using DocStringExtensions: METHODLIST
-using NCDatasets:Dataset
+using NCDatasets: Dataset, defDim, defVar
 using Pkg.Artifacts: archive_artifact, artifact_exists, artifact_hash,
             artifact_meta, artifact_path, bind_artifact!, create_artifact,
             download_artifact
@@ -40,7 +40,7 @@ export doy_to_int, int_to_doy, month_days, month_ind, parse_timestamp, terror,
 export pretty_display
 
 # export public functions --- io
-export read_nc
+export read_csv, read_nc, save_csv!, save_nc!
 
 # export public functions --- math
 export lower_quadratic, mae, mape, mase, nanmax, nanmean, nanmedian, nanmin,
