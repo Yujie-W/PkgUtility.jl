@@ -1,6 +1,6 @@
 module PkgUtility
 
-using CSV: File
+using CSV: File, write
 using DataFrames: DataFrame
 using Dates: Date, DateTime, format, isleapyear, now
 using DocStringExtensions: METHODLIST
