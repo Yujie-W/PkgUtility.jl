@@ -133,6 +133,62 @@ read_nc(FT, file::String, var::String, indz::Int) =
 
 
 
+"""
+Another convenient wrapper is to read all the data for given index in x and y,
+    for example, if one wants to read the time series of data at a given site:
+
+    read_nc(file::String, var::String, indx::Int, indy::Int)
+
+Read the time series of data for a site, given
+- `file` Dataset path
+- `var` Variable name
+- `indx` The 1st index of subset data to read, typically longitude
+- `indy` The 2nd index of subset data to read, typically latitude
+
+---
+Example
+```julia
+data = read_nc("test.nc", "test", 1, 1);
+```
+"""
+read_nc(file::String, var::String, indx::Int, indy::Int) =
+(
+    _dset = Dataset(file, "r");
+    _dvar = _dset[var][indx,indy,:];
+    _data = replace(_dvar, missing=>NaN);
+    _dvar = nothing;
+    close(_dset);
+
+    return _data
+)
+
+
+
+
+"""
+Similarly, one may want to read the subset as a certain float type using
+
+    read_nc(FT, file::String, var::String, indx::Int, indy::Int)
+
+Read the time series of data for a site, given
+- `FT` Float number type
+- `file` Dataset path
+- `var` Variable name
+- `indx` The 1st index of subset data to read, typically longitude
+- `indy` The 2nd index of subset data to read, typically latitude
+
+---
+Example
+```julia
+data = read_nc(Float32, "test.nc", "test", 1, 1);
+```
+"""
+read_nc(FT, file::String, var::String, indx::Int, indy::Int) =
+    FT.(file, var, indx, indy)
+
+
+
+
 
 
 
