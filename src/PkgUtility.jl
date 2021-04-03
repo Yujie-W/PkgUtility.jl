@@ -1,9 +1,12 @@
 module PkgUtility
 
 using CLIMAParameters
-using CLIMAParameters: AbstractEarthParameterSet, gas_constant, k_Boltzmann
-using CLIMAParameters.Planet: LH_v0, R_v, T_freeze, T_triple, cp_l, cp_v,
-            molmass_water, press_triple, ρ_cloud_liq
+using CLIMAParameters: AbstractEarthParameterSet, avogad, gas_constant,
+            h_Planck, k_Boltzmann, light_speed
+using CLIMAParameters.Planet: LH_v0, MSLP, R_v, T_freeze, T_triple, cp_d, cp_l,
+            cp_v, grav, molmass_dryair, molmass_water, press_triple,
+            ρ_cloud_liq
+using CLIMAParameters.SubgridScale: von_karman_const
 using CSV: File, write
 using DataFrames: DataFrame
 using Dates: Date, DateTime, format, isleapyear, now
@@ -41,7 +44,7 @@ export doy_to_int, int_to_doy, month_days, month_ind, parse_timestamp, terror,
 export pretty_display
 
 # export public functions --- io
-export read_csv, read_nc, save_csv!, save_nc!
+export read_csv, read_nc, save_csv!, save_nc!, send_email!
 
 # export public functions --- math
 export lower_quadratic, mae, mape, mase, nanmax, nanmean, nanmedian, nanmin,
@@ -61,8 +64,9 @@ include("date/tinfo.jl")
 
 include("display/recursive.jl")
 
-include("io/csv.jl")
-include("io/nc.jl" )
+include("io/csv.jl"  )
+include("io/email.jl")
+include("io/nc.jl"   )
 
 include("land/clima.jl")
 
