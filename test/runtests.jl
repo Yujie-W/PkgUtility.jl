@@ -1,4 +1,5 @@
-using Pkg.Artifacts
+using Dates
+using LazyArtifacts
 using PkgUtility
 using Test
 
@@ -6,9 +7,7 @@ using Test
 
 
 # function and struct used to test
-function f(x)
-    x^2
-end
+f(x) = x^2;
 
 struct TestStruct
     a::Any
@@ -19,21 +18,39 @@ end
 
 
 @testset "PkgUtility --- Artifact" begin
-    # deploy an artifact
+    # deploy an artifact per file
     mkdir("temp");
     cp("example.toml", "temp/test_1.txt"; force=true);
     cp("example.toml", "temp/test_2.txt"; force=true);
-    deploy_artifact("temp/TempArtifacts.toml",
-                    "example_artifact",
-                    "$(pwd())/temp",
-                    "$(pwd())",
-                    ["url_1", "url_2"]);
-    deploy_artifact("temp/TempArtifacts.toml",
-                    "example_artifact",
-                    "$(pwd())/temp",
-                    ["test_1.txt", "test_2.txt"],
-                    "$(pwd())",
-                    ["url_1", "url_2"]);
+    deploy_artifact!("temp/TempArtifacts.toml",
+                     "example_artifact",
+                     "$(pwd())/temp",
+                     "$(pwd())",
+                     ["url_1", "url_2"]);
+    deploy_artifact!("temp/TempArtifacts.toml",
+                     "example_artifact",
+                     "$(pwd())/temp",
+                     "$(pwd())",
+                     ["url_1", "url_2"]);
+
+    # remove temp files
+    meta = artifact_meta("example_artifact", "temp/TempArtifacts.toml");
+    hash = meta["git-tree-sha1"];
+    rm("$(homedir())/.julia/artifacts/$(hash)"; recursive=true);
+    rm("temp"; recursive=true);
+    rm("example_artifact.tar.gz");
+    @test true;
+
+    # deploy an artifact per folder
+    mkdir("temp");
+    cp("example.toml", "temp/test_1.txt"; force=true);
+    cp("example.toml", "temp/test_2.txt"; force=true);
+    deploy_artifact!("temp/TempArtifacts.toml",
+                     "example_artifact",
+                     "$(pwd())/temp",
+                     ["test_1.txt", "test_2.txt"],
+                     "$(pwd())",
+                     ["url_1", "url_2"]);
 
     # remove temp files
     meta = artifact_meta("example_artifact", "temp/TempArtifacts.toml");
@@ -44,7 +61,9 @@ end
     @test true;
 
     # predownload the artifact directly from the given URL
-    predownload_artifact("CI_PFT_2X_1Y_V1", "example.toml");
+    # the manual steps are only tested on Windows
+    predownload_artifact!("CI_PFT_2X_1Y_V1", "example.toml");
+    predownload_artifact!("CI_PFT_2X_1Y_V1", "example.toml");
     @test true;
 end
 
@@ -55,12 +74,21 @@ println();
 @testset "PkgUtility --- Date" begin
     @test parse_timestamp("20000401"; out_format="DOY") == 92;
     @test parse_timestamp("20010401"; out_format="DOY") == 91;
+    @test parse_timestamp("20010401000000"; in_format="YYYYMMDDhhmmss", out_format="FDOY") == 91;
+    @test parse_timestamp("20010401"; out_format="DATE") == Date("2001-04-01");
+    @test parse_timestamp("20010401"; out_format="DATETIME") == DateTime("2001-04-01T00:00:00");
+    @test parse_timestamp(2000, 100) == "20000409";
+    @test parse_timestamp(2001, 100) == "20010410";
     @test month_days(2019, 2) == 28;
     @test month_days(2020, 2) == 29;
     @test month_ind(2019, 60) == 3;
     @test month_ind(2020, 60) == 2;
-    @test parse_timestamp(2000, 100) == "20000409";
-    @test parse_timestamp(2001, 100) == "20010410";
+
+    # some time labeled information
+    err_info = terror("This is an error!");
+    err_info = tinfo("This is an info!");
+    err_info = twarn("This is a warning!");
+    @test true;
 end
 
 
@@ -81,7 +109,7 @@ println();
                   ],
     ];
     @info tinfo("Display the dict in a pretty way:");
-    pretty_display(xxx);
+    pretty_display!(xxx);
     @test true;
 end
 
