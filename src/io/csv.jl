@@ -192,7 +192,7 @@ save_csv!(file::String,
     end;
 
     # convert the data to DataFrame and save it
-    _df = DataFrame(_mat);
+    _df = DataFrame(_mat, _var);
     save_csv!(file, _df);
 
     return nothing

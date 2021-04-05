@@ -47,13 +47,13 @@ send_email!(subject::String,
     @info tinfo("Sending email to $(to_email)...");
 
     # compose email and write the email to local drive
-    _emial_to_write = """
+    _email_to_write = """
     Subject: $(subject)
     From: $(from_email)
     To: $(to_email)
     $(body)
     """;
-    write(".tmp_email", _emial_to_write);
+    Base.write(".tmp_email", _email_to_write);
 
     # send the email through pipeline and delete the file
     run( pipeline(".tmp_email", `sendmail -t`) );

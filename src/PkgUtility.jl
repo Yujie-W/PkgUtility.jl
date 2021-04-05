@@ -33,18 +33,26 @@ const TIME_OUTPUT = ["DATE", "DATETIME", "DOY", "FDOY"];
 
 
 
+# export deprecated functions
+export doy_to_int, int_to_doy, ncread, parse_date
+
 # export public functions --- artifact
-export deploy_artifact, predownload_artifact
+export deploy_artifact!, predownload_artifact!
 
 # export public functions --- date
-export doy_to_int, int_to_doy, month_days, month_ind, parse_timestamp, terror,
-            tinfo, twarn
+export month_days, month_ind, parse_timestamp, terror, tinfo, twarn
 
 # export public functions --- display
-export pretty_display
+export pretty_display!
 
 # export public functions --- io
 export read_csv, read_nc, save_csv!, save_nc!, send_email!
+
+# export land wrapper functions --- land
+export AVOGADRO, CP_D, CP_D_MOL, CP_L, CP_V, GAS_R, GRAVITY, H_PLANCK,
+            K_BOLTZMANN, K_STEFAN, K_VON_KARMAN, LH_V0, LIGHT_SPEED, M_DRYAIR,
+            M_H₂O, P_ATM, PRESS_TRIPLE, R_V, RT_25, T_0, T_25, T_TRIPLE, V_H₂O,
+            YEAR_D, ρ_H₂O, ρg_MPa
 
 # export public functions --- math
 export lower_quadratic, mae, mape, mase, nanmax, nanmean, nanmedian, nanmin,

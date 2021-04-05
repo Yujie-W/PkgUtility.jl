@@ -33,7 +33,7 @@ Note that f and Δx may have different dimensions, and if so a warning will
 Examples
 ```julia
 FT = Float32;
-f_sum = numerical∫(FT[1,2,3,4], FT[0.1,0.1,0.2,0.3])
+f_sum = numerical∫(FT[1,2,3,4], FT[0.1,0.1,0.2,0.3]);
 ```
 """
 numerical∫(f::Array{FT,1}, Δx::Array{FT,1}) where {FT<:AbstractFloat} =
@@ -65,7 +65,7 @@ Intergal of given
 Examples
 ```julia
 FT = Float32;
-f_sum = numerical∫(FT[1,2,3,4], FT(0.1))
+f_sum = numerical∫(FT[1,2,3,4], FT(0.1));
 ```
 """
 numerical∫(f::Array{FT,1}, Δx::FT) where {FT<:AbstractFloat} =
@@ -97,7 +97,7 @@ Examples
 ```julia
 FT = Float32;
 func(x) = x^2;
-f_sum = numerical∫(func, FT(0), FT(2), 20)
+f_sum = numerical∫(func, FT(0), FT(2), 20);
 ```
 """
 numerical∫(f::Function,
@@ -119,6 +119,33 @@ numerical∫(f::Function,
 
 
 
+"""
+This method automatically computes the integral of a function for an `x` within
+    a range:
+
+    numerical∫(f::Function,
+               x_min::FT,
+               x_max::FT,
+               x_tol::FT = sqrt(eps(FT)),
+               y_tol::FT = sqrt(eps(FT))
+    ) where {FT<:AbstractFloat}
+
+Intergal of given
+- `f` A function
+- `x_min` Minimum limit of x
+- `x_max` Maximum limit of x
+- `x_tol` Tolerance of Δx (x/N)
+- `y_tol` Tolerance of the integral solution
+
+---
+Example
+```julia
+FT = Float32;
+func(x) = x^2;
+f_sum = numerical∫(func, FT(0), FT(2));
+f_sum = numerical∫(func, FT(0), FT(2), FT(1e-3), FT(1e-3));
+```
+"""
 numerical∫(f::Function,
            x_min::FT,
            x_max::FT,
