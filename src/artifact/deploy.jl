@@ -5,20 +5,20 @@
 ###############################################################################
 """
 `PkgUtility` provides a convenient wrapper to deploy the artifact from a given
-    list of files, for exmaple, `deploy_artifact` function is used to deploy
+    list of files, for exmaple, `deploy_artifact!` function is used to deploy
     the [`GirddingMachine`](https://github.com/CliMA/GriddingMachine.jl)
     artifacts.
 
 $(METHODLIST)
 
 """
-function deploy_artifact end
+function deploy_artifact! end
 
 
 
 
 """
-What `deploy_artifact` function does are
+What `deploy_artifact!` function does are
 - determine if the artifact already exists in the `art_toml` file
 - if `true`, skip the deployment
 - if `false`
@@ -29,7 +29,7 @@ What `deploy_artifact` function does are
 
 Method for this deployment is
 
-    deploy_artifact(
+    deploy_artifact!(
                 art_toml::String,
                 art_name::String,
                 art_locf::String,
@@ -53,15 +53,16 @@ Deploy the artifact, given
 Examples
 ```julia
 # deploy art_1.txt and art_2.txt as test_art artifact
-deploy_artifact("Artifacts.toml", "test_art", "./", ["art_1.txt", "art_2.txt],
-                "./", ["https://public.server.url"])
+deploy_artifact!("Artifacts.toml", "test_art", "./", ["art_1.txt", "art_2.txt],
+                 "./", ["https://public.server.url"]);
+
 # deploy art_1.txt and art_2.txt as test_art artifact with new names
-deploy_artifact("Artifacts.toml", "test_art", "./", ["art_1.txt", "art_2.txt],
-                "./", ["https://public.server.url"];
-                new_files=["new_1.txt", "new_2.txt"]);
+deploy_artifact!("Artifacts.toml", "test_art", "./", ["art_1.txt", "art_2.txt],
+                 "./", ["https://public.server.url"];
+                 new_files=["new_1.txt", "new_2.txt"]);
 ```
 """
-deploy_artifact(
+deploy_artifact!(
             art_toml::String,
             art_name::String,
             art_locf::String,
@@ -114,7 +115,7 @@ In many cases, one might want to copy all the files in a folder to the target
     artifact, and iterate the file names is not convenient at all. Thus,
     a readily usable method is provided for this purpose:
 
-    deploy_artifact(
+    deploy_artifact!(
                 art_toml::String,
                 art_name::String,
                 art_locf::String,
@@ -134,11 +135,11 @@ Deploy the artifact, given
 Examples
 ```julia
 # deploy all files in target folder
-deploy_artifact("Artifacts.toml", "test_art", "./folder", "./",
-                ["https://public.server.url"])
+deploy_artifact!("Artifacts.toml", "test_art", "./folder", "./",
+                 ["https://public.server.url"]);
 ```
 """
-deploy_artifact(
+deploy_artifact!(
             art_toml::String,
             art_name::String,
             art_locf::String,
@@ -149,7 +150,7 @@ deploy_artifact(
     _art_files = String[_file for _file in readdir(art_locf)];
 
     # deploy the artifact
-    deploy_artifact(art_toml, art_name, art_locf, _art_files, art_tarf,
+    deploy_artifact!(art_toml, art_name, art_locf, _art_files, art_tarf,
                     art_urls);
 
     return nothing;

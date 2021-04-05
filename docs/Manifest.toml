@@ -29,9 +29,9 @@ version = "0.8.4"
 
 [[CategoricalArrays]]
 deps = ["DataAPI", "Future", "JSON", "Missings", "Printf", "Statistics", "StructTypes", "Unicode"]
-git-tree-sha1 = "9f6101597998e8d8cc8c99b85e4aca144354403b"
+git-tree-sha1 = "f713d583d10fc036252fd826feebc6c173c522a8"
 uuid = "324d7699-5711-5eae-9e2f-1d82baa6b597"
-version = "0.9.4"
+version = "0.9.5"
 
 [[Compat]]
 deps = ["Base64", "Dates", "DelimitedFiles", "Distributed", "InteractiveUtils", "LibGit2", "Libdl", "LinearAlgebra", "Markdown", "Mmap", "Pkg", "Printf", "REPL", "Random", "SHA", "Serialization", "SharedArrays", "Sockets", "SparseArrays", "Statistics", "Test", "UUIDs", "Unicode"]
@@ -228,7 +228,7 @@ uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 deps = ["CLIMAParameters", "CSV", "DataFrames", "Dates", "DocStringExtensions", "NCDatasets", "Pkg", "Statistics", "Test"]
 path = ".."
 uuid = "0d262f2c-28e9-492c-8e19-d7a5c4f11611"
-version = "0.1.8"
+version = "0.1.9"
 
 [[PooledArrays]]
 deps = ["DataAPI", "Future"]

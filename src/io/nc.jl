@@ -296,8 +296,8 @@ save_nc!(file::String,
     # dimensions for each attribute with their own sizes
     for _i in 1:N
         defDim(_dset, atts_name[_i], length(atts_data[_i]));
-        _var = defVar(_dset, atts_name[_i], eltype(atts_data[_i]), atts_name[_i:_i];
-                      attrib=atts_attr[_i]);
+        _var = defVar(_dset, atts_name[_i], eltype(atts_data[_i]),
+                      atts_name[_i:_i]; attrib=atts_attr[_i]);
         _var[:,:] = atts_data[_i];
     end;
 
@@ -317,6 +317,7 @@ save_nc!(file::String,
 const DEFAULT_DICT = Dict(
     "about" => "This is a file generated using PkgUtility.jl",
     "notes" => "PkgUtility.jl uses NCDatasets.jl to create NC files");
+
 """
 To save the code and effort to redefine the common attributes like latitude,
     longitude, and cycle index, we provide a shortcut method that handles these

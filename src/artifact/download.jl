@@ -7,19 +7,19 @@
 Artifacts stored on FTP cannot be installed directly for Windows using Julia
     1.5. This problem may be fixed in future Julia versions. To address the
     problem for lower Julia versions, `PkgUtility` provides function
-    `predownload_artifact` to download and unpack the artifact manually for
+    `predownload_artifact!` to download and unpack the artifact manually for
     Windows:
 
 $(METHODLIST)
 
 """
-function predownload_artifact end
+function predownload_artifact! end
 
 
 
 
 """
-What `predownload_artifact` does are
+What `predownload_artifact!` does are
 - determine if the artifact exists already
 - if `true`, skip the artifact installation
 - if `false`
@@ -30,7 +30,7 @@ What `predownload_artifact` does are
 
 Method for this function is
 
-    predownload_artifact(art_name::String, artifact_toml::String)
+    predownload_artifact!(art_name::String, artifact_toml::String)
 
 Download the artifact from given server if it does not exist, given
 - `art_name` Artifact name to install
@@ -40,10 +40,10 @@ Download the artifact from given server if it does not exist, given
 Examples
 ```julia
 # download the artifact manually if default methods fail
-predownload_artifact("test_artifact", "Artifacts.toml");
+predownload_artifact!("test_artifact", "Artifacts.toml");
 ```
 """
-predownload_artifact(art_name::String, artifact_toml::String) =
+predownload_artifact!(art_name::String, artifact_toml::String) =
 (
     _meta = artifact_meta(art_name, artifact_toml);
     _hash = Base.SHA1(_meta["git-tree-sha1"]);

@@ -9,18 +9,18 @@ Display the parameters in a colored way.
 $(METHODLIST)
 
 """
-function pretty_display end
+function pretty_display! end
 
 
 
 
 """
-When a dictionary (a pair of key and item) is passed to the `pretty_display`
+When a dictionary (a pair of key and item) is passed to the `pretty_display!`
     function, the dictionary will be displayed as `(LEADING_SPACE)key ⇨ item,`.
     However, if the dictionary item is an array of dictionaries, then the array
     will be displayed recursively.
 
-    pretty_display(dict::Pair, max_len::Int, spaces = "    ")
+    pretty_display!(dict::Pair, max_len::Int, spaces = "    ")
 
 Display the key and item in a dictionary (Pair), given
 - `dict` Dictionary to display
@@ -31,11 +31,11 @@ Display the key and item in a dictionary (Pair), given
 Examples
 ```julia
 # display the pair in a pretty way (automatic alignments)
-pretty_display("a" => "b", 1);
-pretty_display("a" => "b", 2, "  ");
+pretty_display!("a" => "b", 1);
+pretty_display!("a" => "b", 2, "  ");
 ```
 """
-pretty_display(dict::Pair, max_len::Int, spaces = "    ") =
+pretty_display!(dict::Pair, max_len::Int, spaces = "    ") =
 (
     # print leading spaces
     print(spaces);
@@ -50,7 +50,7 @@ pretty_display(dict::Pair, max_len::Int, spaces = "    ") =
     if typeof(dict[2]) <: Vector
         # display [ and line break
         print( "[\n" );
-        pretty_display(dict[2], spaces*repeat(" ",max_len+5));
+        pretty_display!(dict[2], spaces*repeat(" ",max_len+5));
 
         # display a ] and the next line
         print(spaces * repeat(" ",max_len+4) * "],\n" );
@@ -68,11 +68,11 @@ pretty_display(dict::Pair, max_len::Int, spaces = "    ") =
 
 
 """
-When an array of dictionaries is given, the `pretty_display` function computes
+When an array of dictionaries is given, the `pretty_display!` function computes
     the maximum length of the dictionary keys, and then display the
     dictionaries in a colored and pretty manner
 
-    pretty_display(
+    pretty_display!(
                 dicts::Union{Vector{Pair{String,String}},
                              Vector{Pair{String,Any}},
                              Vector{Pair{Any,String}},
@@ -88,11 +88,11 @@ Examples
 ```julia
 # display the vector of pairs recursively (automatic alignments)
 _dicts = ["A" => "b", "d" => "A", "rr" => ["ra" => "rB", "rD" => "ra"]];
-pretty_display(_dicts);
-pretty_display(_dicts, "  ");
+pretty_display!(_dicts);
+pretty_display!(_dicts, "  ");
 ```
 """
-pretty_display(
+pretty_display!(
             dicts::Union{Vector{Pair{String,String}},
                          Vector{Pair{String,Any}},
                          Vector{Pair{Any,String}},
@@ -103,7 +103,7 @@ pretty_display(
     _max_len = maximum(length.([string(p[1]) for p in dicts]));
 
     # display the elements
-    pretty_display.(dicts, _max_len, spaces);
+    pretty_display!.(dicts, _max_len, spaces);
 
     return nothing
 )

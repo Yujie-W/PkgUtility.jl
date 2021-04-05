@@ -26,7 +26,7 @@ end
 
 
 function ncread(FT, file::String, var::String)
-    @warn twarn("parse_date is deprecated, use read_nc instead...");
+    @warn twarn("ncread is deprecated, use read_nc instead...");
 
     return read_nc(FT, file, var)
 end
@@ -35,7 +35,7 @@ end
 
 
 function ncread(file::String, var::String, indz::Int)
-    @warn twarn("parse_date is deprecated, use read_nc instead...");
+    @warn twarn("ncread is deprecated, use read_nc instead...");
 
     return read_nc(file, var, indz)
 end
