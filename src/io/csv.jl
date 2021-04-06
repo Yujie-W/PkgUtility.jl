@@ -19,7 +19,7 @@ function read_csv end
 """
 When there is no unit row in the CSV file, the method is given as
 
-    read_csv(file::String; skiprows::Int = 0)
+    read_csv(file::String; skiprows::Int = 0, displaying::Bool = false)
 
 Read CSV file as a DataFrame, given
 - `file` Path to CSV file
@@ -30,15 +30,15 @@ Example
 ```julia
 # read CSV without skipping any rows
 df = read_csv("test.csv");
-df = read_csv("test.csv"; skiprows=0);
+df = read_csv("test.csv"; skiprows=0, displaying=true);
 
 # skip first 2 rows
-df = read_csv("test.csv"; skiprows=2);
+df = read_csv("test.csv"; skiprows=2, displaying=true);
 ```
 """
-read_csv(file::String; skiprows::Int = 0) =
+read_csv(file::String; skiprows::Int = 0, displaying::Bool = false) =
 (
-    @info tinfo("Reading data from $(file)...");
+    if displaying @info tinfo("Reading data from $(file)..."); end;
 
     return DataFrame(File(file; header=skiprows+1))
 )
@@ -75,8 +75,8 @@ To save the data as a plain CSV without any attribute information, one may use
     name does not matter as the function will automatically recognize the
     sequence:
 
-    save_csv!(df::DataFrame, file::String)
-    save_csv!(file::String, df::DataFrame)
+    save_csv!(df::DataFrame, file::String; displaying::Bool = false)
+    save_csv!(file::String, df::DataFrame; displaying::Bool = false)
 
 Save data to CSV file, given
 - `df` A DataFrame
@@ -91,9 +91,9 @@ save_csv!(df, "out.csv");
 save_csv!("out.csv", df);
 ```
 """
-save_csv!(df::DataFrame, file::String) =
+save_csv!(df::DataFrame, file::String; displaying::Bool = false) =
 (
-    @info tinfo("Data written to $(file)...");
+    if displaying @info tinfo("Data written to $(file)..."); end;
     write(file, df);
 
     return nothing
@@ -102,7 +102,8 @@ save_csv!(df::DataFrame, file::String) =
 
 
 
-save_csv!(file::String, df::DataFrame) = save_csv!(df, file)
+save_csv!(file::String, df::DataFrame; displaying::Bool = false) =
+    save_csv!(df, file; displaying=displaying)
 
 
 
