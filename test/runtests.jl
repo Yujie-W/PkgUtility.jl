@@ -155,7 +155,12 @@ end
 
 
 println();
-@testset "PkgUtility --- NetCDF" begin
+@testset "PkgUtility --- IO" begin
+    # test the dataframe
+    df = dataframe();
+    df = dataframe([rand(3), rand(3)], ["A","B"]);
+    @test true;
+
     # test the read_nc
     path = artifact_path(artifact_hash("CI_PFT_2X_1Y_V1", "example.toml"));
     file = path * "/CI_PFT_2X_1Y_V1.nc";

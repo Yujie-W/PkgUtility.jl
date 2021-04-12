@@ -46,7 +46,7 @@ export month_days, month_ind, parse_timestamp, terror, tinfo, twarn
 export pretty_display!
 
 # export public functions --- io
-export read_csv, read_nc, save_csv!, save_nc!, send_email!
+export dataframe, read_csv, read_nc, save_csv!, save_nc!, send_email!
 
 # export land wrapper functions --- land
 export AVOGADRO, CP_D, CP_D_MOL, CP_L, CP_V, GAS_R, GRAVITY, H_PLANCK,
@@ -72,9 +72,10 @@ include("date/tinfo.jl")
 
 include("display/recursive.jl")
 
-include("io/csv.jl"  )
-include("io/email.jl")
-include("io/nc.jl"   )
+include("io/csv.jl"      )
+include("io/dataframe.jl")
+include("io/email.jl"    )
+include("io/nc.jl"       )
 
 include("land/clima.jl")
 
