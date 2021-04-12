@@ -89,6 +89,31 @@ end
 
 """
 
+    nanpercentile(x::Array, p::Number)
+
+Return the percentile by excluding the NaN of given
+- `x` Array of data
+- `p` Percentile
+
+---
+Example
+```julia
+xs = rand(100);
+pth = nanpercentile(rand(100), 50);
+xs[1:10] .= NaN;
+pth = nanpercentile(rand(100), 50);
+```
+"""
+function nanpercentile(x::Array, p::Number)
+    @assert 0 <= p <= 100
+    return percentile( filter(!isnan, x), p )
+end
+
+
+
+
+"""
+
     nanstd(x::Array)
 
 Return the std of array by ommiting the NaN, given

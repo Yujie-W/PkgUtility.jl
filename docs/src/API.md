@@ -156,6 +156,7 @@ nanmax
 nanmean
 nanmedian
 nanmin
+nanpercentile
 nanstd
 mae
 mape

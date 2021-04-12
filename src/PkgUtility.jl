@@ -16,6 +16,7 @@ using Pkg.Artifacts: archive_artifact, artifact_exists, artifact_hash,
       download_artifact
 using Pkg.PlatformEngines: unpack
 using Statistics: mean, median, std
+using StatsBase: percentile
 
 
 
@@ -55,7 +56,7 @@ export AVOGADRO, CP_D, CP_D_MOL, CP_L, CP_V, GAS_R, GRAVITY, H_PLANCK,
 
 # export public functions --- math
 export lower_quadratic, mae, mape, mase, nanmax, nanmean, nanmedian, nanmin,
-       nanstd, numerical∫, rmse, upper_quadratic
+       nanpercentile, nanstd, numerical∫, rmse, upper_quadratic
 
 # export public functions --- test
 export FT_test, NaN_test

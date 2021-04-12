@@ -142,6 +142,7 @@ println();
     nanmean(xx);
     nanmedian(xx);
     nanmin(xx);
+    nanpercentile(xx, 50);
     nanstd(xx);
     mae(xx, yy);
     mape(xx, yy);
