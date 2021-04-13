@@ -184,7 +184,7 @@ data = read_nc(Float32, "test.nc", "test", 1, 1);
 ```
 """
 read_nc(FT, file::String, var::String, indx::Int, indy::Int) =
-    FT.(file, var, indx, indy)
+    FT.(read_nc(file, var, indx, indy))
 
 
 

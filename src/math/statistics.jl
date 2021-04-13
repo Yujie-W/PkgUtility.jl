@@ -18,7 +18,11 @@ nmax = nanmax(xs);
 ```
 """
 function nanmax(x::Array)
-    return maximum( filter(!isnan, x) )
+    _x = filter(!isnan, x);
+
+    if length(_x) == 0 return NaN end;
+
+    return maximum( _x )
 end
 
 
@@ -39,7 +43,11 @@ nmean = nanmean(xs);
 ```
 """
 function nanmean(x::Array)
-    return mean( filter(!isnan, x) )
+    _x = filter(!isnan, x);
+
+    if length(_x) == 0 return NaN end;
+
+    return mean( _x )
 end
 
 
@@ -60,7 +68,11 @@ nmed = nanmedian(xs);
 ```
 """
 function nanmedian(x::Array)
-    return median( filter(!isnan, x) )
+    _x = filter(!isnan, x);
+
+    if length(_x) == 0 return NaN end;
+
+    return median( _x )
 end
 
 
@@ -81,7 +93,41 @@ nmin = nanmin(xs);
 ```
 """
 function nanmin(x::Array)
-    return minimum( filter(!isnan, x) )
+    _x = filter(!isnan, x);
+
+    if length(_x) == 0 return NaN end;
+
+    return minimum( _x )
+end
+
+
+
+
+"""
+
+    nanpercentile(x::Array, p::Number)
+
+Return the percentile by excluding the NaN of given
+- `x` Array of data
+- `p` Percentile
+
+---
+Example
+```julia
+xs = rand(100);
+pth = nanpercentile(rand(100), 50);
+xs[1:10] .= NaN;
+pth = nanpercentile(rand(100), 50);
+```
+"""
+function nanpercentile(x::Array, p::Number)
+    @assert 0 <= p <= 100
+
+    _x = filter(!isnan, x);
+
+    if length(_x) == 0 return NaN end;
+
+    return percentile( _x, p )
 end
 
 
@@ -102,7 +148,11 @@ nstd = nanstd(xs);
 ```
 """
 function nanstd(x::Array)
-    return std( filter(!isnan, x) )
+    _x = filter(!isnan, x);
+
+    if length(_x) == 0 return NaN end;
+
+    return std( _x )
 end
 
 
@@ -157,10 +207,10 @@ nmape = mape(ys, preds);
 ```
 """
 function mape(y::Array, pred::Array)
-    aver = abs( nanmean(y) );
-    diff = abs.(y .- pred) ./ aver .* 100;
+    _mean = abs( nanmean(y) );
+    _diff = abs.(y .- pred) ./ _mean .* 100;
 
-    return nanmean( diff )
+    return nanmean( _diff )
 end
 
 
@@ -183,10 +233,10 @@ nmase = mase(ys, preds);
 ```
 """
 function mase(y::Array, pred::Array)
-    nstd = nanstd(y);
-    diff = abs.(y .- pred) ./ nstd .* 100;
+    _nstd = nanstd(y);
+    _diff = abs.(y .- pred) ./ _nstd .* 100;
 
-    return nanmean( diff )
+    return nanmean( _diff )
 end
 
 

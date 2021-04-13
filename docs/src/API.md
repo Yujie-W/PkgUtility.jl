@@ -65,6 +65,13 @@ save_csv!(file::String, data::Vector, var_names::Vector{String};
 save_csv!(file::String, data::Vector; per_row::Bool=true)
 ```
 
+### DataFrame
+```@docs
+dataframe
+dataframe()
+dataframe(v_data::Vector, v_name::Vector{String})
+```
+
 ### Email
 
 ```@docs
@@ -156,6 +163,7 @@ nanmax
 nanmean
 nanmedian
 nanmin
+nanpercentile
 nanstd
 mae
 mape

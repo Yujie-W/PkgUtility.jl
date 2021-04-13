@@ -2,10 +2,9 @@ module PkgUtility
 
 using CLIMAParameters
 using CLIMAParameters: AbstractEarthParameterSet, avogad, gas_constant,
-            h_Planck, k_Boltzmann, light_speed
+      h_Planck, k_Boltzmann, light_speed
 using CLIMAParameters.Planet: LH_v0, MSLP, R_v, T_freeze, T_triple, cp_d, cp_l,
-            cp_v, grav, molmass_dryair, molmass_water, press_triple,
-            ρ_cloud_liq
+      cp_v, grav, molmass_dryair, molmass_water, press_triple, ρ_cloud_liq
 using CLIMAParameters.SubgridScale: von_karman_const
 using CSV: File, write
 using DataFrames: DataFrame
@@ -13,10 +12,11 @@ using Dates: Date, DateTime, format, isleapyear, now
 using DocStringExtensions: METHODLIST
 using NCDatasets: Dataset, defDim, defVar
 using Pkg.Artifacts: archive_artifact, artifact_exists, artifact_hash,
-            artifact_meta, artifact_path, bind_artifact!, create_artifact,
-            download_artifact
+      artifact_meta, artifact_path, bind_artifact!, create_artifact,
+      download_artifact
 using Pkg.PlatformEngines: unpack
 using Statistics: mean, median, std
+using StatsBase: percentile
 
 
 
@@ -46,17 +46,17 @@ export month_days, month_ind, parse_timestamp, terror, tinfo, twarn
 export pretty_display!
 
 # export public functions --- io
-export read_csv, read_nc, save_csv!, save_nc!, send_email!
+export dataframe, read_csv, read_nc, save_csv!, save_nc!, send_email!
 
 # export land wrapper functions --- land
 export AVOGADRO, CP_D, CP_D_MOL, CP_L, CP_V, GAS_R, GRAVITY, H_PLANCK,
-            K_BOLTZMANN, K_STEFAN, K_VON_KARMAN, LH_V0, LIGHT_SPEED, M_DRYAIR,
-            M_H₂O, P_ATM, PRESS_TRIPLE, R_V, RT_25, T_0, T_25, T_TRIPLE, V_H₂O,
-            YEAR_D, ρ_H₂O, ρg_MPa
+       K_BOLTZMANN, K_STEFAN, K_VON_KARMAN, LH_V0, LIGHT_SPEED, M_DRYAIR,
+       M_H₂O, P_ATM, PRESS_TRIPLE, R_V, RT_25, T_0, T_25, T_TRIPLE, V_H₂O,
+       YEAR_D, ρ_H₂O, ρg_MPa
 
 # export public functions --- math
 export lower_quadratic, mae, mape, mase, nanmax, nanmean, nanmedian, nanmin,
-            nanstd, numerical∫, rmse, upper_quadratic
+       nanpercentile, nanstd, numerical∫, rmse, upper_quadratic
 
 # export public functions --- test
 export FT_test, NaN_test
@@ -72,9 +72,10 @@ include("date/tinfo.jl")
 
 include("display/recursive.jl")
 
-include("io/csv.jl"  )
-include("io/email.jl")
-include("io/nc.jl"   )
+include("io/csv.jl"      )
+include("io/dataframe.jl")
+include("io/email.jl"    )
+include("io/nc.jl"       )
 
 include("land/clima.jl")
 
@@ -89,4 +90,4 @@ include("deprecated.jl")
 
 
 
-end
+end # module

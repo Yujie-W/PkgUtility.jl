@@ -76,7 +76,7 @@ predownload_artifact!(art_name::String, artifact_toml::String) =
         _dest_dir  = artifact_path(_hash; honor_overrides=false);
         _url       = _entry["url"];
 
-        @info tinfo("Downloading artifact from $(_url)...");
+        @info tinfo("Downloading artifact manually from $(_url)...");
         _succeeded = download(_url, "temp_artifact.tar.gz");
         if _succeeded == "temp_artifact.tar.gz"
             unpack("temp_artifact.tar.gz", _dest_dir);
