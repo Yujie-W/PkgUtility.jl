@@ -19,7 +19,7 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 [compat]
 CLIMAParameters = "0.1.11"
 CSV = "0.8"
-DataFrames = "0.22"
+DataFrames = "0.22, 1"
 DocStringExtensions = "0.8"
 NCDatasets = "0.11"
 StatsBase = "0.33"
