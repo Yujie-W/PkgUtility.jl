@@ -10,7 +10,7 @@ using CSV: File, write
 using DataFrames: DataFrame
 using Dates: Date, DateTime, format, isleapyear, now
 using DocStringExtensions: METHODLIST
-using NCDatasets: Dataset, defDim, defVar
+using NCDatasets: Dataset, defDim, defVar, listVar
 using Pkg.Artifacts: archive_artifact, artifact_exists, artifact_hash,
       artifact_meta, artifact_path, bind_artifact!, create_artifact,
       download_artifact
