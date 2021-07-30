@@ -1,14 +1,30 @@
 ###############################################################################
 #
+# constants
+#
+###############################################################################
+const ATTR_LAT   = Dict("description" => "Latitude", "unit" => "°");
+const ATTR_LON   = Dict("description" => "Longitude", "unit" => "°");
+const ATTR_CYC   = Dict("description" => "Cycle index", "unit" => "-");
+const ATTR_ABOUT = Dict("about" => "This is a file generated using PkgUtility.jl",
+                        "notes" => "PkgUtility.jl uses NCDatasets.jl to create NC files");
+
+
+
+
+
+
+
+
+###############################################################################
+#
 # read_nc Wrapper using NCDatasets
 #
 ###############################################################################
 """
-NCDatasets.jl and NetCDF.jl both provide function to read data out from NC
-    dataset. However, while NetCDF.jl is more convenient to use (less lines of
-    code to read data), NCDatasets.jl is better to read a subset from the
-    dataset and is able to detect the scale factor and offset. Here, we used a
-    wrapper function to read NC dataset using NCDatasets.jl:
+NCDatasets.jl and NetCDF.jl both provide function to read data out from NC dataset. However, while NetCDF.jl is more convenient to use (less lines of code
+    to read data), NCDatasets.jl is better to read a subset from the dataset and is able to detect the scale factor and offset. Here, we used a wrapper
+    function to read NC dataset using NCDatasets.jl:
 
 $(METHODLIST)
 
@@ -19,8 +35,7 @@ function read_nc end
 
 
 """
-When only file name and variable label are provided, `read_nc` function reads
-    out all the data:
+When only file name and variable label are provided, `read_nc` function reads out all the data:
 
     read_nc(file::String, var::String)
 
@@ -52,8 +67,7 @@ read_nc(file::String, var::String) =
 
 
 """
-If a float type is given, the data will be converted to FT, namely the output
-    will be an array of float numbers:
+If a float type is given, the data will be converted to FT, namely the output will be an array of float numbers:
 
     read_nc(FT, file::String, var::String)
 
@@ -75,8 +89,7 @@ read_nc(FT, file::String, var::String) = FT.(read_nc(file, var))
 
 
 """
-In many cases, the NC dataset can be very huge, and reading all the data points
-    into one array could be time and memory consuming. In this case, reading a
+In many cases, the NC dataset can be very huge, and reading all the data points into one array could be time and memory consuming. In this case, reading a
     subset of data would be the best option:
 
     read_nc(file::String, var::String, indz::Int)
@@ -134,8 +147,7 @@ read_nc(FT, file::String, var::String, indz::Int) =
 
 
 """
-Another convenient wrapper is to read all the data for given index in x and y,
-    for example, if one wants to read the time series of data at a given site:
+Another convenient wrapper is to read all the data for given index in x and y, for example, if one wants to read the time series of data at a given site:
 
     read_nc(file::String, var::String, indx::Int, indy::Int)
 
@@ -199,8 +211,7 @@ read_nc(FT, file::String, var::String, indx::Int, indy::Int) =
 #
 ###############################################################################
 """
-NCDatasets.jl does not have a convenient function (1 line command) to save
-    dataset as a file. Thus, we provide a few methods as supplements:
+NCDatasets.jl does not have a convenient function (1 line command) to save dataset as a file. Thus, we provide a few methods as supplements:
 
 $(METHODLIST)
 
@@ -211,8 +222,7 @@ function save_nc! end
 
 
 """
-This method is a case if one wants to save both variable and attributes into
-    the target file. This method support saving multiple (N) dimension arrays:
+This method is a case if one wants to save both variable and attributes into the target file. This method support saving multiple (N) dimension arrays:
 
     save_nc!(file::String,
              var_name::String,
@@ -263,15 +273,12 @@ atts_data1 = Any[lats];
 atts_data2 = Any[lons, lats];
 atts_data3 = Any[lons, lats, inds];
 notes = Dict("description" => "This is a file generated using PkgUtility.jl",
-             "notes" => "PkgUtility.jl uses NCDatasets.jl to create NC files");
+             "notes"       => "PkgUtility.jl uses NCDatasets.jl to create NC files");
 
 # save data as NC files (1D, 2D, and 3D)
-save_nc!("data1.nc", "data1", attrn, data1, atts_name1, atts_attr1, atts_data1,
-         notes);
-save_nc!("data2.nc", "data2", attrn, data2, atts_name2, atts_attr2, atts_data2,
-         notes);
-save_nc!("data3.nc", "data3", attrn, data3, atts_name3, atts_attr3, atts_data3,
-         notes);
+save_nc!("data1.nc", "data1", attrn, data1, atts_name1, atts_attr1, atts_data1, notes);
+save_nc!("data2.nc", "data2", attrn, data2, atts_name2, atts_attr2, atts_data2, notes);
+save_nc!("data3.nc", "data3", attrn, data3, atts_name3, atts_attr3, atts_data3, notes);
 ```
 """
 save_nc!(file::String,
@@ -299,15 +306,12 @@ save_nc!(file::String,
     # dimensions for each attribute with their own sizes
     for _i in 1:N
         defDim(_dset, atts_name[_i], length(atts_data[_i]));
-        _var = defVar(_dset, atts_name[_i], eltype(atts_data[_i]),
-                      atts_name[_i:_i]; attrib=atts_attr[_i],
-                      deflatelevel=compress);
+        _var = defVar(_dset, atts_name[_i], eltype(atts_data[_i]), atts_name[_i:_i]; attrib=atts_attr[_i], deflatelevel=compress);
         _var[:,:] = atts_data[_i];
     end;
 
     # define variable with attribute units and copy data into it
-    _data = defVar(_dset, var_name, FT, atts_name; attrib=var_attr,
-                   deflatelevel=compress);
+    _data = defVar(_dset, var_name, FT, atts_name; attrib=var_attr, deflatelevel=compress);
     _data[:,:] = var_data;
 
     # close dataset file
@@ -319,13 +323,8 @@ save_nc!(file::String,
 
 
 
-const DEFAULT_DICT = Dict(
-    "about" => "This is a file generated using PkgUtility.jl",
-    "notes" => "PkgUtility.jl uses NCDatasets.jl to create NC files");
-
 """
-To save the code and effort to redefine the common attributes like latitude,
-    longitude, and cycle index, we provide a shortcut method that handles these
+To save the code and effort to redefine the common attributes like latitude, longitude, and cycle index, we provide a shortcut method that handles these
     within the function:
 
     save_nc!(file::String,
@@ -354,7 +353,7 @@ data3 = rand(36,18,12) .+ 273.15;
 # define the attributes and notes
 attrn = Dict("description" => "Random temperature", "unit" => "K");
 notes = Dict("description" => "This is a file generated using PkgUtility.jl",
-             "notes" => "PkgUtility.jl uses NCDatasets.jl to create NC files");
+             "notes"       => "PkgUtility.jl uses NCDatasets.jl to create NC files");
 
 # save data as NC files (2D and 3D)
 save_nc!("data2.nc", "data2", attrn, data2);
@@ -367,7 +366,7 @@ save_nc!(file::String,
          var_name::String,
          var_attr::Dict{String,String},
          var_data::Array{FT,N};
-         notes::Dict{String,String} = DEFAULT_DICT,
+         notes::Dict{String,String} = ATTR_ABOUT,
          compress::Int = 4
 ) where {FT<:AbstractFloat,N} = (
     @assert 2 <= N <= 3;
@@ -385,22 +384,18 @@ save_nc!(file::String,
     end;
 
     # define the attributes of the dimensions and data
-    _latat = Dict("description" => "Latitude", "unit" => "°");
-    _lonat = Dict("description" => "Longitude", "unit" => "°");
-    _indat = Dict("description" => "Cycle index", "unit" => "-");
     if N==2
         _atts_name = ["lon", "lat"];
-        _atts_attr = [_lonat, _latat];
+        _atts_attr = [ATTR_LON, ATTR_LAT];
         _atts_data = Any[_lons, _lats];
     else
         _atts_name = ["lon", "lat", "ind"];
-        _atts_attr = [_lonat, _latat, _indat];
+        _atts_attr = [ATTR_LON, ATTR_LAT, ATTR_CYC];
         _atts_data = Any[_lons, _lats, _inds];
     end;
 
     # save the data to NC file
-    save_nc!(file, var_name, var_attr, var_data, _atts_name, _atts_attr,
-             _atts_data, notes; compress=compress);
+    save_nc!(file, var_name, var_attr, var_data, _atts_name, _atts_attr, _atts_data, notes; compress=compress);
 
     return nothing
 )
@@ -418,8 +413,7 @@ save_nc!(file::String,
 #
 ###############################################################################
 """
-NCDatasets.jl does not have a convenient function (1 line command) to append
-    dataset into a file. Thus, we provide a few methods as supplements:
+NCDatasets.jl does not have a convenient function (1 line command) to append dataset into a file. Thus, we provide a few methods as supplements:
 
 $(METHODLIST)
 
@@ -430,8 +424,7 @@ function append_nc! end
 
 
 """
-This method append data to an exisiting NC file. If the attributes exist
-    already, then only save the data:
+This method append data to an exisiting NC file. If the attributes exist already, then only save the data:
 
     append_nc!(file::String,
                var_name::String,
@@ -481,15 +474,12 @@ atts_data1 = Any[lats];
 atts_data2 = Any[lons, lats];
 atts_data3 = Any[lons, lats, inds];
 notes = Dict("description" => "This is a file generated using PkgUtility.jl",
-             "notes" => "PkgUtility.jl uses NCDatasets.jl to create NC files");
+             "notes"       => "PkgUtility.jl uses NCDatasets.jl to create NC files");
 
 # save data as NC files (1D, 2D, and 3D)
-append_nc!("data1.nc", "datax", attrn, data1, atts_name1, atts_attr1,
-           atts_data1);
-append_nc!("data2.nc", "datax", attrn, data2, atts_name2, atts_attr2,
-           atts_data2);
-append_nc!("data3.nc", "datax", attrn, data3, atts_name3, atts_attr3,
-           atts_data3);
+append_nc!("data1.nc", "datax", attrn, data1, atts_name1, atts_attr1, atts_data1);
+append_nc!("data2.nc", "datax", attrn, data2, atts_name2, atts_attr2, atts_data2);
+append_nc!("data3.nc", "datax", attrn, data3, atts_name3, atts_attr3, atts_data3);
 ```
 """
 append_nc!(file::String,
@@ -512,16 +502,13 @@ append_nc!(file::String,
     for _i in 1:N
         if !(atts_name[_i] in listVar(_dset.ncid))
             defDim(_dset, atts_name[_i], length(atts_data[_i]));
-            _var = defVar(_dset, atts_name[_i], eltype(atts_data[_i]),
-                          atts_name[_i:_i]; attrib=atts_attr[_i],
-                          deflatelevel=compress);
+            _var = defVar(_dset, atts_name[_i], eltype(atts_data[_i]), atts_name[_i:_i]; attrib=atts_attr[_i], deflatelevel=compress);
             _var[:,:] = atts_data[_i];
         end;
     end;
 
     # define variable with attribute units and copy data into it
-    _data = defVar(_dset, var_name, FT, atts_name; attrib=var_attr,
-                   deflatelevel=compress);
+    _data = defVar(_dset, var_name, FT, atts_name; attrib=var_attr, deflatelevel=compress);
     _data[:,:] = var_data;
 
     # close dataset file

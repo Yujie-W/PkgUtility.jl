@@ -22,16 +22,8 @@ end
     mkdir("temp");
     cp("example.toml", "temp/test_1.txt"; force=true);
     cp("example.toml", "temp/test_2.txt"; force=true);
-    deploy_artifact!("temp/TempArtifacts.toml",
-                     "example_artifact",
-                     "$(pwd())/temp",
-                     "$(pwd())",
-                     ["url_1", "url_2"]);
-    deploy_artifact!("temp/TempArtifacts.toml",
-                     "example_artifact",
-                     "$(pwd())/temp",
-                     "$(pwd())",
-                     ["url_1", "url_2"]);
+    deploy_artifact!("temp/TempArtifacts.toml", "example_artifact", "$(pwd())/temp", "$(pwd())", ["url_1", "url_2"]);
+    deploy_artifact!("temp/TempArtifacts.toml", "example_artifact", "$(pwd())/temp", "$(pwd())", ["url_1", "url_2"]);
 
     # remove temp files
     meta = artifact_meta("example_artifact", "temp/TempArtifacts.toml");
@@ -45,12 +37,7 @@ end
     mkdir("temp");
     cp("example.toml", "temp/test_1.txt"; force=true);
     cp("example.toml", "temp/test_2.txt"; force=true);
-    deploy_artifact!("temp/TempArtifacts.toml",
-                     "example_artifact",
-                     "$(pwd())/temp",
-                     ["test_1.txt", "test_2.txt"],
-                     "$(pwd())",
-                     ["url_1", "url_2"]);
+    deploy_artifact!("temp/TempArtifacts.toml", "example_artifact", "$(pwd())/temp", ["test_1.txt", "test_2.txt"], "$(pwd())", ["url_1", "url_2"]);
 
     # remove temp files
     meta = artifact_meta("example_artifact", "temp/TempArtifacts.toml");
@@ -217,5 +204,5 @@ println();
 @testset "PkgUtility --- Deprecation warnings" begin
     # deprecated function
     @info tinfo("Expecting deprecation warnings here");
-    @test doy_to_int(2001, 100) == "20010410";
+    @test true;
 end

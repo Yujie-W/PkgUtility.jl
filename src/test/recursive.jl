@@ -4,8 +4,7 @@
 #
 ###############################################################################
 """
-Using consistent floating number type may accelerate calculations, particularly
-    for GPUs. Thus, we provided a function to test the floating number type
+Using consistent floating number type may accelerate calculations, particularly for GPUs. Thus, we provided a function to test the floating number type
     recursively:
 
 $(METHODLIST)
@@ -17,8 +16,7 @@ function FT_test end
 
 
 """
-If the testing variable is an array, the function will test if element type is
-    float number:
+If the testing variable is an array, the function will test if element type is float number:
 - If true, the function tests if the element type is the same as given `FT`
 - If false, the function tests each element recursively
 
@@ -58,8 +56,7 @@ FT_test(para::Array, FT) =
 
 
 """
-When the given variable is a number, the following criteria are used based on
-    the type of the number
+When the given variable is a number, the following criteria are used based on the type of the number
 - If the variable is a float, then compare it to `FT`
 - Otherwise, return true (because integers can be mix-used with floats)
 
@@ -94,8 +91,7 @@ FT_test(para::Number, FT) =
 
 
 """
-If the variable is a function, module, or symbol, then nothing will be done,
-    and a true will be returned. This method is to avoid endless nested loop
+If the variable is a function, module, or symbol, then nothing will be done, and a true will be returned. This method is to avoid endless nested loop
     within the test of Function or Module:
 
     FT_test(para::Union{Function,Module,Symbol})
@@ -121,8 +117,7 @@ FT_test(para::Union{Function,Module,Symbol}) = true
 
 
 """
-The variable to test maybe a struct, but `FT_test` does not know the struct
-    type name a priori. Thus, we try to read out the fields of the variable:
+The variable to test maybe a struct, but `FT_test` does not know the struct type name a priori. Thus, we try to read out the fields of the variable:
 
 - If succeeds, the function test the fields recursively
 - If fails, then do nothing
@@ -181,8 +176,7 @@ FT_test(para::Any, FT) =
 #
 ###############################################################################
 """
-Like [`FT_test`](@ref), same logic is used to test if all the elements within
-    the tested variable are not NaN:
+Like [`FT_test`](@ref), same logic is used to test if all the elements within the tested variable are not NaN:
 
 $(METHODLIST)
 
@@ -193,8 +187,7 @@ function NaN_test end
 
 
 """
-When an array is passed to the function, the function first determines if the
-    variable is an array of number:
+When an array is passed to the function, the function first determines if the variable is an array of number:
 
 - If true, the function tests each element within the array directly
 - If false, the function tests each element recursively
@@ -254,8 +247,7 @@ NaN_test(para::Number) = !isnan(para)
 
 
 """
-If the variable is a function, module, or symbol, then nothing will be done,
-    and a true will be returned. This method is to avoid endless nested loop
+If the variable is a function, module, or symbol, then nothing will be done, and a true will be returned. This method is to avoid endless nested loop
     within the test of Function or Module:
 
     NaN_test(para::Union{Function,Module,Symbol})
@@ -280,8 +272,7 @@ NaN_test(para::Union{Function,Module,Symbol}) = true
 
 
 """
-If the given variable is a struct, the function will test the fields
-    recursively:
+If the given variable is a struct, the function will test the fields recursively:
 
     NaN_test(para::Any)
 

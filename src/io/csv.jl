@@ -4,9 +4,8 @@
 #
 ###############################################################################
 """
-Reading CSV file may be troublesome for many cases, for example, when some
-    lines exist before the header or when a few unit lines exist after the
-    header. Here we provide a generalized function to read CSV files:
+Reading CSV file may be troublesome for many cases, for example, when some lines exist before the header or when a few unit lines exist after the header.
+    Here we provide a generalized function to read CSV files:
 
 $(METHODLIST)
 
@@ -56,10 +55,8 @@ read_csv(file::String; skiprows::Int = 0, displaying::Bool = false) =
 #
 ###############################################################################
 """
-Saving data to CSV file may also be troublesome when we want to save the data
-    using a known format, for example, when we want to save attributes in the
-    file as well such as the units. To best use Julia, we provide a generalized
-    function to save data as CSV:
+Saving data to CSV file may also be troublesome when we want to save the data using a known format, for example, when we want to save attributes in the
+    file as well such as the units. To best use Julia, we provide a generalized function to save data as CSV:
 
 $(METHODLIST)
 
@@ -70,10 +67,8 @@ function save_csv! end
 
 
 """
-To save the data as a plain CSV without any attribute information, one may use
-    one of these functions. Note that the sequence of the data frame and file
-    name does not matter as the function will automatically recognize the
-    sequence:
+To save the data as a plain CSV without any attribute information, one may use one of these functions. Note that the sequence of the data frame and file
+    name does not matter as the function will automatically recognize the sequence:
 
     save_csv!(df::DataFrame, file::String; displaying::Bool = false)
     save_csv!(file::String, df::DataFrame; displaying::Bool = false)
@@ -109,16 +104,11 @@ save_csv!(file::String, df::DataFrame; displaying::Bool = false) =
 
 
 """
-In many cases, one might have the data as Vector or Matrix, for example, the
-    result from multiple threading calculations using `pmap`. In this case,
-    converting the data to a DataFrame and then save the DataFrame may be the
-    best case here. However, the results from pmap may be a Vector (R) of
-    Vector (N), or a Vector (R) of Matrix (1×N), or a Vector (R) of Tuple, or
-    a Vector of combinations. While it is possible to use `vcat` or `hcat` to
-    recast the results to certain format, one needs to be really cautious about
-    the recasting. Here we provide a wrapper function to automatically detect
-    the result format and save the data. Again, one may reverse the order of
-    file name and data in the function parameter list:
+In many cases, one might have the data as Vector or Matrix, for example, the result from multiple threading calculations using `pmap`. In this case,
+    converting the data to a DataFrame and then save the DataFrame may be the best case here. However, the results from pmap may be a Vector (R) of Vector
+    (N), or a Vector (R) of Matrix (1×N), or a Vector (R) of Tuple, or a Vector of combinations. While it is possible to use `vcat` or `hcat` to recast the
+    results to certain format, one needs to be really cautious about the recasting. Here we provide a wrapper function to automatically detect the result
+    format and save the data. Again, one may reverse the order of file name and data in the function parameter list:
 
     save_csv!(file::String,
               data::Vector,
@@ -131,11 +121,9 @@ In many cases, one might have the data as Vector or Matrix, for example, the
 
 Save data to CSV file, given
 - `file` Path of the target CSV file
-- `data` A Vector of data, needs to be a Vector of Tuple (N), Vector (N), or
-    Matrix (1×N)
+- `data` A Vector of data, needs to be a Vector of Tuple (N), Vector (N), or Matrix (1×N)
 - `var_name` Variable names appear in the CSV file
-- `per_row` If true, item in the data Vector is treated as row; othrewise, the
-    data item is treated as column
+- `per_row` If true, item in the data Vector is treated as row; othrewise, the data item is treated as column
 
 ---
 Example
@@ -161,8 +149,7 @@ save_csv!(file::String,
           per_row::Bool=true) =
 (
     # judge if all data have the same length
-    _judge = all( [length(data[1])==length(data[_i])
-                   for _i in eachindex(data)] );
+    _judge = all( [length(data[1])==length(data[_i]) for _i in eachindex(data)] );
 
     # if not the same length, fill the rest with missing
     if !_judge
@@ -188,8 +175,7 @@ save_csv!(file::String,
     elseif length(var_names) > size(_mat,2)
         _var = var_names[1:size(_mat,2)];
     else
-        _var = [var_names;
-                ["x$(_i)" for _i in length(var_names)+1:size(_mat,2)]];
+        _var = [var_names; ["x$(_i)" for _i in length(var_names)+1:size(_mat,2)]];
     end;
 
     # convert the data to DataFrame and save it
@@ -212,18 +198,15 @@ save_csv!(data::Vector,
 
 
 """
-Further, as the above method supports filling in missing values, it is possible
-    to not set the `var_names`:
+Further, as the above method supports filling in missing values, it is possible to not set the `var_names`:
 
     save_csv!(file::String, data::Vector; per_row::Bool=true)
     save_csv!(data::Vector, file::String; per_row::Bool=true)
 
 Save data to CSV file, given
 - `file` Path of the target CSV file
-- `data` A Vector of data, needs to be a Vector of Tuple (N), Vector (N), or
-    Matrix (1×N)
-- `per_row` If true, item in the data Vector is treated as row; othrewise, the
-    data item is treated as column
+- `data` A Vector of data, needs to be a Vector of Tuple (N), Vector (N), or Matrix (1×N)
+- `per_row` If true, item in the data Vector is treated as row; othrewise, the data item is treated as column
 
 ---
 Example

@@ -10,11 +10,9 @@ CurrentModule = PkgUtility
 
 ```@docs
 deploy_artifact!
-deploy_artifact!(art_toml::String, art_name::String, art_locf::String,
-    art_file::Vector{String}, art_tarf::String, art_urls::Vector{String};
-    new_file::Vector{String} = art_file)
-deploy_artifact!(art_toml::String, art_name::String, art_locf::String,
-    art_tarf::String, art_urls::Vector{String})
+deploy_artifact!(art_toml::String, art_name::String, art_locf::String, art_file::Vector{String}, art_tarf::String, art_urls::Vector{String};
+                 new_file::Vector{String} = art_file)
+deploy_artifact!(art_toml::String, art_name::String, art_locf::String, art_tarf::String, art_urls::Vector{String})
 predownload_artifact!
 predownload_artifact!(art_name::String, artifact_toml::String)
 ```
@@ -25,8 +23,7 @@ predownload_artifact!(art_name::String, artifact_toml::String)
 ## Date
 ```@docs
 parse_timestamp
-parse_timestamp(time_stamp::Union{Int,String}; in_format::String = "YYYYMMDD",
-    out_format::String = "DOY")
+parse_timestamp(time_stamp::Union{Int,String}; in_format::String="YYYYMMDD", out_format::String="DOY")
 parse_timestamp(year::Int, doy::Int, sep::String="")
 month_days
 month_ind
@@ -42,10 +39,9 @@ twarn
 
 ```@docs
 pretty_display!
-pretty_display!(dict::Pair, max_len::Int, spaces = "    ")
-pretty_display!(dicts::Union{Vector{Pair{String,String}},
-    Vector{Pair{String,Any}}, Vector{Pair{Any,String}}, Vector{Pair{Any,Any}}},
-    spaces::String = "    ")
+pretty_display!(dict::Pair, max_len::Int, spaces="    ")
+pretty_display!(dicts::Union{Vector{Pair{String,String}}, Vector{Pair{String,Any}}, Vector{Pair{Any,String}}, Vector{Pair{Any,Any}}},
+                spaces::String="    ")
 ```
 
 
@@ -60,8 +56,7 @@ read_csv
 read_csv(file::String; skiprows::Int = 0)
 save_csv!
 save_csv!(df::DataFrame, file::String)
-save_csv!(file::String, data::Vector, var_names::Vector{String};
-    per_row::Bool=true)
+save_csv!(file::String, data::Vector, var_names::Vector{String}; per_row::Bool=true)
 save_csv!(file::String, data::Vector; per_row::Bool=true)
 ```
 
@@ -76,8 +71,7 @@ dataframe(v_data::Vector, v_name::Vector{String})
 
 ```@docs
 send_email!
-send_email!(subject::String, from_email::String, to_email::String,
-    body::String)
+send_email!(subject::String, from_email::String, to_email::String, body::String)
 ```
 
 ### NetCDF
@@ -91,12 +85,12 @@ read_nc(Float64, file::String, var::String, indz::Int)
 read_nc(file::String, var::String, indx::Int, indy::Int)
 read_nc(Float64, file::String, var::String, indx::Int, indy::Int)
 save_nc!
-save_nc!(file::String, var_name::String, var_attr::Dict{String,String},
-    var_data::Array{Float64,2}, atts_name::Vector{String},
-    atts_attr::Vector{Dict{String,String}}, atts_data::Vector,
-    notes::Dict{String,String})
-save_nc!(file::String, var_name::String, var_attr::Dict{String,String},
-    var_data::Array{Float64,2})
+save_nc!(file::String, var_name::String, var_attr::Dict{String,String}, var_data::Array{Float64,2}, atts_name::Vector{String},
+         atts_attr::Vector{Dict{String,String}}, atts_data::Vector, notes::Dict{String,String})
+save_nc!(file::String, var_name::String, var_attr::Dict{String,String}, var_data::Array{Float64,2})
+append_nc!
+append_nc!(file::String, var_name::String, var_attr::Dict{String,String}, var_data::Array{Float64,3}, atts_name::Vector{String},
+           atts_attr::Vector{Dict{String,String}}, atts_data::Vector; compress::Int=4)
 ```
 
 
@@ -145,8 +139,7 @@ numerical∫
 numerical∫(f::Array{Float64,1}, Δx::Array{Float64,1})
 numerical∫(f::Array{Float64,1}, Δx::Float64)
 numerical∫(f::Function, x_min::Float64, x_max::Float64, n::Int)
-numerical∫(f::Function, x_min::Float64, x_max::Float64, x_tol::Float64 =
-    sqrt(eps(Float64)), y_tol::Float64 = sqrt(eps(Float64)))
+numerical∫(f::Function, x_min::Float64, x_max::Float64, x_tol::Float64=sqrt(eps(Float64)), y_tol::Float64=sqrt(eps(Float64)))
 ```
 
 ### Quadratic solver
