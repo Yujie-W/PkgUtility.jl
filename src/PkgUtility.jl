@@ -28,9 +28,6 @@ const TIME_OUTPUT = ["DATE", "DATETIME", "DOY", "FDOY"];
 
 
 
-# export deprecated functions
-export doy_to_int, int_to_doy, ncread, parse_date
-
 # export public functions --- artifact
 export deploy_artifact!, predownload_artifact!
 
