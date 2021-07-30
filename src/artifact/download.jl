@@ -4,11 +4,8 @@
 #
 ###############################################################################
 """
-Artifacts stored on FTP cannot be installed directly for Windows using Julia
-    1.5. This problem may be fixed in future Julia versions. To address the
-    problem for lower Julia versions, `PkgUtility` provides function
-    `predownload_artifact!` to download and unpack the artifact manually for
-    Windows:
+Artifacts stored on FTP cannot be installed directly for Windows using Julia 1.5. This problem may be fixed in future Julia versions. To address the
+    problem for lower Julia versions, `PkgUtility` provides function `predownload_artifact!` to download and unpack the artifact manually for Windows:
 
 $(METHODLIST)
 

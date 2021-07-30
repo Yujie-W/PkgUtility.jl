@@ -4,10 +4,8 @@
 #
 ###############################################################################
 """
-Researchers may often run into the scenarios when they have to convert dates to
-    strings or numbers, vice versa. Thought the conversions are easy to make,
-    it is not convenient at all if ones need to recreate the wheel everytime.
-    Thus, we provide functions to make the conversion. One of the common
+Researchers may often run into the scenarios when they have to convert dates to strings or numbers, vice versa. Thought the conversions are easy to make,
+    it is not convenient at all if ones need to recreate the wheel everytime. Thus, we provide functions to make the conversion. One of the common
     conversions is to convert time stamp to a number:
 
 $(METHODLIST)
@@ -19,10 +17,8 @@ function parse_timestamp end
 
 
 """
-The time stamp can be either an integer or a string, and the integer will be
-    converted to a string within the function. The supported time stamp formats
-    are `YYYYMMDD`, `YYYYMMDDhh`, `YYYYMMDDhhmm`, and `YYYYMMDDhhmmss`, where
-    the labels are
+The time stamp can be either an integer or a string, and the integer will be converted to a string within the function. The supported time stamp formats
+    are `YYYYMMDD`, `YYYYMMDDhh`, `YYYYMMDDhhmm`, and `YYYYMMDDhhmmss`, where the labels are
 
 - `YYYY` Year number
 - `MM` Month number

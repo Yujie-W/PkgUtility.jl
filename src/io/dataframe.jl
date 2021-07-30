@@ -33,8 +33,7 @@ dataframe() = DataFrame()
 
 
 """
-When a vector of data and a vector of headers are given, `dataframe` returns a
-    DataFrame with the given data and header:
+When a vector of data and a vector of headers are given, `dataframe` returns a DataFrame with the given data and header:
 
     dataframe(v_data::Vector, v_name::Vector{String})
 

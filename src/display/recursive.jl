@@ -15,10 +15,8 @@ function pretty_display! end
 
 
 """
-When a dictionary (a pair of key and item) is passed to the `pretty_display!`
-    function, the dictionary will be displayed as `(LEADING_SPACE)key ⇨ item,`.
-    However, if the dictionary item is an array of dictionaries, then the array
-    will be displayed recursively.
+When a dictionary (a pair of key and item) is passed to the `pretty_display!` function, the dictionary will be displayed as `(LEADING_SPACE)key ⇨ item,`.
+    However, if the dictionary item is an array of dictionaries, then the array will be displayed recursively.
 
     pretty_display!(dict::Pair, max_len::Int, spaces = "    ")
 
@@ -68,9 +66,8 @@ pretty_display!(dict::Pair, max_len::Int, spaces = "    ") =
 
 
 """
-When an array of dictionaries is given, the `pretty_display!` function computes
-    the maximum length of the dictionary keys, and then display the
-    dictionaries in a colored and pretty manner
+When an array of dictionaries is given, the `pretty_display!` function computes the maximum length of the dictionary keys, and then display the
+    dictionaries in a colored and pretty manner:
 
     pretty_display!(
                 dicts::Union{Vector{Pair{String,String}},

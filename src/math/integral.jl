@@ -4,8 +4,7 @@
 #
 ###############################################################################
 """
-Function `numerical∫` calculates the integral numerically. The supported
-    methods are
+Function `numerical∫` calculates the integral numerically. The supported methods are
 
 $(METHODLIST)
 
@@ -16,8 +15,7 @@ function numerical∫ end
 
 
 """
-When two arrays (one for f(x) and one for Δx) are provided, `numerical∫`
-    computes the sum of the mutiplication of the two using matrix mutiplication
+When two arrays (one for f(x) and one for Δx) are provided, `numerical∫` computes the sum of the mutiplication of the two using matrix mutiplication
     `fxs' * Δxs`.
 
     numerical∫(f::Array{FT,1}, Δx::Array{FT,1}) where {FT<:AbstractFloat}
@@ -26,8 +24,7 @@ Intergal of given
 - `f` f(x) for each x
 - `Δx` Δx for each x
 
-Note that f and Δx may have different dimensions, and if so a warning will
-    display.
+Note that f and Δx may have different dimensions, and if so a warning will display.
 
 ---
 Examples
@@ -51,8 +48,7 @@ numerical∫(f::Array{FT,1}, Δx::Array{FT,1}) where {FT<:AbstractFloat} =
 
 
 """
-The above methods is useful for both evenly and non-evenly distributed `Δx`.
-    However, for many cases `Δx` is evenly distributed and provided as a number
+The above methods is useful for both evenly and non-evenly distributed `Δx`. However, for many cases `Δx` is evenly distributed and provided as a number
     rather than an array. In this scenario, a special method is given:
 
     numerical∫(f::Array{FT,1}, Δx::FT) where {FT<:AbstractFloat}
@@ -77,8 +73,7 @@ numerical∫(f::Array{FT,1}, Δx::FT) where {FT<:AbstractFloat} =
 
 
 """
-We also provide a function to manually solve for the integral of a given
-    function for a given range of x. The method is
+We also provide a function to manually solve for the integral of a given function for a given range of x. The method is
 
     numerical∫(f::Function,
                x_min::FT,
@@ -120,8 +115,7 @@ numerical∫(f::Function,
 
 
 """
-This method automatically computes the integral of a function for an `x` within
-    a range:
+This method automatically computes the integral of a function for an `x` within a range:
 
     numerical∫(f::Function,
                x_min::FT,
