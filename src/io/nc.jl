@@ -1,8 +1,4 @@
-###############################################################################
-#
 # constants
-#
-###############################################################################
 const ATTR_LAT   = Dict("description" => "Latitude", "unit" => "°");
 const ATTR_LON   = Dict("description" => "Longitude", "unit" => "°");
 const ATTR_CYC   = Dict("description" => "Cycle index", "unit" => "-");
@@ -10,28 +6,40 @@ const ATTR_ABOUT = Dict("about" => "This is a file generated using PkgUtility.jl
                         "notes" => "PkgUtility.jl uses NCDatasets.jl to create NC files");
 
 
-
-
-
-
-
-
-###############################################################################
-#
-# read_nc Wrapper using NCDatasets
-#
-###############################################################################
+# size_nc Wrapper using NCDatasets
 """
-NCDatasets.jl and NetCDF.jl both provide function to read data out from NC dataset. However, while NetCDF.jl is more convenient to use (less lines of code
-    to read data), NCDatasets.jl is better to read a subset from the dataset and is able to detect the scale factor and offset. Here, we used a wrapper
-    function to read NC dataset using NCDatasets.jl:
+    size_nc(file::String, var::String)
+
+Return the dimensions and size of a NetCDF dataset, given
+- `file` Dataset path
+- `var` Variable name
+
+---
+# Examples
+```julia
+ndims,sizes = read_nc("test.nc", "test");
+```
+"""
+function size_nc(file::String, var::String)
+    _dset = Dataset(file, "r");
+    _dvar = _dset[var];
+    _ndim = ndims(_dvar);
+    _size = size(_dvar);
+    close(_dset);
+
+    return _ndim, _size
+end
+
+
+# read_nc Wrapper using NCDatasets
+"""
+NCDatasets.jl and NetCDF.jl both provide function to read data out from NC dataset. However, while NetCDF.jl is more convenient to use (less lines of code to read data), NCDatasets.jl is better to
+    read a subset from the dataset and is able to detect the scale factor and offset. Here, we used a wrapper function to read NC dataset using NCDatasets.jl:
 
 $(METHODLIST)
 
 """
 function read_nc end
-
-
 
 
 """
@@ -46,14 +54,13 @@ Read data from NC file, given
 Note that the missing data will be labeled as NaN.
 
 ---
-Example
+Examples
 ```julia
 # read data labeled as test from test.nc
 data = read_nc("test.nc", "test");
 ```
 """
-read_nc(file::String, var::String) =
-(
+read_nc(file::String, var::String) = (
     _dset = Dataset(file, "r");
     _dvar = _dset[var][:,:];
     _nvar = replace(_dvar, missing=>NaN);
@@ -61,9 +68,7 @@ read_nc(file::String, var::String) =
     close(_dset);
 
     return _nvar
-)
-
-
+);
 
 
 """
@@ -77,20 +82,17 @@ Read data from nc file, given
 - `var` Variable name
 
 ---
-Example
+Examples
 ```julia
 # read data labeled as test from test.nc as Float32
 data = read_nc(Float32, "test.nc", "test");
 ```
 """
-read_nc(FT, file::String, var::String) = FT.(read_nc(file, var))
-
-
+read_nc(FT, file::String, var::String) = FT.(read_nc(file, var));
 
 
 """
-In many cases, the NC dataset can be very huge, and reading all the data points into one array could be time and memory consuming. In this case, reading a
-    subset of data would be the best option:
+In many cases, the NC dataset can be very huge, and reading all the data points into one array could be time and memory consuming. In this case, reading a subset of data would be the best option:
 
     read_nc(file::String, var::String, indz::Int)
 
@@ -102,14 +104,13 @@ Read a subset from nc file, given
 Note that the dataset must be a 3D array to use this method.
 
 ---
-Example
+Examples
 ```julia
 # read 1st layer data labeled as test from test.nc
 data = read_nc("test.nc", "test", 1);
 ```
 """
-read_nc(file::String, var::String, indz::Int) =
-(
+read_nc(file::String, var::String, indz::Int) = (
     _dset = Dataset(file, "r");
     _dvar = _dset[var][:,:,indz];
     _data = replace(_dvar, missing=>NaN);
@@ -117,9 +118,7 @@ read_nc(file::String, var::String, indz::Int) =
     close(_dset);
 
     return _data
-)
-
-
+);
 
 
 """
@@ -134,16 +133,13 @@ Read a subset from nc file, given
 - `indz` The 3rd index of subset data to read
 
 ---
-Example
+Examples
 ```julia
 # read 1st layer data labeled as test from test.nc as Float32
 data = read_nc(Float32, "test.nc", "test", 1);
 ```
 """
-read_nc(FT, file::String, var::String, indz::Int) =
-    FT.(read_nc(file, var, indz))
-
-
+read_nc(FT, file::String, var::String, indz::Int) = FT.(read_nc(file, var, indz));
 
 
 """
@@ -158,13 +154,12 @@ Read the time series of data for a site, given
 - `indy` The 2nd index of subset data to read, typically latitude
 
 ---
-Example
+Examples
 ```julia
 data = read_nc("test.nc", "test", 1, 1);
 ```
 """
-read_nc(file::String, var::String, indx::Int, indy::Int) =
-(
+read_nc(file::String, var::String, indx::Int, indy::Int) = (
     _dset = Dataset(file, "r");
     _dvar = _dset[var][indx,indy,:];
     _data = replace(_dvar, missing=>NaN);
@@ -172,9 +167,7 @@ read_nc(file::String, var::String, indx::Int, indy::Int) =
     close(_dset);
 
     return _data
-)
-
-
+);
 
 
 """
@@ -190,26 +183,66 @@ Read the time series of data for a site, given
 - `indy` The 2nd index of subset data to read, typically latitude
 
 ---
-Example
+Examples
 ```julia
 data = read_nc(Float32, "test.nc", "test", 1, 1);
 ```
 """
-read_nc(FT, file::String, var::String, indx::Int, indy::Int) =
-    FT.(read_nc(file, var, indx, indy))
+read_nc(FT, file::String, var::String, indx::Int, indy::Int) = FT.(read_nc(file, var, indx, indy));
 
 
+"""
+Another convenient wrapper is to read the data for given index in x, y, and z, for example, if one wants to read the time series of data at a given site:
+
+    read_nc(file::String, var::String, indx::Int, indy::Int, indz::Int)
+
+Read the time series of data for a site, given
+- `file` Dataset path
+- `var` Variable name
+- `indx` The 1st index of subset data to read, typically longitude
+- `indy` The 2nd index of subset data to read, typically latitude
+- `indz` The 3rd index of subset data to read, typically time
+
+---
+Examples
+```julia
+data = read_nc("test.nc", "test", 1, 1, 1);
+```
+"""
+read_nc(file::String, var::String, indx::Int, indy::Int, indz::Int) = (
+    _dset = Dataset(file, "r");
+    _dvar = _dset[var][indx,indy,indz];
+    _data = ismissing(_dvar) ? NaN : _dvar;
+    _dvar = nothing;
+    close(_dset);
+
+    return _data
+);
 
 
+"""
+Similarly, one may want to read the data as a certain float type using
+
+    read_nc(FT, file::String, var::String, indx::Int, indy::Int, indz::Int)
+
+Read the time series of data for a site, given
+- `FT` Float number type
+- `file` Dataset path
+- `var` Variable name
+- `indx` The 1st index of subset data to read, typically longitude
+- `indy` The 2nd index of subset data to read, typically latitude
+- `indz` The 3rd index of subset data to read, typically time
+
+---
+Examples
+```julia
+data = read_nc(Float32, "test.nc", "test", 1, 1, 1);
+```
+"""
+read_nc(FT, file::String, var::String, indx::Int, indy::Int, indz::Int) = FT.(read_nc(file, var, indx, indy, indz));
 
 
-
-
-###############################################################################
-#
 # save Arrays to NC file
-#
-###############################################################################
 """
 NCDatasets.jl does not have a convenient function (1 line command) to save dataset as a file. Thus, we provide a few methods as supplements:
 
@@ -217,8 +250,6 @@ $(METHODLIST)
 
 """
 function save_nc! end
-
-
 
 
 """
@@ -246,7 +277,7 @@ Save dataset as NC file, given
 - `compress` Compression level fro NetCDF, default is 4
 
 ---
-Example
+Examples
 ```julia
 # generate data to write into NC file
 lats = collect(Float64, -85:10:85);
@@ -272,8 +303,7 @@ atts_attr3 = [lonat, latat, indat];
 atts_data1 = Any[lats];
 atts_data2 = Any[lons, lats];
 atts_data3 = Any[lons, lats, inds];
-notes = Dict("description" => "This is a file generated using PkgUtility.jl",
-             "notes"       => "PkgUtility.jl uses NCDatasets.jl to create NC files");
+notes = Dict("description" => "This is a file generated using PkgUtility.jl", "notes" => "PkgUtility.jl uses NCDatasets.jl to create NC files");
 
 # save data as NC files (1D, 2D, and 3D)
 save_nc!("data1.nc", "data1", attrn, data1, atts_name1, atts_attr1, atts_data1, notes);
@@ -318,14 +348,11 @@ save_nc!(file::String,
     close(_dset);
 
     return nothing
-)
-
-
+);
 
 
 """
-To save the code and effort to redefine the common attributes like latitude, longitude, and cycle index, we provide a shortcut method that handles these
-    within the function:
+To save the code and effort to redefine the common attributes like latitude, longitude, and cycle index, we provide a shortcut method that handles these within the function:
 
     save_nc!(file::String,
              var_name::String,
@@ -352,8 +379,7 @@ data3 = rand(36,18,12) .+ 273.15;
 
 # define the attributes and notes
 attrn = Dict("description" => "Random temperature", "unit" => "K");
-notes = Dict("description" => "This is a file generated using PkgUtility.jl",
-             "notes"       => "PkgUtility.jl uses NCDatasets.jl to create NC files");
+notes = Dict("description" => "This is a file generated using PkgUtility.jl", "notes" => "PkgUtility.jl uses NCDatasets.jl to create NC files");
 
 # save data as NC files (2D and 3D)
 save_nc!("data2.nc", "data2", attrn, data2);
@@ -398,20 +424,10 @@ save_nc!(file::String,
     save_nc!(file, var_name, var_attr, var_data, _atts_name, _atts_attr, _atts_data, notes; compress=compress);
 
     return nothing
-)
+);
 
 
-
-
-
-
-
-
-###############################################################################
-#
 # append Arrays to NC file
-#
-###############################################################################
 """
 NCDatasets.jl does not have a convenient function (1 line command) to append dataset into a file. Thus, we provide a few methods as supplements:
 
@@ -419,8 +435,6 @@ $(METHODLIST)
 
 """
 function append_nc! end
-
-
 
 
 """
@@ -473,8 +487,7 @@ atts_attr3 = [lonat, latat, indat];
 atts_data1 = Any[lats];
 atts_data2 = Any[lons, lats];
 atts_data3 = Any[lons, lats, inds];
-notes = Dict("description" => "This is a file generated using PkgUtility.jl",
-             "notes"       => "PkgUtility.jl uses NCDatasets.jl to create NC files");
+notes = Dict("description" => "This is a file generated using PkgUtility.jl", "notes" => "PkgUtility.jl uses NCDatasets.jl to create NC files");
 
 # save data as NC files (1D, 2D, and 3D)
 append_nc!("data1.nc", "datax", attrn, data1, atts_name1, atts_attr1, atts_data1);
@@ -515,4 +528,4 @@ append_nc!(file::String,
     close(_dset);
 
     return nothing
-)
+);
