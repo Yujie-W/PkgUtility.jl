@@ -8,12 +8,10 @@ using CSV: File, write
 using DataFrames: DataFrame
 using Dates: Date, DateTime, format, isleapyear, now
 using DocStringExtensions: METHODLIST
-using Pkg.Artifacts: archive_artifact, artifact_exists, artifact_hash, artifact_meta, artifact_path, bind_artifact!, create_artifact, download_artifact
+using Pkg.Artifacts: archive_artifact, artifact_exists, artifact_hash, bind_artifact!, create_artifact
 using Pkg.PlatformEngines: unpack
 using Statistics: mean, median, std
 using StatsBase: percentile
-
-
 
 
 # global constants
@@ -25,10 +23,8 @@ const TIME_FORMAT = ["YYYYMMDD", "YYYYMMDDhh", "YYYYMMDDhhmm", "YYYYMMDDhhmmss"]
 const TIME_OUTPUT = ["DATE", "DATETIME", "DOY", "FDOY"];
 
 
-
-
 # export public functions --- artifact
-export deploy_artifact!, predownload_artifact!
+export deploy_artifact!
 
 # export public functions --- date
 export month_days, month_ind, parse_timestamp, terror, tinfo, twarn
@@ -40,8 +36,8 @@ export pretty_display!
 export dataframe, read_csv, save_csv!, send_email!
 
 # export land wrapper functions --- land
-export AVOGADRO, CP_D, CP_D_MOL, CP_L, CP_V, GAS_R, GRAVITY, H_PLANCK, K_BOLTZMANN, K_STEFAN, K_VON_KARMAN, LH_V0, LIGHT_SPEED, M_DRYAIR, M_H₂O, P_ATM,
-       PRESS_TRIPLE, R_V, RT_25, T_0, T_25, T_TRIPLE, V_H₂O, YEAR_D, ρ_H₂O, ρg_MPa
+export AVOGADRO, CP_D, CP_D_MOL, CP_L, CP_V, GAS_R, GRAVITY, H_PLANCK, K_BOLTZMANN, K_STEFAN, K_VON_KARMAN, LH_V0, LIGHT_SPEED, M_DRYAIR, M_H₂O, P_ATM, PRESS_TRIPLE, R_V, RT_25, T_0, T_25, T_TRIPLE,
+       V_H₂O, YEAR_D, ρ_H₂O, ρg_MPa
 
 # export public functions --- math
 export lower_quadratic, mae, mape, mase, nanmax, nanmean, nanmedian, nanmin, nanpercentile, nanstd, numerical∫, rmse, upper_quadratic
@@ -50,10 +46,7 @@ export lower_quadratic, mae, mape, mase, nanmax, nanmean, nanmedian, nanmin, nan
 export FT_test, NaN_test
 
 
-
-
-include("artifact/deploy.jl"  )
-include("artifact/download.jl")
+include("artifacts.jl")
 
 include("date/doy.jl"  )
 include("date/tinfo.jl")
@@ -73,8 +66,6 @@ include("math/statistics.jl")
 include("test/recursive.jl")
 
 include("deprecated.jl")
-
-
 
 
 end # module

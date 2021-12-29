@@ -1,18 +1,11 @@
-###############################################################################
-#
-# Function to deploy artifact
-#
-###############################################################################
 """
-`PkgUtility` provides a convenient wrapper to deploy the artifact from a given list of files, for exmaple, `deploy_artifact!` function is used to deploy
-    the [`GirddingMachine`](https://github.com/CliMA/GriddingMachine.jl) artifacts.
+`PkgUtility` provides a convenient wrapper to deploy the artifact from a given list of files, for exmaple, `deploy_artifact!` function is used to deploy the
+    [`GirddingMachine`](https://github.com/CliMA/GriddingMachine.jl) artifacts.
 
 $(METHODLIST)
 
 """
 function deploy_artifact! end
-
-
 
 
 """
@@ -27,14 +20,7 @@ What `deploy_artifact!` function does are
 
 Method for this deployment is
 
-    deploy_artifact!(
-                art_toml::String,
-                art_name::String,
-                art_locf::String,
-                art_file::Vector{String},
-                art_tarf::String,
-                art_urls::Vector{String};
-                new_file::Vector{String} = art_file)
+    deploy_artifact!(art_toml::String, art_name::String, art_locf::String, art_file::Vector{String}, art_tarf::String, art_urls::Vector{String}; new_file::Vector{String} = art_file)
 
 Deploy the artifact, given
 - `art_toml` Artifact `.toml` file location
@@ -55,15 +41,7 @@ deploy_artifact!("Artifacts.toml", "test_art", "./", ["art_1.txt", "art_2.txt], 
 deploy_artifact!("Artifacts.toml", "test_art", "./", ["art_1.txt", "art_2.txt], "./", ["https://public.server.url"]; new_files=["new_1.txt", "new_2.txt"]);
 ```
 """
-deploy_artifact!(
-            art_toml::String,
-            art_name::String,
-            art_locf::String,
-            art_file::Vector{String},
-            art_tarf::String,
-            art_urls::Vector{String};
-            new_file::Vector{String} = art_file) =
-(
+deploy_artifact!(art_toml::String, art_name::String, art_locf::String, art_file::Vector{String}, art_tarf::String, art_urls::Vector{String}; new_file::Vector{String} = art_file) = (
     # querry whether the artifact exists
     _art_hash = artifact_hash(art_name, art_toml);
 
@@ -96,21 +74,14 @@ deploy_artifact!(
     bind_artifact!(art_toml, art_name, _art_hash; download_info=_download_info, lazy=true, force=true);
 
     return nothing;
-)
-
-
+);
 
 
 """
 In many cases, one might want to copy all the files in a folder to the target artifact, and iterate the file names is not convenient at all. Thus, a
     readily usable method is provided for this purpose:
 
-    deploy_artifact!(
-                art_toml::String,
-                art_name::String,
-                art_locf::String,
-                art_tarf::String,
-                art_urls::Vector{String})
+    deploy_artifact!(art_toml::String, art_name::String, art_locf::String, art_tarf::String, art_urls::Vector{String})
 
 Deploy the artifact, given
 - `art_toml` Artifact `.toml` file location
@@ -126,13 +97,7 @@ Examples
 deploy_artifact!("Artifacts.toml", "test_art", "./folder", "./", ["https://public.server.url"]);
 ```
 """
-deploy_artifact!(
-            art_toml::String,
-            art_name::String,
-            art_locf::String,
-            art_tarf::String,
-            art_urls::Vector{String}) =
-(
+deploy_artifact!(art_toml::String, art_name::String, art_locf::String, art_tarf::String, art_urls::Vector{String}) = (
     # querry all the files in the folder
     _art_files = String[_file for _file in readdir(art_locf)];
 
@@ -140,4 +105,4 @@ deploy_artifact!(
     deploy_artifact!(art_toml, art_name, art_locf, _art_files, art_tarf, art_urls);
 
     return nothing;
-)
+);
