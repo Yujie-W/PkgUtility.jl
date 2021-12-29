@@ -21,8 +21,6 @@
 [cov-url]: https://codecov.io/gh/Yujie-W/PkgUtility.jl
 
 
-
-
 ## About
 
 [`PkgUtility.jl`][ju-url] includes a collection of utility functions.
@@ -32,15 +30,11 @@
 | [![][dev-img]][dev-url] [![][rel-img]][rel-url] | [![][st-img]][st-url] | [![][min-img]][min-url] | [![][cov-img]][cov-url] |
 
 
-
-
 ## Installation
 ```julia
 julia> using Pkg;
 julia> Pkg.add("PkgUtility");
 ```
-
-
 
 
 ## API

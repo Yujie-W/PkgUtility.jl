@@ -8,7 +8,6 @@ using CSV: File, write
 using DataFrames: DataFrame
 using Dates: Date, DateTime, format, isleapyear, now
 using DocStringExtensions: METHODLIST
-using NCDatasets: Dataset, defDim, defVar, listVar
 using Pkg.Artifacts: archive_artifact, artifact_exists, artifact_hash, artifact_meta, artifact_path, bind_artifact!, create_artifact, download_artifact
 using Pkg.PlatformEngines: unpack
 using Statistics: mean, median, std
@@ -38,7 +37,7 @@ export month_days, month_ind, parse_timestamp, terror, tinfo, twarn
 export pretty_display!
 
 # export public functions --- io
-export dataframe, read_csv, read_nc, save_csv!, save_nc!, size_nc, send_email!
+export dataframe, read_csv, save_csv!, send_email!
 
 # export land wrapper functions --- land
 export AVOGADRO, CP_D, CP_D_MOL, CP_L, CP_V, GAS_R, GRAVITY, H_PLANCK, K_BOLTZMANN, K_STEFAN, K_VON_KARMAN, LH_V0, LIGHT_SPEED, M_DRYAIR, M_H₂O, P_ATM,
@@ -64,7 +63,6 @@ include("display/recursive.jl")
 include("io/csv.jl"      )
 include("io/dataframe.jl")
 include("io/email.jl"    )
-include("io/nc.jl"       )
 
 include("land/clima.jl")
 
