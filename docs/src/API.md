@@ -8,11 +8,8 @@ CurrentModule = PkgUtility
 
 ```@docs
 deploy_artifact!
-deploy_artifact!(art_toml::String, art_name::String, art_locf::String, art_file::Vector{String}, art_tarf::String, art_urls::Vector{String};
-                 new_file::Vector{String} = art_file)
+deploy_artifact!(art_toml::String, art_name::String, art_locf::String, art_file::Vector{String}, art_tarf::String, art_urls::Vector{String}; new_file::Vector{String} = art_file)
 deploy_artifact!(art_toml::String, art_name::String, art_locf::String, art_tarf::String, art_urls::Vector{String})
-predownload_artifact!
-predownload_artifact!(art_name::String, artifact_toml::String)
 ```
 
 
@@ -34,8 +31,7 @@ twarn
 ```@docs
 pretty_display!
 pretty_display!(dict::Pair, max_len::Int, spaces="    ")
-pretty_display!(dicts::Union{Vector{Pair{String,String}}, Vector{Pair{String,Any}}, Vector{Pair{Any,String}}, Vector{Pair{Any,Any}}},
-                spaces::String="    ")
+pretty_display!(dicts::Union{Vector{Pair{String,String}}, Vector{Pair{String,Any}}, Vector{Pair{Any,String}}, Vector{Pair{Any,Any}}}, spaces::String="    ")
 ```
 
 
