@@ -23,7 +23,7 @@
 
 ## About
 
-[`PkgUtility.jl`][ju-url] includes a collection of utility functions.
+[`PkgUtility.jl`][ju-url] includes a collection of utility functions. Note that support to Netcdf has been moved to [`NetcdfIO.jl`](https://github.com/Yujie-W/NetcdfIO.jl) since version v0.1.14.
 
 | Documentation                                   | CI Status             | Compatibility           | Code Coverage           |
 |:------------------------------------------------|:----------------------|:------------------------|:------------------------|
