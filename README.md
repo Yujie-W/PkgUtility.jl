@@ -14,24 +14,20 @@
 [st-img]: https://github.com/Yujie-W/PkgUtility.jl/workflows/JuliaStable/badge.svg?branch=main
 [st-url]: https://github.com/Yujie-W/PkgUtility.jl/actions?query=branch%3A"main"++workflow%3A"JuliaStable"
 
-[min-img]: https://github.com/Yujie-W/PkgUtility.jl/workflows/Julia-1.3/badge.svg?branch=main
-[min-url]: https://github.com/Yujie-W/PkgUtility.jl/actions?query=branch%3A"main"++workflow%3A"Julia-1.3"
+[min-img]: https://github.com/Yujie-W/PkgUtility.jl/workflows/Julia-1.6/badge.svg?branch=main
+[min-url]: https://github.com/Yujie-W/PkgUtility.jl/actions?query=branch%3A"main"++workflow%3A"Julia-1.6"
 
 [cov-img]: https://codecov.io/gh/Yujie-W/PkgUtility.jl/branch/main/graph/badge.svg
 [cov-url]: https://codecov.io/gh/Yujie-W/PkgUtility.jl
 
 
-
-
 ## About
 
-[`PkgUtility.jl`][ju-url] includes a collection of utility functions.
+[`PkgUtility.jl`][ju-url] includes a collection of utility functions. Note that support to Netcdf has been moved to [`NetcdfIO.jl`](https://github.com/Yujie-W/NetcdfIO.jl) since version v0.1.14.
 
 | Documentation                                   | CI Status             | Compatibility           | Code Coverage           |
 |:------------------------------------------------|:----------------------|:------------------------|:------------------------|
 | [![][dev-img]][dev-url] [![][rel-img]][rel-url] | [![][st-img]][st-url] | [![][min-img]][min-url] | [![][cov-img]][cov-url] |
-
-
 
 
 ## Installation
@@ -39,8 +35,6 @@
 julia> using Pkg;
 julia> Pkg.add("PkgUtility");
 ```
-
-
 
 
 ## API

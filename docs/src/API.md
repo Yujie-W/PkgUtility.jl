@@ -4,20 +4,13 @@ CurrentModule = PkgUtility
 ```
 
 
-
-
 ## Artifacts
 
 ```@docs
 deploy_artifact!
-deploy_artifact!(art_toml::String, art_name::String, art_locf::String, art_file::Vector{String}, art_tarf::String, art_urls::Vector{String};
-                 new_file::Vector{String} = art_file)
+deploy_artifact!(art_toml::String, art_name::String, art_locf::String, art_file::Vector{String}, art_tarf::String, art_urls::Vector{String}; new_file::Vector{String} = art_file)
 deploy_artifact!(art_toml::String, art_name::String, art_locf::String, art_tarf::String, art_urls::Vector{String})
-predownload_artifact!
-predownload_artifact!(art_name::String, artifact_toml::String)
 ```
-
-
 
 
 ## Date
@@ -33,18 +26,13 @@ twarn
 ```
 
 
-
-
 ## Display
 
 ```@docs
 pretty_display!
 pretty_display!(dict::Pair, max_len::Int, spaces="    ")
-pretty_display!(dicts::Union{Vector{Pair{String,String}}, Vector{Pair{String,Any}}, Vector{Pair{Any,String}}, Vector{Pair{Any,Any}}},
-                spaces::String="    ")
+pretty_display!(dicts::Union{Vector{Pair{String,String}}, Vector{Pair{String,Any}}, Vector{Pair{Any,String}}, Vector{Pair{Any,Any}}}, spaces::String="    ")
 ```
-
-
 
 
 ## IO
@@ -73,27 +61,6 @@ dataframe(v_data::Vector, v_name::Vector{String})
 send_email!
 send_email!(subject::String, from_email::String, to_email::String, body::String)
 ```
-
-### NetCDF
-
-```@docs
-read_nc
-read_nc(file::String, var::String)
-read_nc(Float64, file::String, var::String)
-read_nc(file::String, var::String, indz::Int)
-read_nc(Float64, file::String, var::String, indz::Int)
-read_nc(file::String, var::String, indx::Int, indy::Int)
-read_nc(Float64, file::String, var::String, indx::Int, indy::Int)
-save_nc!
-save_nc!(file::String, var_name::String, var_attr::Dict{String,String}, var_data::Array{Float64,2}, atts_name::Vector{String},
-         atts_attr::Vector{Dict{String,String}}, atts_data::Vector, notes::Dict{String,String})
-save_nc!(file::String, var_name::String, var_attr::Dict{String,String}, var_data::Array{Float64,2})
-append_nc!
-append_nc!(file::String, var_name::String, var_attr::Dict{String,String}, var_data::Array{Float64,3}, atts_name::Vector{String},
-           atts_attr::Vector{Dict{String,String}}, atts_data::Vector; compress::Int=4)
-```
-
-
 
 
 ## Land Wrapper
@@ -126,8 +93,6 @@ YEAR_D
 ρ_H₂O
 ρg_MPa
 ```
-
-
 
 
 ## Math
@@ -163,8 +128,6 @@ mape
 mase
 rmse
 ```
-
-
 
 
 ## Recursive test
