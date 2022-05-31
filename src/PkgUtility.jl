@@ -1,9 +1,5 @@
 module PkgUtility
 
-using CLIMAParameters
-using CLIMAParameters: AbstractEarthParameterSet, avogad, gas_constant, h_Planck, k_Boltzmann, light_speed
-using CLIMAParameters.Planet: LH_v0, MSLP, R_v, T_freeze, T_triple, cp_d, cp_l, cp_v, grav, molmass_dryair, molmass_water, press_triple, ρ_cloud_liq
-using CLIMAParameters.SubgridScale: von_karman_const
 using CSV: File, write
 using DataFrames: DataFrame
 using Dates: Date, DateTime, format, isleapyear, now
