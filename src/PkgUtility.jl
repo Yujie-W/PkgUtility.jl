@@ -31,10 +31,6 @@ export pretty_display!
 # export public functions --- io
 export dataframe, read_csv, save_csv!, send_email!
 
-# export land wrapper functions --- land
-export AVOGADRO, CP_D, CP_D_MOL, CP_L, CP_V, GAS_R, GRAVITY, H_PLANCK, K_BOLTZMANN, K_STEFAN, K_VON_KARMAN, LH_V0, LIGHT_SPEED, M_DRYAIR, M_H₂O, P_ATM, PRESS_TRIPLE, R_V, RT_25, T_0, T_25, T_TRIPLE,
-       V_H₂O, YEAR_D, ρ_H₂O, ρg_MPa
-
 # export public functions --- math
 export lower_quadratic, mae, mape, mase, nanmax, nanmean, nanmedian, nanmin, nanpercentile, nanstd, numerical∫, rmse, upper_quadratic
 
@@ -52,8 +48,6 @@ include("display/recursive.jl")
 include("io/csv.jl"      )
 include("io/dataframe.jl")
 include("io/email.jl"    )
-
-include("land/clima.jl")
 
 include("math/integral.jl"  )
 include("math/quadratic.jl" )
