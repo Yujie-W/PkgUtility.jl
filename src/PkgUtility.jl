@@ -19,26 +19,11 @@ const TIME_FORMAT = ["YYYYMMDD", "YYYYMMDDhh", "YYYYMMDDhhmm", "YYYYMMDDhhmmss"]
 const TIME_OUTPUT = ["DATE", "DATETIME", "DOY", "FDOY"];
 
 
-# export public functions --- artifact
-export deploy_artifact!
-
-# export public functions --- date
-export month_days, month_ind, parse_timestamp, terror, tinfo, twarn
-
-# export public functions --- display
-export pretty_display!
-
-# export public functions --- io
-export dataframe, read_csv, save_csv!, send_email!
-
-# export public functions --- math
-export lower_quadratic, mae, mape, mase, nanmax, nanmean, nanmedian, nanmin, nanpercentile, nanstd, numerical∫, rmse, upper_quadratic
-
-# export public functions --- test
-export FT_test, NaN_test
+include("artifacts.jl" )
+include("deprecated.jl")
 
 
-include("artifacts.jl")
+
 
 include("date/doy.jl"  )
 include("date/tinfo.jl")
@@ -54,8 +39,6 @@ include("math/quadratic.jl" )
 include("math/statistics.jl")
 
 include("test/recursive.jl")
-
-include("deprecated.jl")
 
 
 end # module
