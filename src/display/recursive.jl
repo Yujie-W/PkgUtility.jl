@@ -6,7 +6,6 @@
 """
 Display the parameters in a colored way.
 
-$(METHODLIST)
 
 """
 function pretty_display! end

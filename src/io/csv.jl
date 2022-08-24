@@ -7,7 +7,6 @@
 Reading CSV file may be troublesome for many cases, for example, when some lines exist before the header or when a few unit lines exist after the header.
     Here we provide a generalized function to read CSV files:
 
-$(METHODLIST)
 
 """
 function read_csv end
@@ -58,7 +57,6 @@ read_csv(file::String; skiprows::Int = 0, displaying::Bool = false) =
 Saving data to CSV file may also be troublesome when we want to save the data using a known format, for example, when we want to save attributes in the
     file as well such as the units. To best use Julia, we provide a generalized function to save data as CSV:
 
-$(METHODLIST)
 
 """
 function save_csv! end

@@ -3,7 +3,6 @@ module PkgUtility
 using CSV: File, write
 using DataFrames: DataFrame
 using Dates: Date, DateTime, format, isleapyear, now
-using DocStringExtensions: METHODLIST
 using Pkg.Artifacts: archive_artifact, artifact_exists, artifact_hash, bind_artifact!, create_artifact
 using Pkg.PlatformEngines: unpack
 using Statistics: mean, median, std
@@ -20,12 +19,12 @@ const TIME_OUTPUT = ["DATE", "DATETIME", "DOY", "FDOY"];
 
 
 include("artifacts.jl" )
+include("datetime.jl"  )
 include("deprecated.jl")
 
 
 
 
-include("date/doy.jl"  )
 include("date/tinfo.jl")
 
 include("display/recursive.jl")

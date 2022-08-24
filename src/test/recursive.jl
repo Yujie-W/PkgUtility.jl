@@ -7,7 +7,6 @@
 Using consistent floating number type may accelerate calculations, particularly for GPUs. Thus, we provided a function to test the floating number type
     recursively:
 
-$(METHODLIST)
 
 """
 function FT_test end
@@ -178,7 +177,6 @@ FT_test(para::Any, FT) =
 """
 Like [`FT_test`](@ref), same logic is used to test if all the elements within the tested variable are not NaN:
 
-$(METHODLIST)
 
 """
 function NaN_test end

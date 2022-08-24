@@ -6,7 +6,6 @@
 """
 Create a data frame from given parameters:
 
-$(METHODLIST)
 
 """
 function dataframe end

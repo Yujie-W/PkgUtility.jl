@@ -6,7 +6,6 @@
 """
 Function `numerical∫` calculates the integral numerically. The supported methods are
 
-$(METHODLIST)
 
 """
 function numerical∫ end
