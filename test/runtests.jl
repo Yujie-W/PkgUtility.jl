@@ -46,16 +46,16 @@ end
         rm("temp"; recursive=true);
         rm("example_artifact.tar.gz");
         @test true;
-    end
+    end;
 
-    @testset "Date" begin
+    @testset "DateTime" begin
         @test PkgUtility.parse_timestamp("20000401"; out_format="DOY") == 92;
         @test PkgUtility.parse_timestamp("20010401"; out_format="DOY") == 91;
         @test PkgUtility.parse_timestamp("20010401000000"; in_format="YYYYMMDDhhmmss", out_format="FDOY") == 91;
         @test PkgUtility.parse_timestamp("20010401"; out_format="DATE") == Date("2001-04-01");
         @test PkgUtility.parse_timestamp("20010401"; out_format="DATETIME") == DateTime("2001-04-01T00:00:00");
-        @test PkgUtility.parse_timestamp(2000, 100) == "20000409";
-        @test PkgUtility.parse_timestamp(2001, 100) == "20010410";
+        @test PkgUtility.parse_timestamp(2000, 100) == 100;
+        @test PkgUtility.parse_timestamp(2001, 100.1) == 100;
         @test PkgUtility.month_days(2019, 2) == 28;
         @test PkgUtility.month_days(2020, 2) == 29;
         @test PkgUtility.month_ind(2019, 60) == 3;
@@ -66,7 +66,7 @@ end
         err_info = PkgUtility.tinfo("This is an info!");
         err_info = PkgUtility.twarn("This is a warning!");
         @test true;
-    end
+    end;
 
     @testset "Display" begin
         xxx = [
@@ -84,48 +84,7 @@ end
         @info PkgUtility.tinfo("Display the dict in a pretty way:");
         PkgUtility.pretty_display!(xxx);
         @test true;
-    end
-
-    @testset "Math" begin
-        # test integral function
-        PkgUtility.numerical∫(rand(5), rand(5));
-        @info PkgUtility.tinfo("Expecting dimension mismatch warning here...");
-        PkgUtility.numerical∫(rand(5), rand(6));
-        PkgUtility.numerical∫(rand(5), 0.1);
-        @test true;
-
-        # test quadratic solvers
-        for FT in [Float32, Float64]
-            @test PkgUtility.lower_quadratic(FT( 1), FT(-3), FT( 2)) == FT(1);
-            @test PkgUtility.lower_quadratic(FT(-1), FT( 3), FT(-2)) == FT(1);
-            @test isnan(PkgUtility.lower_quadratic(FT( 1), FT(-3), FT(10)));
-            @test PkgUtility.upper_quadratic(FT( 1), FT(-3), FT( 2)) == FT(2);
-            @test PkgUtility.upper_quadratic(FT(-1), FT( 3), FT(-2)) == FT(2);
-            @test isnan(PkgUtility.upper_quadratic(FT( 1), FT(-3), FT(10)));
-        end
-
-        # test statistics
-        xx = rand(10); xx[1]=NaN;
-        yy = rand(10);
-        PkgUtility.nanmax(xx);
-        PkgUtility.nanmean(xx);
-        PkgUtility.nanmedian(xx);
-        PkgUtility.nanmin(xx);
-        PkgUtility.nanpercentile(xx, 50);
-        PkgUtility.nanstd(xx);
-        PkgUtility.mae(xx, yy);
-        PkgUtility.mape(xx, yy);
-        PkgUtility.mase(xx, yy);
-        PkgUtility.rmse(xx, yy);
-        @test true;
-    end
-
-    @testset "IO" begin
-        # test the dataframe
-        df = PkgUtility.dataframe();
-        df = PkgUtility.dataframe([rand(3), rand(3)], ["A","B"]);
-        @test true;
-    end
+    end;
 
     @testset "NaN" begin
         for FT in [Float32, Float64]
@@ -142,8 +101,8 @@ end
             @test PkgUtility.NaN_test([1,2,NaN]) == false;
             @test PkgUtility.NaN_test([[1,2,NaN], 2]) == false;
             @test PkgUtility.NaN_test(sb) == false;
-        end
-    end
+        end;
+    end;
 
     @testset "Type" begin
         for FT in [Float32, Float64]
@@ -156,14 +115,8 @@ end
             @test PkgUtility.FT_test(FT(1), FT);
             @test PkgUtility.FT_test("a", FT);
             @test PkgUtility.FT_test(sa, FT);
-        end
+        end;
         @test PkgUtility.FT_test([1f0,2f0], Float64) == false;
         @test PkgUtility.FT_test([[1,2],2f0], Float64) == false;
-    end
-
-    @testset "Deprecation" begin
-        # deprecated function
-        @info PkgUtility.tinfo("Expecting deprecation warnings here");
-        @test true;
-    end
-end
+    end;
+end;

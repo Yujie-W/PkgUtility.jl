@@ -97,7 +97,7 @@ parse_timestamp(timestamp::Union{Int,String}; in_format::String = "YYYYMMDD", ou
 
 parse_timestamp(year::Int, doy::Int; out_format::String = "DOY") = (
     @assert 0 <= year <= 9999;
-    @assert 1 <= doy  <= isleapyear(year) ? 366 : 365;
+    @assert 1 <= doy  <= (isleapyear(year) ? 366 : 365);
 
     # convert the year and doy to timestamp
     _month = month_ind(year, doy);
@@ -109,7 +109,7 @@ parse_timestamp(year::Int, doy::Int; out_format::String = "DOY") = (
 
 parse_timestamp(year::Int, doy::AbstractFloat; out_format::String = "DOY") = (
     @assert 0 <= year <= 9999;
-    @assert 1 <= doy  <  isleapyear(year) ? 367 : 366;
+    @assert 1 <= doy  <  (isleapyear(year) ? 367 : 366);
 
     # convert the year and doy to timestamp
     _doy   = Int(floor(doy));

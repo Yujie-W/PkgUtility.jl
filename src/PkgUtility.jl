@@ -17,6 +17,7 @@ include("artifacts.jl")
 include("datetime.jl" )
 include("display.jl"  )
 include("logs.jl"     )
+include("testing.jl"  )
 
 
 end # module
