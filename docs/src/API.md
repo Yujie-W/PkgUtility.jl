@@ -63,38 +63,6 @@ send_email!(subject::String, from_email::String, to_email::String, body::String)
 ```
 
 
-## Land Wrapper
-
-```@docs
-AVOGADRO
-CP_D
-CP_D_MOL
-CP_L
-CP_V
-GAS_R
-GRAVITY
-H_PLANCK
-K_BOLTZMANN
-K_STEFAN
-K_VON_KARMAN
-LH_V0
-LIGHT_SPEED
-M_DRYAIR
-M_H₂O
-P_ATM
-PRESS_TRIPLE
-R_V
-RT_25
-T_0
-T_25
-T_TRIPLE
-V_H₂O
-YEAR_D
-ρ_H₂O
-ρg_MPa
-```
-
-
 ## Math
 
 ### Integral
