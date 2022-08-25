@@ -1,12 +1,7 @@
 module PkgUtility
 
-using CSV: File, write
-using DataFrames: DataFrame
 using Dates: Date, DateTime, format, isleapyear, now
 using Pkg.Artifacts: archive_artifact, artifact_exists, artifact_hash, bind_artifact!, create_artifact
-using Pkg.PlatformEngines: unpack
-using Statistics: mean, median, std
-using StatsBase: percentile
 
 
 # global constants
@@ -20,26 +15,8 @@ const TIME_OUTPUT = ["DATE", "DATETIME", "DOY", "FDOY"];
 
 include("artifacts.jl")
 include("datetime.jl" )
+include("display.jl"  )
 include("logs.jl"     )
-
-include("deprecated.jl")
-
-
-
-
-include("date/tinfo.jl")
-
-include("display/recursive.jl")
-
-include("io/csv.jl"      )
-include("io/dataframe.jl")
-include("io/email.jl"    )
-
-include("math/integral.jl"  )
-include("math/quadratic.jl" )
-include("math/statistics.jl")
-
-include("test/recursive.jl")
 
 
 end # module
