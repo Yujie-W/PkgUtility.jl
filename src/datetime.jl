@@ -1,8 +1,9 @@
 #######################################################################################################################################################################################################
 #
-# Changes to this struct
+# Changes to this function
 # General
 #     2022-Aug-24: move function outside of the folder
+#     2022-Aug-24: add method to convert float doy
 #
 #######################################################################################################################################################################################################
 """
@@ -126,6 +127,13 @@ parse_timestamp(year::Int, doy::AbstractFloat; out_format::String = "DOY") = (
 );
 
 
+#######################################################################################################################################################################################################
+#
+# Changes to this function
+# General
+#     2022-Aug-24: move function outside of the folder
+#
+#######################################################################################################################################################################################################
 """
 
     month_days(year::Int, month::Int)
@@ -142,6 +150,14 @@ function month_days(year::Int, month::Int)
 end
 
 
+#######################################################################################################################################################################################################
+#
+# Changes to this function
+# General
+#     2022-Aug-24: move function outside of the folder
+#     2022-Aug-24: add method to convert float doy
+#
+#######################################################################################################################################################################################################
 """
 
     month_ind(year::Int, doy::Int)
@@ -155,6 +171,7 @@ Return the month index, given
 function month_ind end
 
 month_ind(year::Int, doy::Int) = (
+    # if is leap year
     if isleapyear(year)
         @assert 1 <= doy <= 366;
         _month = 1;
@@ -164,14 +181,17 @@ month_ind(year::Int, doy::Int) = (
                 break;
             end;
         end;
-    else
-        @assert 1 <= doy <= 365;
-        _month = 1;
-        for i in 1:12
-            if MDAYS[i] < doy <= MDAYS[i+1]
-                _month = i;
-                break;
-            end;
+
+        return _month
+    end;
+
+    # if not leap year
+    @assert 1 <= doy <= 365;
+    _month = 1;
+    for i in 1:12
+        if MDAYS[i] < doy <= MDAYS[i+1]
+            _month = i;
+            break;
         end;
     end;
 
