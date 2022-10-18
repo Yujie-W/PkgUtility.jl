@@ -13,11 +13,12 @@ const TIME_FORMAT = ["YYYYMMDD", "YYYYMMDDhh", "YYYYMMDDhhmm", "YYYYMMDDhhmmss"]
 const TIME_OUTPUT = ["DATE", "DATETIME", "DOY", "FDOY"];
 
 
-include("artifacts.jl")
-include("datetime.jl" )
-include("display.jl"  )
-include("logs.jl"     )
-include("testing.jl"  )
+include("artifacts.jl" )
+include("datetime.jl"  )
+include("display.jl"   )
+include("logs.jl"      )
+include("statistics.jl")
+include("testing.jl"   )
 
 
 end # module
