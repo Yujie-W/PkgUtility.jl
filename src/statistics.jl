@@ -1,8 +1,10 @@
-###############################################################################
+#######################################################################################################################################################################################################
 #
-# nanmean, nanmedian, nanstd, nanmax, nanmin
+# Changes to the functions
+# General
+#     2022-Oct-17: move functions outside of the folder
 #
-###############################################################################
+#######################################################################################################################################################################################################
 """
 
     nanmax(x::Array)
@@ -10,22 +12,12 @@
 Return the maximum of array ommiting the NaN, given
 - `x` Array of numbers, can be NaN
 
----
-Example
-```julia
-xs = [1, 2, 4, NaN];
-nmax = nanmax(xs);
-```
 """
 function nanmax(x::Array)
     _x = filter(!isnan, x);
 
-    if length(_x) == 0 return NaN end;
-
-    return maximum( _x )
+    return length(_x) == 0 ? NaN : maximum( _x )
 end
-
-
 
 
 """
@@ -35,22 +27,12 @@ end
 Return the mean of array by ommiting the NaN, given
 - `x` Array of numbers, can be NaN
 
----
-Example
-```julia
-xs = [1, 2, 4, NaN];
-nmean = nanmean(xs);
-```
 """
 function nanmean(x::Array)
     _x = filter(!isnan, x);
 
-    if length(_x) == 0 return NaN end;
-
-    return mean( _x )
+    return length(_x) == 0 ? NaN : mean( _x )
 end
-
-
 
 
 """
@@ -60,22 +42,12 @@ end
 Return the median of array by ommiting the NaN, given
 - `x` Array of numbers, can be NaN
 
----
-Example
-```julia
-xs = [1, 2, 4, NaN];
-nmed = nanmedian(xs);
-```
 """
 function nanmedian(x::Array)
     _x = filter(!isnan, x);
 
-    if length(_x) == 0 return NaN end;
-
-    return median( _x )
+    return length(_x) == 0 ? NaN : median( _x )
 end
-
-
 
 
 """
@@ -85,22 +57,12 @@ end
 Return the maximum of array ommiting the NaN, given
 - `x` Array of numbers, can be NaN
 
----
-Example
-```julia
-xs = [1, 2, 4, NaN];
-nmin = nanmin(xs);
-```
 """
 function nanmin(x::Array)
     _x = filter(!isnan, x);
 
-    if length(_x) == 0 return NaN end;
-
-    return minimum( _x )
+    return length(_x) == 0 ? NaN : minimum( _x )
 end
-
-
 
 
 """
@@ -109,28 +71,16 @@ end
 
 Return the percentile by excluding the NaN of given
 - `x` Array of data
-- `p` Percentile
+- `p` Percentile in `[%]`
 
----
-Example
-```julia
-xs = rand(100);
-pth = nanpercentile(rand(100), 50);
-xs[1:10] .= NaN;
-pth = nanpercentile(rand(100), 50);
-```
 """
 function nanpercentile(x::Array, p::Number)
     @assert 0 <= p <= 100
 
     _x = filter(!isnan, x);
 
-    if length(_x) == 0 return NaN end;
-
-    return percentile( _x, p )
+    return length(_x) == 0 ? NaN : percentile( _x, p )
 end
-
-
 
 
 """
@@ -140,33 +90,22 @@ end
 Return the std of array by ommiting the NaN, given
 - `x` Array of numbers, can be NaN
 
----
-Example
-```julia
-xs = [1, 2, 4, NaN];
-nstd = nanstd(xs);
 ```
 """
 function nanstd(x::Array)
     _x = filter(!isnan, x);
 
-    if length(_x) == 0 return NaN end;
-
-    return std( _x )
+    return length(_x) == 0 ? NaN : std( _x )
 end
 
 
-
-
-
-
-
-
-###############################################################################
+#######################################################################################################################################################################################################
 #
-# Error measures
+# Changes to the functions
+# General
+#     2022-Oct-17: move functions outside of the folder
 #
-###############################################################################
+#######################################################################################################################################################################################################
 """
 
     mae(y::Array, pred::Array)
@@ -175,19 +114,10 @@ Return the mean absolute error by ommiting the NaN, given
 - `y` Array of numbers, can be NaN
 - `pred` Array of predictions, can be NaN
 
----
-Example
-```julia
-ys = [1, 2, 4, NaN];
-preds = [2, 4, 1, NaN];
-nmae = mae(ys, preds);
-```
 """
 function mae(y::Array, pred::Array)
     return nanmean( abs.(y .- pred) )
 end
-
-
 
 
 """
@@ -198,13 +128,6 @@ Return the mean absolute percentage error by ommiting the NaN, given
 - `y` Array of numbers, can be NaN
 - `pred` Array of predictions, can be NaN
 
----
-Example
-```julia
-ys = [1, 2, 4, NaN];
-preds = [2, 4, 1, NaN];
-nmape = mape(ys, preds);
-```
 """
 function mape(y::Array, pred::Array)
     _mean = abs( nanmean(y) );
@@ -212,8 +135,6 @@ function mape(y::Array, pred::Array)
 
     return nanmean( _diff )
 end
-
-
 
 
 """
@@ -224,13 +145,6 @@ Return the mean absolute standardized error by ommiting the NaN, given
 - `y` Array of numbers, can be NaN
 - `pred` Array of predictions, can be NaN
 
----
-Example
-```julia
-ys = [1, 2, 4, NaN];
-preds = [2, 4, 1, NaN];
-nmase = mase(ys, preds);
-```
 """
 function mase(y::Array, pred::Array)
     _nstd = nanstd(y);
@@ -238,8 +152,6 @@ function mase(y::Array, pred::Array)
 
     return nanmean( _diff )
 end
-
-
 
 
 """
@@ -250,13 +162,6 @@ Return the root mean square error by ommiting the NaN, given
 - `y` Array of numbers, can be NaN
 - `pred` Array of predictions, can be NaN
 
----
-Example
-```julia
-ys = [1, 2, 4, NaN];
-preds = [2, 4, 1, NaN];
-rmse = rmse(ys, preds);
-```
 """
 function rmse(y::Array, pred::Array)
     return sqrt( nanmean( (y .- pred) .^ 2 ) )

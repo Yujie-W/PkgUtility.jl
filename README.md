@@ -23,7 +23,9 @@
 
 ## About
 
-[`PkgUtility.jl`][ju-url] includes a collection of utility functions. Note that support to Netcdf has been moved to [`NetcdfIO.jl`](https://github.com/Yujie-W/NetcdfIO.jl) since version v0.1.14.
+[`PkgUtility.jl`][ju-url] includes a collection of utility functions. Note that support to Netcdf has been moved to [`NetcdfIO.jl`](https://github.com/Yujie-W/NetcdfIO.jl) since version v0.1.14,
+    support to CliMA Land constants has been moved to `EmeraldConstants.jl` since v0.3.0, support to statistical tools has been moved to `ResearchStatistics.jl`, and supports to CSV and DataFrames
+    have been moved to `TextIO.jl`.
 
 | Documentation                                   | CI Status             | Compatibility           | Code Coverage           |
 |:------------------------------------------------|:----------------------|:------------------------|:------------------------|
@@ -32,8 +34,8 @@
 
 ## Installation
 ```julia
-julia> using Pkg;
-julia> Pkg.add("PkgUtility");
+using Pkg;
+Pkg.add("PkgUtility");
 ```
 
 
