@@ -2,6 +2,8 @@ module PkgUtility
 
 using Dates: Date, DateTime, format, isleapyear, now
 using Pkg.Artifacts: archive_artifact, artifact_exists, artifact_hash, bind_artifact!, create_artifact
+using Statistics: mean, median, std
+using StatsBase: percentile
 
 
 # global constants
