@@ -86,6 +86,47 @@ end
         @test true;
     end;
 
+    @testset "Numerics" begin
+        for FT in [Float32, Float64]
+            f(x) = x ^ 2;
+            xx = rand(FT, 5);
+            fx = f.(xx);
+            x  = FT(0.1);
+            for result in [
+                        PkgUtility.numerical∫(fx, xx),
+                        PkgUtility.numerical∫(fx, xx[1:4]),
+                        PkgUtility.numerical∫(fx, x),
+                        PkgUtility.numerical∫(f, FT(1), FT(3), 10),
+                        PkgUtility.numerical∫(f, FT(1), FT(3)),
+                        PkgUtility.lower_quadratic(FT(1), FT(3), FT(8)),
+                        PkgUtility.lower_quadratic(FT(-1), FT(3), FT(8)),
+                        PkgUtility.upper_quadratic(FT(1), FT(3), FT(8)),
+                        PkgUtility.upper_quadratic(FT(-1), FT(3), FT(8))]
+                @test true;
+            end;
+        end;
+    end;
+
+    @testset "Statistics" begin
+        for FT in [Float32, Float64]
+            xn = FT[1, 2, 3, 4, NaN];
+            yn = FT[2, 2, 3, 4, NaN];
+            for result in [
+                        PkgUtility.nanmax(xn),
+                        PkgUtility.nanmean(xn),
+                        PkgUtility.nanmedian(xn),
+                        PkgUtility.nanmin(xn),
+                        PkgUtility.nanpercentile(xn, 90),
+                        PkgUtility.nanstd(xn),
+                        PkgUtility.mae(xn, yn),
+                        PkgUtility.mape(xn, yn),
+                        PkgUtility.mase(xn, yn),
+                        PkgUtility.rmse(xn, yn)]
+                @test true;
+            end;
+        end;
+    end;
+
     @testset "NaN" begin
         for FT in [Float32, Float64]
             sa = TestStruct(ones(FT,5), 2);
@@ -97,10 +138,10 @@ end
             @test PkgUtility.NaN_test(1);
             @test PkgUtility.NaN_test("a");
             @test PkgUtility.NaN_test(sa);
-            @test PkgUtility.NaN_test(NaN) == false;
-            @test PkgUtility.NaN_test([1,2,NaN]) == false;
-            @test PkgUtility.NaN_test([[1,2,NaN], 2]) == false;
-            @test PkgUtility.NaN_test(sb) == false;
+            @test !PkgUtility.NaN_test(NaN);
+            @test !PkgUtility.NaN_test([1,2,NaN]);
+            @test !PkgUtility.NaN_test([[1,2,NaN], 2]);
+            @test !PkgUtility.NaN_test(sb);
         end;
     end;
 
@@ -116,7 +157,7 @@ end
             @test PkgUtility.FT_test("a", FT);
             @test PkgUtility.FT_test(sa, FT);
         end;
-        @test PkgUtility.FT_test([1f0,2f0], Float64) == false;
-        @test PkgUtility.FT_test([[1,2],2f0], Float64) == false;
+        @test !PkgUtility.FT_test([1f0,2f0], Float64);
+        @test !PkgUtility.FT_test([[1,2],2f0], Float64);
     end;
 end;

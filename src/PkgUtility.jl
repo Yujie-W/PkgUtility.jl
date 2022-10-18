@@ -19,6 +19,7 @@ include("artifacts.jl" )
 include("datetime.jl"  )
 include("display.jl"   )
 include("logs.jl"      )
+include("numerical.jl" )
 include("statistics.jl")
 include("testing.jl"   )
 
