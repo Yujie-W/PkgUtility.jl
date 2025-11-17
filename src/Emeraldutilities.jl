@@ -2,9 +2,9 @@ module EmeraldUtility
 
 
 # submodules
-include("display/PrettyDisplay.jl");
-include("recursive/RecursiveTools.jl");
-include("time/TimeParser.jl");
+include("PrettyDisplay/PrettyDisplay.jl");
+include("RecursiveTools/RecursiveTools.jl");
+include("TimeParser/TimeParser.jl");
 
 
 end; # module

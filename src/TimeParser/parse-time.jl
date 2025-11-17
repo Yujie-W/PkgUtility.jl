@@ -8,9 +8,9 @@
 #######################################################################################################################################################################################################
 """
 
-    parse_timestamp(timestamp::Union{Int,String}; in_format::String = "YYYYMMDD", out_format::String = "DOY")
-    parse_timestamp(year::Int, doy::Int; out_format::String = "DOY")
-    parse_timestamp(year::Int, doy::AbstractFloat; out_format::String = "DOY")
+    parse_timestamp(timestamp::Union{Int,String}, in_format::String, out_format::String)
+    parse_timestamp(year::Int, doy::Int, out_format::String)
+    parse_timestamp(year::Int, doy::AbstractFloat, out_format::String)
 
 Convert timestamp, given
 - `timestamp` Time stamp
@@ -19,13 +19,14 @@ Convert timestamp, given
 - `year` Year (in this case, the function will convert year and day to timestamp first)
 - `doy` Day of year (typically 1-365, 1-366 for leap years)
 
-The input format (string or integer) supports `YYYYMMDD`, `YYYYMMDDhh`, `YYYYMMDDhhmm`, and `YYYYMMDDhhmmss`, where the labels are
+The input format (string or integer) supports `YYYYMMDD`, `YYYYMMDDhh`, `YYYYMMDDhhmm`, `YYYYMMDDhhmmss`, and `YYYYMMDDhhmmss.mmm`, where the labels are
 - `YYYY` Year number
 - `MM` Month number
 - `DD` Day number
 - `hh` Hour number
 - `mm` Minute number
-- `ss` second number
+- `ss` Second number
+- `mmm` Millisecond number
 
 The supported outputs are
 - `DATE` A `Dates.Date` type variable
@@ -36,10 +37,10 @@ The supported outputs are
 ---
 Examples
 ```julia
-time = parse_timestamp(20200130; in_format="YYYYMMDD", out_format="FDOY");
-time = parse_timestamp("20200130"; in_format="YYYYMMDD", out_format="FDOY");
-time = parse_timestamp(2020, 100);
-time = parse_timestamp(2020, 100.23435436);
+    time = parse_timestamp(20200130, "YYYYMMDD", "FDOY");
+    time = parse_timestamp("20200130", "YYYYMMDD", "FDOY");
+    time = parse_timestamp(2020, 100, "DOY");
+    time = parse_timestamp(2020, 100.23435436, "DATETIME");
 ```
 
 """
