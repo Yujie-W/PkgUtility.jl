@@ -3,7 +3,7 @@ module EmeraldUtility
 
 # submodules
 include("display/PrettyDisplay.jl");
-include("test/RecursiveTest.jl");
+include("test/RecursiveTools.jl");
 
 
 end; # module

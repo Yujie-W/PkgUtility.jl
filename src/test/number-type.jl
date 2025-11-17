@@ -1,6 +1,3 @@
-module RecursiveTest
-
-
 #######################################################################################################################################################################################################
 #
 # Changes to these functions
@@ -28,19 +25,18 @@ The variable to test maybe a struct, but `FT_test` does not know the struct type
 - If succeeds, the function test the fields recursively
 - If fails, then do nothing
 
----
-Example
+## Example
 ```julia
-struct SA
-    a
-    b
-end;
-sa = SA(1, 2.0);
+    struct SA
+        a
+        b
+    end;
+    sa = SA(1, 2.0);
 
-ft_1 = FT_test([1, 2, 3], Float64);
-ft_2 = FT_test(Any[1, 1.0f0, 1.0e0], Float64);
-ft_3 = FT_test([1, 2.0, "a"], Float64);
-ft_4 = FT_test(sa, Float64);
+    ft_1 = FT_test([1, 2, 3], Float64);
+    ft_2 = FT_test(Any[1, 1.0f0, 1.0e0], Float64);
+    ft_3 = FT_test([1, 2.0, "a"], Float64);
+    ft_4 = FT_test(sa, Float64);
 ```
 
 """
@@ -84,68 +80,3 @@ FT_test(para::Any, FT) = (
 
     return true
 );
-
-
-#######################################################################################################################################################################################################
-#
-# Changes to these functions
-# General
-#     2022-Aug-24: move function outside of the folder
-#     2022-Aug-24: simply the algorithm
-#
-#######################################################################################################################################################################################################
-"""
-Like [`FT_test`](@ref), same logic is used to test if all the elements within the tested variable are not NaN:
-
-    NaN_test(para::Array)
-    NaN_test(para::Number)
-    NaN_test(para::Union{Function, Module, String, Symbol})
-    NaN_test(para::Any)
-
-Test if the variable is not NaN, given
-- `para` Parameter to test
-
----
-Example
-```julia
-struct SA
-    a
-    b
-end;
-
-nan_1 = NaN_test(SA(1,2));
-nan_2 = NaN_test(SA(1,NaN));
-nan_3 = NaN_test([1,2,NaN]);
-nan_4 = NaN_test([1,3,4]);
-nan_5 = NaN_test([1,2,"a"]);
-```
-
-"""
-function NaN_test end;
-
-NaN_test(para::Array) = all(NaN_test.(para));
-
-NaN_test(para::Number) = !isnan(para);
-
-NaN_test(para::Union{Function, Module, String, Symbol}) = true;
-
-NaN_test(para::Any) = (
-    # try to detech struct
-    if !(typeof(para) <: DataType)
-        try
-            arr = [];
-            for fn in fieldnames( typeof(para) )
-                push!(arr, NaN_test( getfield(para, fn) ));
-            end;
-
-            return all(arr)
-        catch e
-            nothing
-        end;
-    end;
-
-    return true
-);
-
-
-end;
