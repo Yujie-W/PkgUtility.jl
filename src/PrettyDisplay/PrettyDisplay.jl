@@ -49,20 +49,20 @@ pretty_display!(msg::String, func_type::String) = (
     @assert occursin("tinfo", func_type) || occursin("twarn", func_type) || occursin("terror", func_type);
 
     # parse the function name to call
-    f = if "tinfo" in func_type
+    f = if occursin("tinfo", func_type)
         display_timed_info!
-    elseif "twarn" in func_type
+    elseif occursin("twarn", func_type)
         display_timed_warning!
-    elseif "terror" in func_type
+    elseif occursin("terror", func_type)
         display_timed_error!
     end;
 
     # parse the message level extension
-    msg_lvl = if "pre" in func_type
+    msg_lvl = if occursin("pre", func_type)
         "pre"
-    elseif "mid" in func_type
+    elseif occursin("mid", func_type)
         "mid"
-    elseif "end" in func_type
+    elseif occursin("end", func_type)
         "end"
     else
         ""
@@ -216,23 +216,23 @@ pretty_display!(pair::Pair, max_len::Int, recursed_space::Int) = (
     printstyled(string(pair[1]); color = :light_magenta);
 
     # print spaces after key and arrow
-    print(repeat(" ", max_len - length(string(pair[1]))) * " ⇨ ");
+    print(repeat(" ", max_len - length(string(pair[1]))) * " => ");
 
     # if the value is a vector of pairs, recursive display
     if typeof(pair[2]) <: Vector && typeof(pair[2][1]) <: Pair
         # display [ and line break
         print("[\n");
-        pretty_display!(pair[2], max_len + 4);
+        pretty_display!(pair[2], max_len + 5);
 
         # display a ] and the next line
         printstyled("│       "; bold = true, color = :cyan);
-        print(repeat(" ", max_len + recursed_space + 3) * "],\n");
+        print(repeat(" ", max_len + recursed_space + 4) * "],\n");
 
         return nothing;
     end;
 
     # if the value is not array of pair, display it
-    printstyled(string(pair[2]); color = :cyan);
+    printstyled(string(pair[2]); color = :green);
     print(",\n");
 
     return nothing;
