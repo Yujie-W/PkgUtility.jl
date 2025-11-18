@@ -1,6 +1,6 @@
 module MathTools
 
-using Dates: isleapyear
+using Dates: daysinmonth, isleapyear
 using DocStringExtensions: TYPEDEF, TYPEDFIELDS
 using Statistics: mean, median, std
 using StatsBase: percentile

@@ -29,7 +29,7 @@ resample_data(dat_in::Union{FT,Vector{FT}}, year::Int64; out_reso::String = "1H"
     dat_1d = if length(dat_in) == 1
         repeat([dat_in;]; inner = nday)
     elseif length(dat_in) == 12
-        [([repeat(dat_in[_m:_m], month_doys(year, _m)) for _m in 1:12]...)...]
+        [([repeat(dat_in[m:m], daysinmonth(year, m)) for m in 1:12]...)...]
     elseif length(dat_in) == 46
         repeat(dat_in; inner = 8)[1:nday]
     elseif length(dat_in) in [52,53]
