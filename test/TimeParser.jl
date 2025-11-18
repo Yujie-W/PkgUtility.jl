@@ -20,5 +20,9 @@ import EmeraldUtilities.TimeParser as TP
         @test TP.parse_timestamp("202303151230", "YYYYMMDDhhmm", "DOY") == 74;
         @test TP.parse_timestamp("20230315123045", "YYYYMMDDhhmmss", "FDOY") ≈ 74.52135416666667;
         @test TP.parse_timestamp("20230315123045.123", "YYYYMMDDhhmmss.mmm", "DATETIME") == DateTime(2023,3,15,12,30,45,123);
+
+        @test TP.parse_timestamp(2023, 74, "FDOY") == 74.0;
+        @test TP.parse_timestamp(2023, 74, "DATE") == Date(2023,3,15);
+        @test TP.parse_timestamp(2023, 74.52135416666667, "DATETIME") == DateTime(2023,3,15,12,30,45);
     end;
 end;

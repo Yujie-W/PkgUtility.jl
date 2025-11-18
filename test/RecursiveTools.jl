@@ -71,11 +71,11 @@ import EmeraldUtilities.RecursiveTools as RT
         sc_3 = SC(1.0, [1.0, 2.0, 4.0], "test");
         sc_4 = SC(1.0000001, [1.0, 2.0, 3.0], "test");
         sc_5 = SC(1.0, [1.0, 2.0, 3.0], "test2");
-        @test RT.compare_struct!(sc_1, sc_2; show_diff_msg = false) == 0;
-        @test RT.compare_struct!(sc_1, sc_3; show_diff_msg = false) == 1;
-        @test RT.compare_struct!(sc_1, sc_4; show_diff_msg = false) == 1;
-        @test RT.compare_struct!(sc_1, sc_5; show_diff_msg = false) == 1;
-        @test RT.compare_struct!(sc_3, sc_5; show_diff_msg = false) == 2;
+        @test RT.compare_struct!(sc_1, sc_2; show_diff_msg = true) == 0;
+        @test RT.compare_struct!(sc_1, sc_3; show_diff_msg = true) == 1;
+        @test RT.compare_struct!(sc_1, sc_4; show_diff_msg = true) == 1;
+        @test RT.compare_struct!(sc_1, sc_5; show_diff_msg = true) == 1;
+        @test RT.compare_struct!(sc_3, sc_5; show_diff_msg = true) == 2;
     end;
 
     @testset "Sync Struct" begin
@@ -88,8 +88,8 @@ import EmeraldUtilities.RecursiveTools as RT
         sd_2 = SD(2.0, [4.0, 5.0, 6.0], "test2");
         sd_3 = SD(3.0, [4.0, 5.0, 6.0], "test3");
         RT.sync_struct!(sd_1, sd_2);
-        @test RT.compare_struct!(sd_1, sd_2; show_diff_msg = false) == 0;
+        @test RT.compare_struct!(sd_1, sd_2; show_diff_msg = true) == 0;
         RT.sync_struct!(sd_3, sd_1);
-        @test RT.compare_struct!(sd_1, sd_2; show_diff_msg = false) == 3;
+        @test RT.compare_struct!(sd_1, sd_2; show_diff_msg = true) == 3;
     end;
 end;
