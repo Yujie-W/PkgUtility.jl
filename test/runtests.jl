@@ -8,4 +8,5 @@ using Test
     include("PrettyDisplay.jl");
     include("RecursiveTools.jl");
     include("TimeParser.jl");
+    include("UniversalConstants.jl");
 end;
