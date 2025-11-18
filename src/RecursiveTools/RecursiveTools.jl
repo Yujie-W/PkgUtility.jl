@@ -1,4 +1,4 @@
-module RecursiveTest
+module RecursiveTools
 
 
 include("nan-test.jl");
