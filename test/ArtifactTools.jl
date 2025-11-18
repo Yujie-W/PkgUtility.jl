@@ -1,6 +1,7 @@
 using OrderedCollections: OrderedDict
 import EmeraldUtilities.ArtifactTools as AT
 
+
 @testset "ArtifactTools" verbose = true begin
     @testset "Save the library" begin
         normal_dict = Dict(
@@ -32,6 +33,13 @@ import EmeraldUtilities.ArtifactTools as AT
         AT.save_library!(normal_dict, "test_artifacts_12.toml"); @test true;
         AT.save_library!("test_artifacts_21.yaml", ordered_dict); @test true;
         AT.save_library!(ordered_dict, "test_artifacts_22.yaml"); @test true;
+
+        # try the case with error
+        try
+            AT.save_library!("test_artifacts.txt", normal_dict);
+        catch e
+            @test isa(e, ErrorException);
+        end;
     end;
 
     @testset "Read the library" begin
@@ -42,6 +50,14 @@ import EmeraldUtilities.ArtifactTools as AT
         lib4 = AT.read_library("test_artifacts_22.yaml"); @test isa(lib4, Dict); @test true;
         @test lib1 == lib2 == lib3 == lib4;
 
+        # try the case with error
+        try
+            AT.read_library("test_artifacts.txt");
+        catch e
+            @test isa(e, ErrorException);
+        end;
+
+        # remove the test files
         rm("test_artifacts_11.toml"; force = true);
         rm("test_artifacts_12.toml"; force = true);
         rm("test_artifacts_21.yaml"; force = true);

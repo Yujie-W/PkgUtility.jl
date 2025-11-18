@@ -1,6 +1,7 @@
 using Distributed
 import EmeraldUtilities.DistributedTools as DT
 
+
 @testset "DistributedTools" verbose = true begin
     @testset "Add Processors" begin
         DT.dynamic_workers!(2);

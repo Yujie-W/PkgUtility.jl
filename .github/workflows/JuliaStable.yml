@@ -33,7 +33,7 @@ jobs:
         uses: julia-actions/julia-processcoverage@v1
       - name: Submit Coverage
         if: runner.os == 'Linux'
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           file: lcov.info
           token: ${{ secrets.CODECOV_TOKEN }}
