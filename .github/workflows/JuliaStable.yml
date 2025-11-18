@@ -37,3 +37,4 @@ jobs:
         with:
           file: lcov.info
           token: ${{ secrets.CODECOV_TOKEN }}
+          slug: silicormosia/EmeraldUtilities.jl
