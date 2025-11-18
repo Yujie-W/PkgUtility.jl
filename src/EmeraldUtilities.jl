@@ -9,5 +9,8 @@ include("RecursiveTools/RecursiveTools.jl");
 include("TimeParser/TimeParser.jl");
 include("UniversalConstants/UniversalConstants.jl");
 
+# with internal dependencies
+include("EarthGeometry/EarthGeometry.jl");
+
 
 end; # module

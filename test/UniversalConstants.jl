@@ -43,8 +43,8 @@ import EmeraldUtilities.UniversalConstants as UC
     end;
 
     @testset "Unit Conversion" begin
-        λ = 500.0  # nm
-        E = 1.0e-6  # J
+        λ = 500.0;  # nm
+        E = 1.0e-6;  # J
         phot = UC.energy_to_photon(λ, E);
         E_back = UC.photon_to_energy(λ, phot);
         @test E ≈ E_back;
