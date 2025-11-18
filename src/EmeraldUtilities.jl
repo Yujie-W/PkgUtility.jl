@@ -13,6 +13,7 @@ include("UniversalConstants/UniversalConstants.jl");
 # with internal dependencies
 include("EarthGeometry/EarthGeometry.jl");
 include("MathTools/MathTools.jl");
+include("PhysicalChemistry/PhysicalChemistry.jl");
 
 
 end; # module
