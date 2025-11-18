@@ -6,4 +6,6 @@ using Test
     include("ArtifactTools.jl");
     include("DistributedTools.jl");
     include("PrettyDisplay.jl");
+    include("RecursiveTools.jl");
+    include("TimeParser.jl");
 end;
