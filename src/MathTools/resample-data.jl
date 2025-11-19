@@ -50,7 +50,7 @@ resample_data(dat_in::Union{FT,Vector{FT}}, year::Int64; out_reso::String = "1H"
     elseif out_reso == "8D"
         [nanmean(dat_1d[((d8-1)*8+1):min(d8*8, nday)]) for d8 in 1:46]
     elseif out_reso == "1M"
-        [nanmean(dat_1d[month_doys(year, m; ranges = true)]) for m in 1:12]
+        [nanmean(dat_1d[month_doys(year, m)]) for m in 1:12]
     elseif out_reso == "1Y"
         nanmean(dat_1d)
     end;

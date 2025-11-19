@@ -3,7 +3,6 @@
 # Changes to this function
 # General
 #     2022-Aug-24: move function outside of the folder
-#     2025-Nov-11: add option ranges to return ranges of days say 1:31 for January
 #     2025-Nov-17: rename the function from month_days to month_doys
 #
 #######################################################################################################################################################################################################
@@ -18,8 +17,6 @@ Return the day of year, given
 """
 function month_doys(year::Int, month::Int)
     @assert 1 <= month <= 12;
-
-    # if returning ranges
     mdays = isleapyear(year) ? MDAYS_LEAP : MDAYS;
 
     return (mdays[month]+1):mdays[month+1]
