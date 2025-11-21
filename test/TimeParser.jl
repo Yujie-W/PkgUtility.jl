@@ -1,5 +1,5 @@
 using Dates
-import EmeraldUtilities.TimeParser as TP
+import PkgUtility.TimeParser as TP
 
 
 @testset "TimeParser" verbose = true begin

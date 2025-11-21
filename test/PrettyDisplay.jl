@@ -1,4 +1,4 @@
-import EmeraldUtilities.PrettyDisplay as PD
+import PkgUtility.PrettyDisplay as PD
 
 
 @testset "PrettyDisplay" verbose = true begin

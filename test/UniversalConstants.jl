@@ -1,4 +1,4 @@
-import EmeraldUtilities.UniversalConstants as UC
+import PkgUtility.UniversalConstants as UC
 
 
 @testset "UniversalConstants" verbose = true begin

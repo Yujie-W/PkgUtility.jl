@@ -37,4 +37,4 @@ jobs:
         with:
           file: lcov.info
           token: ${{ secrets.CODECOV_TOKEN }}
-          slug: silicormosia/EmeraldUtilities.jl
+          slug: Yujie-W/PkgUtility.jl

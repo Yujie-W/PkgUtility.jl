@@ -1,5 +1,5 @@
 using OrderedCollections: OrderedDict
-import EmeraldUtilities.ArtifactTools as AT
+import PkgUtility.ArtifactTools as AT
 
 
 @testset "ArtifactTools" verbose = true begin

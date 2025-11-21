@@ -1,5 +1,5 @@
 using Distributed
-import EmeraldUtilities.DistributedTools as DT
+import PkgUtility.DistributedTools as DT
 
 
 @testset "DistributedTools" verbose = true begin

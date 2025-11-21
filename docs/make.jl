@@ -1,5 +1,5 @@
 using Documenter
-using EmeraldUtilities
+using PkgUtility
 
 
 # define default docs pages
@@ -27,10 +27,10 @@ format = Documenter.HTML(
 
 # build the docs
 makedocs(
-    sitename = "EmeraldUtilities.jl",
+    sitename = "PkgUtility.jl",
     format = format,
     clean = false,
-    modules = [EmeraldUtilities],
+    modules = [PkgUtility],
     pages = pages,
     warnonly = [:cross_references, :missing_docs],
 );
@@ -38,7 +38,7 @@ makedocs(
 
 # deploy the docs to Github gh-pages
 deploydocs(
-    repo = "github.com/silicormosia/EmeraldUtilities.jl.git",
+    repo = "github.com/Yujie-W/PkgUtility.jl.git",
     target = "build",
     devbranch = "main",
     push_preview = true

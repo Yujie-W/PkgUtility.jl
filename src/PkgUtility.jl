@@ -1,4 +1,4 @@
-module EmeraldUtilities
+module PkgUtility
 
 
 # submodules

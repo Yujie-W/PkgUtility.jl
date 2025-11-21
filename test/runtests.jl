@@ -1,8 +1,8 @@
-using EmeraldUtilities
+using PkgUtility
 using Test
 
 
-@testset "EmeraldUtilities" verbose = true begin
+@testset "PkgUtility" verbose = true begin
     include("ArtifactTools.jl");
     include("DistributedTools.jl");
     include("MathTools.jl");

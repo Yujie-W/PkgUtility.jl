@@ -1,4 +1,4 @@
-import EmeraldUtilities.MathTools as MT
+import PkgUtility.MathTools as MT
 
 
 @testset "MathTools" verbose = true begin
