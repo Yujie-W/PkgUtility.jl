@@ -12,6 +12,8 @@ Return a expanded array, given
 function expand_array end;
 
 # 1D array
+expand_array(data::FT, n::Int) where {FT<:AbstractFloat} = ones(FT, n) .* data;
+
 expand_array(data::Vector{FT}, n::Int) where {FT<:AbstractFloat} = (
     # create a new vector to save the data
     vec = ones(FT, length(data) * n) .* FT(NaN);

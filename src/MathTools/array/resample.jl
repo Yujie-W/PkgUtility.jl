@@ -1,53 +1,282 @@
 """
 
-    resample(data::Array{FT,3}, reso_in::String, reso_out::String) where {FT<:AbstractFloat}
+    resample(data::FT, reso_in::String, reso_out::String, year::Int)
+    resample(data::FT, reso_in::String, reso_out::String, leapyear::Bool) where {FT<:AbstractFloat}
+    resample(data::Vector{FT}, reso_in::String, reso_out::String, year::Bool) where {FT<:AbstractFloat}
+    resample(data::Vector{FT}, reso_in::String, reso_out::String, leapyear::Bool) where {FT<:AbstractFloat}
+    resample(data::Array{FT,2}, reso_in::String, reso_out::String, year::Bool) where {FT<:AbstractFloat}
+    resample(data::Array{FT,2}, reso_in::String, reso_out::String, leapyear::Bool) where {FT<:AbstractFloat}
+    resample(data::Array{FT,3}, reso_in::String, reso_out::String, year::Bool) where {FT<:AbstractFloat}
+    resample(data::Array{FT,3}, reso_in::String, reso_out::String, leapyear::Bool) where {FT<:AbstractFloat}
 
 Return the resampled dataset, given
 - `data` Input dataset, 3D array
-- `reso_in` Input temporal resolution, one of "1H", "1D", "8D", "1M"
-- `reso_out` Output temporal resolution, one of "1D", "8D", "1M", "1Y"
+- `reso_in` Input temporal resolution, one of "1H", "1D", "7D", "8D", "1M"
+- `reso_out` Output temporal resolution, one of "1D", "7D", "8D", "1M", "1Y"
+- `year` Year of the input data
+- `leapyear` Whether the input data is for a leap year
 
 """
-function resample(data::Array{FT,3}, reso_in::String, reso_out::String) where {FT<:AbstractFloat}
-    supported_resolutions = ["1H", "1D", "8D", "1M", "1Y"];
+function resample end;
+
+resample(data::FT, reso_in::String, reso_out::String, year::Int) where {FT<:AbstractFloat} = resample(data, reso_in, reso_out, isleapyear(year));
+
+resample(data::FT, reso_in::String, reso_out::String, leapyear::Bool) where {FT<:AbstractFloat} = resample([data;], reso_in, reso_out, leapyear);
+
+resample(data::Vector{FT}, reso_in::String, reso_out::String, year::Bool) where {FT<:AbstractFloat} = resample(data, reso_in, reso_out, isleapyear(year));
+
+resample(data::Vector{FT}, reso_in::String, reso_out::String, leapyear::Bool) where {FT<:AbstractFloat} = (
+    supported_resolutions = ["1H", "1D", "7D", "8D", "1M", "1Y"];
     @assert reso_in in supported_resolutions "Input temporal resolution not supported";
     @assert reso_out in supported_resolutions "Output temporal resolution not supported";
-    @assert findfirst(reso_in .== supported_resolutions) < findfirst(reso_out .== supported_resolutions) "Resampling from $reso_in to $reso_out is not supported!";
 
-    # if the input data is per hour
-    if reso_in == "1H"
-        return reso_out == "1D" ? _resample(data, "1H", "1D") : _resample(_resample(data, "1H", "1D"), "1D", reso_out)
+    # if the input and output resolutions are the same
+    if reso_in == reso_out
+        return data
     end;
 
-    # if the input data is per day
-    return _resample(data, reso_in, reso_out)
-end;
+    # if the input data is per hour (always trucate to 1D first), do it in two steps
+    #     - truncate from 1H to 1D
+    #     - truncate from 1D to other resolutions
+    if reso_in == "1H"
+        return reso_out == "1D" ? _truncate(data, "1H", "1D") : _truncate(_truncate(data, "1H", "1D"), "1D", reso_out)
+    end;
+
+    # if the output data is per day
+    #     - trucate from 1H to 1D if the input is 1H (already handled above)
+    #     - expand from other resolutions to 1D
+    if reso_out == "1D"
+        return _expand_to_1day(data, reso_in, leapyear)
+    end;
+
+    # for all others, first expand to 1D, then truncate to the target resolution
+    return _truncate(_expand_to_1day(data, reso_in, leapyear), "1D", reso_out)
+);
+
+resample(data::Array{FT,2}, reso_in::String, reso_out::String, year::Bool) where {FT<:AbstractFloat} = resample(data, reso_in, reso_out, isleapyear(year));
+
+resample(data::Array{FT,2}, reso_in::String, reso_out::String, leapyear::Bool) where {FT<:AbstractFloat} = resample(reshape(data, size(data,1), size(data,2), 1), reso_in, reso_out, leapyear);
+
+resample(data::Array{FT,3}, reso_in::String, reso_out::String, year::Bool) where {FT<:AbstractFloat} = resample(data, reso_in, reso_out, isleapyear(year));
+
+resample(data::Array{FT,3}, reso_in::String, reso_out::String, leapyear::Bool) where {FT<:AbstractFloat} = (
+    supported_resolutions = ["1H", "1D", "7D", "8D", "1M", "1Y"];
+    @assert reso_in in supported_resolutions "Input temporal resolution not supported";
+    @assert reso_out in supported_resolutions "Output temporal resolution not supported";
+
+    # if the input and output resolutions are the same
+    if reso_in == reso_out
+        return data
+    end;
+
+    # if the input data is per hour (always trucate to 1D first), do it in two steps
+    #     - truncate from 1H to 1D
+    #     - truncate from 1D to other resolutions
+    if reso_in == "1H"
+        return reso_out == "1D" ? _truncate(data, "1H", "1D") : _truncate(_truncate(data, "1H", "1D"), "1D", reso_out)
+    end;
+
+    # if the output data is per day
+    #     - trucate from 1H to 1D if the input is 1H (already handled above)
+    #     - expand from other resolutions to 1D
+    if reso_out == "1D"
+        return _expand_to_1day(data, reso_in, leapyear)
+    end;
+
+    # for all others, first expand to 1D, then truncate to the target resolution
+    return _truncate(_expand_to_1day(data, reso_in, leapyear), "1D", reso_out)
+);
 
 
 # Resample data from one resolution to another
 # Supported pairs:
+# - 7D to 1D
+# - 8D to 1D
+# - 1M to 1D
+# - 1Y to 1D
+_expand_to_1day(data::FT, reso_in::String, leapyear::Bool) where {FT<:AbstractFloat} = _expand_to_1day([data;], reso_in, leapyear);
+
+_expand_to_1day(data::Vector{FT}, reso_in::String, leapyear::Bool) where {FT<:AbstractFloat} = (
+    @assert reso_in in ["7D", "8D", "1M", "1Y"] "Resampling from $reso_in to 1D is not supported!";
+    nday = leapyear ? 366 : 365;
+
+    # if the input data is per week
+    if reso_in == "7D"
+        @assert length(data) in [52, 53] "Input data length not consistent with 7D resolution!";
+        new_data = (length(data) == 53) ? data : (vcat(data, data[end]));
+        expanded = expand_array(new_data, 7);
+
+        return expanded[1:nday]
+    end;
+
+    # if the input data is per 8 days
+    if reso_in == "8D"
+        @assert length(data) == 46 "Input data length not consistent with 8D resolution!";
+        expanded = expand_array(data, 8);
+
+        return expanded[1:nday]
+    end;
+
+    # if the input data is per month
+    if reso_in == "1M"
+        @assert length(data) == 12 "Input data length not consistent with 1M resolution!";
+        expanded = ones(FT, nday) .* FT(NaN);
+        for m in 1:12
+            expanded[month_doys(leapyear, m)] .= expand_array(data[m], daysinmonth(leapyear, m));
+        end;
+
+        return expanded
+    end;
+
+    # if the input data is per year
+    if reso_in == "1Y"
+        @assert length(data) == 1 "Input data length not consistent with 1Y resolution!";
+
+        return expand_array(data, nday)
+    end;
+);
+
+_expand_to_1day(data::Matrix{FT}, reso_in::String, leapyear::Bool) where {FT<:AbstractFloat} = _expand_to_1day(reshape(data, size(data,1), size(data,2), 1), reso_in, leapyear);
+
+_expand_to_1day(data::Array{FT,3}, reso_in::String, leapyear::Bool) where {FT<:AbstractFloat} = (
+    @assert reso_in in ["7D", "8D", "1M", "1Y"] "Resampling from $reso_in to 1D is not supported!";
+    nday = leapyear ? 366 : 365;
+
+    # if the input data is per week
+    if reso_in == "7D"
+        @assert size(data,3) in [52, 53] "Input data length not consistent with 7D resolution!";
+        new_data = (size(data,3) == 53) ? data : (cat(data, data[:,:,end]; dims=3));
+        expanded = expand_array(new_data, 1, 1, 7);
+
+        return expanded[:,:,1:nday]
+    end;
+
+    # if the input data is per 8 days
+    if reso_in == "8D"
+        @assert size(data,3) == 46 "Input data length not consistent with 8D resolution!";
+        expanded = expand_array(data, 1, 1, 8);
+
+        return expanded[:,:,1:nday]
+    end;
+
+    # if the input data is per month
+    if reso_in == "1M"
+        @assert size(data,3) == 12 "Input data length not consistent with 1M resolution!";
+        expanded = ones(FT, size(data,1), size(data,2), nday) .* FT(NaN);
+        for m in 1:12
+            expanded[:,:,month_doys(leapyear, m)] .= expand_array(data[:,:,m], 1, 1, daysinmonth(leapyear, m));
+        end;
+
+        return expanded
+    end;
+
+    # if the input data is per year
+    if reso_in == "1Y"
+        @assert size(data,3) == 1 "Input data length not consistent with 1Y resolution!";
+        expanded = expand_array(data, 1, 1, nday);
+
+        return expanded
+    end;
+);
+
+# Resample data from one resolution to another
+# Supported pairs:
 # - 1H to 1D
-# - 1D to 8D, 1M, 1Y
+# - 1D to 7D, 8D, 1M, 1Y
 # - 8D to 1Y
 # - 1M to 1Y
-_resample(data::Array{FT,3}, reso_in::String, reso_out::String) where {FT<:AbstractFloat} = (
+_truncate(data::Vector{FT}, reso_in::String, reso_out::String) where {FT<:AbstractFloat} = (
     supported_pairs = [
         ("1H", "1D"),
-        ("1D", "8D"), ("1D", "1M"), ("1D", "1Y"),
-        ("8D", "1Y"),
-        ("1M", "1Y"),
+        ("1D", "7D"), ("1D", "8D"), ("1D", "1M"),
+        ("1D", "1Y"), ("7D", "1Y"), ("8D", "1Y"), ("1M", "1Y"),
     ];
     @assert (reso_in, reso_out) in supported_pairs "Resampling from $reso_in to $reso_out is not supported!";
 
+    #
     # if the input data is per hour
+    #
+    if reso_in == "1H"
+        @assert length(data) in [8760, 8784] "Input data length not consistent with 1H resolution!";
+
+        return regrid(data, length(data) ÷ 24)
+    end;
+
+    #
+    # if the input data is per day
+    #
+    if reso_in == "1D" && reso_out == "7D"
+        @assert length(data) in [365, 366] "Input data length not consistent with 1D resolution!";
+        resampled = ones(FT, 53) .* FT(NaN);
+        for wk in 1:53
+            resampled[wk] = nanmean(data[((wk-1)*7+1):min(wk*7, length(data))]);
+        end;
+
+        return resampled
+    elseif reso_in == "1D" && reso_out == "8D"
+        @assert length(data) in [365, 366] "Input data length not consistent with 1D resolution!";
+        resampled = ones(FT, 46) .* FT(NaN);
+        for d8 in 1:46
+            resampled[d8] = nanmean(data[((d8-1)*8+1):min(d8*8, length(data))]);
+        end;
+
+        return resampled
+    elseif reso_in == "1D" && reso_out == "1M"
+        @assert length(data) in [365, 366] "Input data length not consistent with 1D resolution!";
+        leapyear = length(data) == 366;
+        resampled = ones(FT, 12) .* FT(NaN);
+        for m in 1:12
+            resampled[m] = nanmean(data[month_doys(leapyear, m)]);
+        end;
+
+        return resampled
+    end;
+
+    #
+    # if the output data is per year
+    #
+    if reso_in == "1D"
+        @assert size(data,3) in [365, 366] "Input data length not consistent with 1D resolution!";
+    elseif reso_in == "7D"
+        @assert size(data,3) in [52, 53] "Input data length not consistent with 7D resolution!";
+    elseif reso_in == "8D"
+        @assert size(data,3) == 46 "Input data length not consistent with 8D resolution!";
+    elseif reso_in == "1M"
+        @assert size(data,3) == 12 "Input data length not consistent with 1M resolution!";
+    end;
+
+    return nanmean(data)
+);
+
+_truncate(data::Array{FT,3}, reso_in::String, reso_out::String) where {FT<:AbstractFloat} = (
+    supported_pairs = [
+        ("1H", "1D"),
+        ("1D", "7D"), ("1D", "8D"), ("1D", "1M"),
+        ("1D", "1Y"), ("7D", "1Y"), ("8D", "1Y"), ("1M", "1Y"),
+    ];
+    @assert (reso_in, reso_out) in supported_pairs "Resampling from $reso_in to $reso_out is not supported!";
+
+    #
+    # if the input data is per hour
+    #
     if reso_in == "1H"
         @assert size(data,3) in [8760, 8784] "Input data length not consistent with 1H resolution!";
 
         return regrid(data, size(data,1), size(data,2), size(data,3) ÷ 24)
     end;
 
+    #
     # if the input data is per day
-    if reso_in == "1D" && reso_out == "8D"
+    #
+    if reso_in == "1D" && reso_out == "7D"
+        @assert size(data,3) in [365, 366] "Input data length not consistent with 1D resolution!";
+        resampled = ones(FT, size(data,1), size(data,2), 53) .* FT(NaN);
+        for i in axes(data,1), j in axes(data,2), wk in 1:53
+            resampled[i,j,wk] = nanmean(data[i,j,((wk-1)*7+1):min(wk*7, size(data,3))]);
+        end;
+
+        return resampled
+    elseif reso_in == "1D" && reso_out == "8D"
         @assert size(data,3) in [365, 366] "Input data length not consistent with 1D resolution!";
         resampled = ones(FT, size(data,1), size(data,2), 46) .* FT(NaN);
         for i in axes(data,1), j in axes(data,2), d8 in 1:46
@@ -55,9 +284,7 @@ _resample(data::Array{FT,3}, reso_in::String, reso_out::String) where {FT<:Abstr
         end;
 
         return resampled
-    end;
-
-    if reso_in == "1D" && reso_out == "1M"
+    elseif reso_in == "1D" && reso_out == "1M"
         @assert size(data,3) in [365, 366] "Input data length not consistent with 1D resolution!";
         leapyear = size(data,3) == 366;
         resampled = ones(FT, size(data,1), size(data,2), 12) .* FT(NaN);
@@ -68,26 +295,19 @@ _resample(data::Array{FT,3}, reso_in::String, reso_out::String) where {FT<:Abstr
         return resampled
     end;
 
-    if reso_in == "1D" && reso_out == "1Y"
+    #
+    # if the output data is per year
+    #
+    if reso_in == "1D"
         @assert size(data,3) in [365, 366] "Input data length not consistent with 1D resolution!";
-        resampled = regrid(data, size(data,1), size(data,2), 1);
-
-        return resampled[:,:,1]
-    end;
-
-    # if the input data is per 8 days
-    if reso_in == "8D"
+    elseif reso_in == "7D"
+        @assert size(data,3) in [52, 53] "Input data length not consistent with 7D resolution!";
+    elseif reso_in == "8D"
         @assert size(data,3) == 46 "Input data length not consistent with 8D resolution!";
-        resampled = regrid(data, size(data,1), size(data,2), 1);
-
-        return resampled[:,:,1]
-    end;
-
-    # if the input data is per month
-    if reso_in == "1M"
+    elseif reso_in == "1M"
         @assert size(data,3) == 12 "Input data length not consistent with 1M resolution!";
-        resampled = regrid(data, size(data,1), size(data,2), 1);
-
-        return resampled[:,:,1]
     end;
+    resampled = regrid(data, size(data,1), size(data,2), 1);
+
+    return resampled[:,:,1]
 );
