@@ -1,11 +1,3 @@
-#######################################################################################################################################################################################################
-#
-# Changes to this function
-# General
-#     2023-Aug-25: add function (moved from EmeraldFrontier.jl)
-#     2023-Aug-25: add support for single value number (not an array)
-#
-#######################################################################################################################################################################################################
 """
 
     interpolate_data(x::Vector{FT}, y::Vector{FT}, target::FT) where {FT}
@@ -35,15 +27,6 @@ interpolate_data(x::Vector{FT}, y::Vector{FT}, target::FT) where {FT} = (
 );
 
 
-#######################################################################################################################################################################################################
-#
-# Changes to this function
-# General
-#     2022-Jun-13: add method to interpolate the spectrum
-#     2022-Jun-13: add method to interpolate the spectrum via multiple steps
-#     2024-Nov-13: move the method of read_spectrum for single x as resample_data
-#
-#######################################################################################################################################################################################################
 """
 
     read_spectrum(x::Vector{FT}, y::Vector{FT}, x₁::FT, x₂::FT; steps::Int = 2) where {FT}

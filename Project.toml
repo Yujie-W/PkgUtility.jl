@@ -1,6 +1,6 @@
 name = "EmeraldUtilities"
 uuid = "bf152e34-6238-4522-95c8-8e628351fb48"
-version = "0.1.0"
+version = "1.0.0"
 authors = ["Yujie Wang <jesiner@gmail.com>"]
 
 [deps]

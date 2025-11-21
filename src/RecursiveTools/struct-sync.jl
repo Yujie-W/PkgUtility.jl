@@ -1,12 +1,3 @@
-#######################################################################################################################################################################################################
-#
-# Changes to this function
-# General
-#     2024-Feb-24: add function sync_struct! to sync fields from one struct to another recursively
-#     2025-Jun-03: add method to sync the struct to a dictionary (to write to file)
-#     2025-Jun-04: add method to sync the struct from a dictionary (to read from file)
-#
-#######################################################################################################################################################################################################
 """
 
     sync_struct!(struct_from, struct_to)

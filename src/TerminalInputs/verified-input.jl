@@ -1,11 +1,3 @@
-#######################################################################################################################################################################################################
-#
-# Changes to this function
-# General
-#     2023-May-12: add function to read inputs from terminal
-#     2023-Jul-14: add alias functions using the embedded operation and judge functions
-#
-#######################################################################################################################################################################################################
 """
 
     verified_input(message::String, operation_function::Function, judge_function::Function)

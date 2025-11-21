@@ -4,13 +4,6 @@ using ..UniversalConstants: AbstractTraceGas, TraceGasAir, TraceGasCH₄, TraceG
 using ..UniversalConstants: CP_I, CP_L, CP_V, GAS_R, K_BOLTZMANN, LH_M₀, LH_V₀, PRESS_TRIPLE, R_V, T₂₅, T_TRIPLE, V_H₂O
 
 
-#######################################################################################################################################################################################################
-#
-# Changes to the function
-# General:
-#     2022-Oct-17: clean docs
-#
-#######################################################################################################################################################################################################
 """
 Capillary pressure of the trace liquid in a pipe is a function of surface tension (`γ`), pipe raduis (`r`), and contact angle (`α`):
 
@@ -35,14 +28,6 @@ capillary_pressure(r::FT, T::FT, med::TraceLiquidH₂O{FT} = TraceLiquidH₂O{FT
 capillary_pressure(r::FT, T::FT, α::FT, med::TraceLiquidH₂O{FT} = TraceLiquidH₂O{FT}()) where {FT} = cosd(α) * capillary_pressure(r, T, med);
 
 
-#######################################################################################################################################################################################################
-#
-# Changes to the function
-# General:
-#     2022-Oct-17: clean docs
-#     2023-Jun-12: add support for CH₄ and N₂
-#
-#######################################################################################################################################################################################################
 """
 Diffusion of trace molecules in medium is temperature dependent, to calculate this temperature dependency, we provide a function to quick estimate this value for different trace molecules using
     `diffusive_coefficient`. The methods supports the computation for the coefficient in gas and liquid.
@@ -116,14 +101,6 @@ relative_diffusive_coefficient(T::FT, mol::AbstractTraceGas{FT} = TraceGasH₂O{
 relative_diffusive_coefficient(T::FT, mol::Union{TraceGasCO₂{FT}, TraceGasN₂{FT}}, med::TraceLiquidH₂O{FT}) where {FT} = diffusive_coefficient(T, mol, med) / mol.d_water;
 
 
-#######################################################################################################################################################################################################
-#
-# Changes to the function
-# General:
-#     2022-Oct-17: clean docs
-#     2025-Jun-05: add function to compute latent heat of melting
-#
-#######################################################################################################################################################################################################
 """
 
     latent_heat_melt(T::FT, med::TraceLiquidH₂O{FT} = TraceLiquidH₂O{FT}()) where {FT}
@@ -154,13 +131,6 @@ function latent_heat_vapor end;
 latent_heat_vapor(T::FT, med::TraceLiquidH₂O{FT} = TraceLiquidH₂O{FT}()) where {FT} = LH_V₀(FT) + (CP_V(FT) - CP_L(FT)) * (T - T_TRIPLE(FT));
 
 
-#######################################################################################################################################################################################################
-#
-# Changes to the function
-# General:
-#     2022-Oct-17: clean docs
-#
-#######################################################################################################################################################################################################
 """
 
 Yet, the saturation vapor pressure is not only a function of temperature, but also a function of the air-water interface curvature, known as the Kelvin equation. The package provide
@@ -247,13 +217,6 @@ saturation_vapor_pressure_slope(T::FT, med::TraceLiquidH₂O{FT} = TraceLiquidH�
 saturation_vapor_pressure_slope(T::FT, Ψ::FT, med::TraceLiquidH₂O{FT} = TraceLiquidH₂O{FT}()) where {FT} = saturation_vapor_pressure_slope(T, med) * pressure_correction(T, Ψ, med);
 
 
-#######################################################################################################################################################################################################
-#
-# Changes to the function
-# General:
-#     2022-Oct-17: clean docs
-#
-#######################################################################################################################################################################################################
 """
 
 When water temperature increases, the surface tension at the air-water interface decreases. Surface tension changes impacts the plant water transport via two aspects. First, if surface tension is
@@ -297,13 +260,6 @@ function relative_surface_tension end;
 relative_surface_tension(T::FT, med::TraceLiquidH₂O{FT} = TraceLiquidH₂O{FT}()) where {FT} = surface_tension(T, med) / med.γ_ref
 
 
-#######################################################################################################################################################################################################
-#
-# Changes to the function
-# General:
-#     2022-Oct-17: clean docs
-#
-#######################################################################################################################################################################################################
 """
 
 When temperature increases, liquid water viscosuty decreases, meaning that the resistance for water decreases and the pressure drop per flow rate decreases. This effect is pretty significant as 1

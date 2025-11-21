@@ -2,15 +2,6 @@
 const FAC = 1e-9 / (H_PLANCK() * LIGHT_SPEED() * AVOGADRO());
 
 
-#######################################################################################################################################################################################################
-#
-# Changes made to this function
-# General
-#     2021-Oct-22: rename the function to photon
-#     2021-Oct-22: add a method to convert direct from number to number
-#     2025-Nov-18: rename the function from photon to energy_to_photon
-#
-#######################################################################################################################################################################################################
 """
 
     energy_to_photon(λ::FT, E::FT) where {FT}
@@ -25,16 +16,6 @@ function energy_to_photon(λ::FT, E::FT) where {FT}
 end;
 
 
-#######################################################################################################################################################################################################
-#
-# Changes made to this function
-# General
-#     2022-Jun-13: add function
-#     2021-Jun-13: add method to save to provided 3rd variable
-#     2021-Jun-13: add method to save to provided 2rd variable
-#     2025-Nov-18: rename the function from photon! to energy_to_photon!
-#
-#######################################################################################################################################################################################################
 """
 
     energy_to_photon!(λ::Vector{FT}, E::Vector{FT}, phot::Vector{FT}) where {FT}
@@ -53,14 +34,6 @@ energy_to_photon!(λ::Vector{FT}, E::Vector{FT}, phot::Vector{FT}) where {FT} = 
 energy_to_photon!(λ::Vector{FT}, E::Vector{FT}) where {FT} = (E .*= λ .* FT(FAC); return nothing);
 
 
-#######################################################################################################################################################################################################
-#
-# Changes made to this function
-# General
-#     2021-Oct-22: define function to convert photon back to energy
-#   2025-Nov-18: rename the function from energy to photon_to_energy
-#
-#######################################################################################################################################################################################################
 """
 
     photon_to_energy(λ::FT, phot::FT) where {FT}
@@ -75,16 +48,6 @@ function photon_to_energy(λ::FT, phot::FT) where {FT}
 end;
 
 
-#######################################################################################################################################################################################################
-#
-# Changes made to this function
-# General
-#     2022-Jun-13: add function
-#     2021-Jun-13: add method to save to provided 3rd variable
-#     2021-Jun-13: add method to save to provided 2rd variable
-#     2025-Nov-18: rename the function from energy! to photon_to_energy!
-#
-#######################################################################################################################################################################################################
 """
 
     photon_to_energy!(λ::Vector{FT}, phot::Vector{FT}, E::Vector{FT}) where {FT}

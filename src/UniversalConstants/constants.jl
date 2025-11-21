@@ -1,16 +1,3 @@
-#######################################################################################################################################################################################################
-#
-# Changes to this structure
-# General
-#     2022-Jul-08: add struct for universal constants
-#     2022-Jul-08: add field and thus wrapper for thermal conductivity of liquid water
-#     2022-Jul-20: add fields F_O₂, CP_D, CP_I
-#     2022-Jul-20: rename field LH_V0 to LH_V₀, T_0 to T₀
-#     2022-Sep-09: move constants from ClimaCache.jl to EmeraldConstants.jl
-#     2024-Jul-22: add field GLUCOSE
-#     2025-Jun-05: add field LH_M₀ for latent heat of melting at T₀
-#
-#######################################################################################################################################################################################################
 """
 
 $(TYPEDEF)
@@ -82,14 +69,6 @@ Base.@kwdef mutable struct UniversalConstant
 end;
 
 
-#######################################################################################################################################################################################################
-#
-# Changes to these wrappers
-# General
-#     2022-Jul-08: add wrapper functions
-#     2022-Sep-09: move wrapper functions from ClimaCache.jl to EmeraldConstants.jl
-#
-#######################################################################################################################################################################################################
 const UNIVERSAL_CONSTANTS = UniversalConstant();
 
 """ Avogadro's number `[molecule mol⁻¹]` """

@@ -13,14 +13,6 @@ include("save-toml-yaml.jl");
 #=
 using Pkg.Artifacts: archive_artifact, artifact_exists, artifact_hash, bind_artifact!, create_artifact
 
-
-#######################################################################################################################################################################################################
-#
-# Changes to this function
-# General
-#     2021-Dec-21: move function outside of the folder
-#
-#######################################################################################################################################################################################################
 """
 What `deploy_artifact!` function does are
 - determine if the artifact already exists in the `art_toml` file

@@ -1,10 +1,3 @@
-#######################################################################################################################################################################################################
-#
-# Changes to this type
-# General
-#     2023-Mar-10: move from ConstrainedRootSolvers to Emerald
-#
-#######################################################################################################################################################################################################
 """
 
 Abstract type of the ConstrainedRootSolvers methods
@@ -15,13 +8,6 @@ $(TYPEDEF)
 abstract type AbstractCRSMethod{FT<:AbstractFloat} end;
 
 
-#######################################################################################################################################################################################################
-#
-# Changes to this struct
-# General
-#     2023-Mar-10: move from ConstrainedRootSolvers to Emerald
-#
-#######################################################################################################################################################################################################
 """
 
 Bisection method for 1D root solvers
@@ -47,13 +33,6 @@ Base.@kwdef mutable struct BisectionMethod{FT<:AbstractFloat} <: AbstractCRSMeth
 end;
 
 
-#######################################################################################################################################################################################################
-#
-# Changes to this struct
-# General
-#     2023-Mar-10: move from ConstrainedRootSolvers to Emerald
-#
-#######################################################################################################################################################################################################
 """
 
 Nelder-Mead method for 2D and above solvers
@@ -89,13 +68,6 @@ Base.@kwdef mutable struct NelderMeadMethod{FT<:AbstractFloat} <: AbstractCRSMet
 end;
 
 
-#######################################################################################################################################################################################################
-#
-# Changes to this struct
-# General
-#     2023-Mar-10: move from ConstrainedRootSolvers to Emerald
-#
-#######################################################################################################################################################################################################
 """
 
 Newton's method constrained by mininum and maximum ranges for 1D root solver
@@ -121,13 +93,6 @@ Base.@kwdef mutable struct NewtonBisectionMethod{FT<:AbstractFloat} <: AbstractC
 end;
 
 
-#######################################################################################################################################################################################################
-#
-# Changes to this struct
-# General
-#     2023-Mar-10: move from ConstrainedRootSolvers to Emerald
-#
-#######################################################################################################################################################################################################
 """
 
 Newton raphson method for 1D root solver
@@ -149,13 +114,6 @@ Base.@kwdef mutable struct NewtonRaphsonMethod{FT<:AbstractFloat} <: AbstractCRS
 end;
 
 
-#######################################################################################################################################################################################################
-#
-# Changes to this struct
-# General
-#     2023-Mar-10: move from ConstrainedRootSolvers to Emerald
-#
-#######################################################################################################################################################################################################
 """
 
 Reduce step method for 1D root solver. This method increases or decreases from initial guess until no improvement is found. Then the incremantal step decreases, and then the root solver continues.
@@ -183,13 +141,6 @@ Base.@kwdef mutable struct ReduceStepMethod{FT<:AbstractFloat} <: AbstractCRSMet
 end;
 
 
-#######################################################################################################################################################################################################
-#
-# Changes to this struct
-# General
-#     2023-Mar-10: move from ConstrainedRootSolvers to Emerald
-#
-#######################################################################################################################################################################################################
 """
 
 Reduce step method for 2D and above root solver. This method increases or decreases each variable in the initial guess until no improvement is found. Then the incremental steps decreases, and then

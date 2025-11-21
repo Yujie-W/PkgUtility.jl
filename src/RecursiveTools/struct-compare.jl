@@ -1,12 +1,3 @@
-#######################################################################################################################################################################################################
-#
-# Changes to this function
-# General
-#     2024-Feb-27: add function compare_struct! to compare two structs
-#     2024-Feb-28: add option show_diff_msg for testing purpose
-#     2024-Jul-25: add approximation option for comparing numbers
-#
-#######################################################################################################################################################################################################
 """
 
     compare_struct!(struct1::ST, struct2::ST; approximation::Bool = true, first_element_array::Bool = true, show_diff_msg::Bool = true) where ST

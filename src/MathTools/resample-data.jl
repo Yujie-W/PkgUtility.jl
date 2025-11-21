@@ -1,14 +1,3 @@
-#######################################################################################################################################################################################################
-#
-# Changes to this function
-# General
-#     2023-Aug-25: add function (moved from EmeraldFrontier.jl)
-#     2023-Aug-25: add support for single value number (not an array)
-#     2024-Nov-13: move the method of read_spectrum as resample_data
-#     2025-Nov-11: add supports for different output temporal resolutions (say 7D, 8D, and 1M)
-#     2025-Nov-13: add supports for output temporal resolutions of 1Y
-#
-#######################################################################################################################################################################################################
 """
 
     resample_data(dat_in::Union{FT,Vector{FT}}, year::Int64; out_reso::String = "1H") where {FT}

@@ -1,13 +1,3 @@
-# This file contains the parameters of the trace gasses
-
-#######################################################################################################################################################################################################
-#
-# Changes to the types
-# General:
-#     2022-Oct-17: add trace gasses
-#     2023-Jun-13: add trace gas struct for CH₄ and fields for N₂
-#
-#######################################################################################################################################################################################################
 """
 
 `WaterPhysics` uses the multiple dispatch approach to calculate the temperature and pressure dependent physical properties of water and other molecules, such as CO₂. The trace molecules and mediums
