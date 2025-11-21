@@ -4,8 +4,8 @@
     resample(data::FT, reso_in::String, reso_out::String, leapyear::Bool) where {FT<:AbstractFloat}
     resample(data::Vector{FT}, reso_in::String, reso_out::String, year::Bool) where {FT<:AbstractFloat}
     resample(data::Vector{FT}, reso_in::String, reso_out::String, leapyear::Bool) where {FT<:AbstractFloat}
-    resample(data::Array{FT,2}, reso_in::String, reso_out::String, year::Bool) where {FT<:AbstractFloat}
-    resample(data::Array{FT,2}, reso_in::String, reso_out::String, leapyear::Bool) where {FT<:AbstractFloat}
+    resample(data::Matrix{FT}, reso_in::String, reso_out::String, year::Bool) where {FT<:AbstractFloat}
+    resample(data::Matrix{FT}, reso_in::String, reso_out::String, leapyear::Bool) where {FT<:AbstractFloat}
     resample(data::Array{FT,3}, reso_in::String, reso_out::String, year::Bool) where {FT<:AbstractFloat}
     resample(data::Array{FT,3}, reso_in::String, reso_out::String, leapyear::Bool) where {FT<:AbstractFloat}
 
@@ -18,6 +18,54 @@ Return the resampled dataset, given
 
 """
 function resample end;
+
+resample(data::FT, reso_out::String, year::Int) where {FT<:AbstractFloat} = resample(data, "1Y", reso_out, year);
+
+resample(data::FT, reso_out::String, leapyear::Bool) where {FT<:AbstractFloat} = resample(data, "1Y", reso_out, leapyear);
+
+resample(data::Vector{FT}, reso_out::String, year::Int) where {FT<:AbstractFloat} = resample(data, reso_out, isleapyear(year));
+
+resample(data::Vector{FT}, reso_out::String, leapyear::Bool) where {FT<:AbstractFloat} = (
+    if length(data) == 1
+        return resample(data[1], "1Y", reso_out, leapyear);
+    elseif length(data) == 12
+        return resample(data, "1M", reso_out, leapyear);
+    elseif length(data) == 46
+        return resample(data, "8D", reso_out, leapyear);
+    elseif length(data) == 52 || length(data) == 53
+        return resample(data, "7D", reso_out, leapyear);
+    elseif length(data) == (leapyear ? 366 : 365)
+        return resample(data, "1D", reso_out, leapyear);
+    elseif length(data) == (leapyear ? 8784 : 8760)
+        return resample(data, "1H", reso_out, leapyear);
+    else
+        error("Input data length not consistent with any supported resolution!");
+    end;
+);
+
+resample(data::Matrix{FT}, reso_out::String, year::Int) where {FT<:AbstractFloat} = resample(data, "1Y", reso_out, year);
+
+resample(data::Matrix{FT}, reso_out::String, leapyear::Bool) where {FT<:AbstractFloat} = resample(data, "1Y", reso_out, leapyear);
+
+resample(data::Array{FT,3}, reso_out::String, year::Int) where {FT<:AbstractFloat} = resample(data, reso_out, isleapyear(year));
+
+resample(data::Array{FT,3}, reso_out::String, leapyear::Bool) where {FT<:AbstractFloat} = (
+    if size(data,3) == 1
+        return resample(data, "1Y", reso_out, leapyear);
+    elseif size(data,3) == 12
+        return resample(data, "1M", reso_out, leapyear);
+    elseif size(data,3) == 46
+        return resample(data, "8D", reso_out, leapyear);
+    elseif size(data,3) == 52 || size(data,3) == 53
+        return resample(data, "7D", reso_out, leapyear);
+    elseif size(data,3) == (leapyear ? 366 : 365)
+        return resample(data, "1D", reso_out, leapyear);
+    elseif size(data,3) == (leapyear ? 8784 : 8760)
+        return resample(data, "1H", reso_out, leapyear);
+    else
+        error("Input data length not consistent with any supported resolution!");
+    end;
+);
 
 resample(data::FT, reso_in::String, reso_out::String, year::Int) where {FT<:AbstractFloat} = resample(data, reso_in, reso_out, isleapyear(year));
 
@@ -38,9 +86,9 @@ resample(data::Vector{FT}, reso_in::String, reso_out::String, leapyear::Bool) wh
     return reso_out == "1H" ? expand_array(new_data, 24) : _truncate(new_data, "1D", reso_out);
 );
 
-resample(data::Array{FT,2}, reso_in::String, reso_out::String, year::Int) where {FT<:AbstractFloat} = resample(data, reso_in, reso_out, isleapyear(year));
+resample(data::Matrix{FT}, reso_in::String, reso_out::String, year::Int) where {FT<:AbstractFloat} = resample(data, reso_in, reso_out, isleapyear(year));
 
-resample(data::Array{FT,2}, reso_in::String, reso_out::String, leapyear::Bool) where {FT<:AbstractFloat} = resample(reshape(data, size(data,1), size(data,2), 1), reso_in, reso_out, leapyear);
+resample(data::Matrix{FT}, reso_in::String, reso_out::String, leapyear::Bool) where {FT<:AbstractFloat} = resample(reshape(data, size(data,1), size(data,2), 1), reso_in, reso_out, leapyear);
 
 resample(data::Array{FT,3}, reso_in::String, reso_out::String, year::Int) where {FT<:AbstractFloat} = resample(data, reso_in, reso_out, isleapyear(year));
 
