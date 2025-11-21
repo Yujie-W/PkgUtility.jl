@@ -42,6 +42,8 @@ expand_array(data::Array{FT,3}, n::Int) where {FT<:AbstractFloat} = expand_array
 
 expand_array(data::Array{FT,3}, n1::Int, n2::Int) where {FT<:AbstractFloat} = expand_array(data, n1, n2, 1);
 
+expand_array(data::Matrix{FT}, n1::Int, n2::Int, n3::Int) where {FT<:AbstractFloat} = expand_array(reshape(data, size(data,1), size(data,2), 1), n1, n2, n3);
+
 expand_array(data::Array{FT,3}, n1::Int, n2::Int, n3::Int) where {FT<:AbstractFloat} = (
     # create a new matrix to save the data
     array = ones(FT, size(data,1) * n1, size(data,2) * n2, size(data,3) * n3) .* FT(NaN);

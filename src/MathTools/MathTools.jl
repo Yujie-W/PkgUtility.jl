@@ -17,7 +17,6 @@ include("gapfill-data.jl");
 include("integration.jl");
 include("interpolate-data.jl");
 include("nanmath.jl");
-include("resample-data.jl");
 include("quadratic.jl");
 
 include("solver/methods.jl");
