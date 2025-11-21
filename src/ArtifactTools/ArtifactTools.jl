@@ -1,10 +1,18 @@
-#######################################################################################################################################################################################################
-#
-# Changes to this function
-# General
-#     2021-Dec-21: move function outside of the folder
-#
-#######################################################################################################################################################################################################
+module ArtifactTools
+
+using TOML
+using YAML
+
+using OrderedCollections: OrderedDict
+
+
+include("read-toml-yaml.jl");
+include("save-toml-yaml.jl");
+
+
+#=
+using Pkg.Artifacts: archive_artifact, artifact_exists, artifact_hash, bind_artifact!, create_artifact
+
 """
 What `deploy_artifact!` function does are
 - determine if the artifact already exists in the `art_toml` file
@@ -58,7 +66,7 @@ deploy_artifact!("Artifacts.toml", "test_art", "./folder", "./", ["https://publi
 ```
 
 """
-function deploy_artifact! end
+function deploy_artifact! end;
 
 deploy_artifact!(art_toml::String, art_name::String, art_locf::String, art_tarf::String, art_urls::Vector{String}) = (
     # querry all the files in the folder
@@ -76,31 +84,37 @@ deploy_artifact!(art_toml::String, art_name::String, art_locf::String, art_file:
 
     # if artifact exists already skip
     if !isnothing(_art_hash) && artifact_exists(_art_hash)
-        @info tinfo("Artifact $(art_name) already exists, skip it");
+        pretty_display!("Artifact $(art_name) already exists, skip it.", "tinfo");
+
         return nothing;
     end;
 
     # create artifact
-    @info tinfo("Artifact $(art_name) not found, deploy it now...");
-    @info tinfo("Copying files into artifact folder...");
+    pretty_display!("Artifact $(art_name) not found, deploy it now...", "tinfo_pre");
+    pretty_display!("Copying files into artifact folder...", "tinfo_mid");
     _art_hash = create_artifact() do artifact_dir
         for i in eachindex(art_file)
             _in   = art_file[i];
             _out  = new_file[i];
             _path = joinpath(art_locf, _in);
-            @info tinfo("Copying file $(_in)...");
+            pretty_display!("Copying file $(_in)...", "tinfo_mid");
             cp(_path, joinpath(artifact_dir, _out));
         end;
     end;
 
     # compress artifact
-    @info tinfo("Compressing artifact $(art_name)...");
+    pretty_display!("Compressing artifact $(art_name)...", "tinfo_mid");
     _tar_loc  = "$(art_tarf)/$(art_name).tar.gz";
     _tar_hash = archive_artifact(_art_hash, _tar_loc);
 
     # bind artifact to download information
+    pretty_display!("Binding artifact $(art_name) to $(art_toml)...", "tinfo_end");
     _download_info = [("$(_url)/$(art_name).tar.gz", _tar_hash) for _url in art_urls];
     bind_artifact!(art_toml, art_name, _art_hash; download_info=_download_info, lazy=true, force=true);
 
     return nothing;
 );
+=#
+
+
+end; # module
