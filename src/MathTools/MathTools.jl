@@ -8,6 +8,11 @@ using StatsBase: percentile
 using ..TimeParser: month_doys
 
 
+include("array/expand-array.jl");
+include("array/regrid.jl");
+include("array/resample.jl");
+include("array/truncate-array.jl");
+
 include("gapfill-data.jl");
 include("integration.jl");
 include("interpolate-data.jl");
