@@ -3,15 +3,6 @@ module PrettyDisplay
 using Dates: format, now
 
 
-##########################################################################################################################################################################################################
-#
-# Changes to this function
-# General
-#     2022-Aug-24: move function outside of the folder
-#     2022-Aug-24: add support to the case if the value is a vector but not a vector of pairs
-#     2025-Nov-17: add a general call to display messages based on message level
-#
-##########################################################################################################################################################################################################
 """
 #
     pretty_display!(msg::String, func_type::String)

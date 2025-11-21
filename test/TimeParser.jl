@@ -2,7 +2,7 @@ using Dates
 import EmeraldUtilities.TimeParser as TP
 
 
-@testset "TimeParser" begin
+@testset "TimeParser" verbose = true begin
     @testset "Which Month" begin
         @test TP.which_month(2019, 59) == 2;
         @test TP.which_month(2019, 60) == 3;
