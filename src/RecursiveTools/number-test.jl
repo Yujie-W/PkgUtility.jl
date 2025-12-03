@@ -20,6 +20,15 @@ The variable to test maybe a struct, but `FT_test` does not know the struct type
 """
 function FT_test end;
 
+FT_test(para::Number, FT) = (
+    # fail if para is float but not FT
+    if typeof(para) <: AbstractFloat
+        return typeof(para) == FT
+    end;
+
+    return true
+);
+
 FT_test(para::Array, FT) = (
     # fail if para is float but not FT
     if eltype(para) <: AbstractFloat
@@ -30,6 +39,12 @@ FT_test(para::Array, FT) = (
     return all(FT_test.(para, FT))
 );
 
+FT_test(para::Tuple, FT) = all(FT_test.(para, FT));
+
+FT_test(para::DataType, FT) = true;
+
+FT_test(para::Union{Function, Module, String, Symbol}, FT) = true;
+
 FT_test(para::Union{Dict,OrderedDict}, FT) = (
     arr = [];
     for (_,v) in para
@@ -38,17 +53,6 @@ FT_test(para::Union{Dict,OrderedDict}, FT) = (
 
     return all(arr)
 );
-
-FT_test(para::Number, FT) = (
-    # fail if para is float but not FT
-    if typeof(para) <: AbstractFloat
-        return typeof(para) == FT
-    end;
-
-    return true
-);
-
-FT_test(para::Union{Function, Module, String, Symbol}, FT) = true;
 
 FT_test(para::ST, FT) where {ST} = (
     # try to detech struct

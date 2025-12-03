@@ -11,7 +11,15 @@ Test if the variable is not NaN, given
 """
 function NaN_test end;
 
+NaN_test(para::Number) = !isnan(para);
+
 NaN_test(para::Array) = all(NaN_test.(para));
+
+NaN_test(para::Tuple) = all(NaN_test.(para));
+
+NaN_test(para::DataType) = true;
+
+NaN_test(para::Union{Function, Module, String, Symbol}) = true;
 
 NaN_test(para::Union{Dict,OrderedDict}) = (
     arr = [];
@@ -21,10 +29,6 @@ NaN_test(para::Union{Dict,OrderedDict}) = (
 
     return all(arr)
 );
-
-NaN_test(para::Number) = !isnan(para);
-
-NaN_test(para::Union{Function, Module, String, Symbol}) = true;
 
 NaN_test(para::ST) where {ST} = (
     if isstructtype(ST)
