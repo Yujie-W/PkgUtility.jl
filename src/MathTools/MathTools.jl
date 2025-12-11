@@ -1,7 +1,9 @@
 module MathTools
 
+using DataFrames: DataFrame
 using Dates: daysinmonth, isleapyear
 using DocStringExtensions: TYPEDEF, TYPEDFIELDS
+using GLM: adjr², coef, coeftable, confint, lm, predict
 using Statistics: mean, median, std
 using StatsBase: percentile
 
@@ -18,6 +20,10 @@ include("integration.jl");
 include("interpolate-data.jl");
 include("nanmath.jl");
 include("quadratic.jl");
+
+include("regression/type.jl");
+include("regression/linear-regress.jl");
+include("regression/linear-slope-test.jl");
 
 include("solver/methods.jl");
 include("solver/tolerance.jl");

@@ -17,22 +17,17 @@ The variable to test maybe a struct, but `FT_test` does not know the struct type
 - If succeeds, the function test the fields recursively
 - If fails, then do nothing
 
-## Example
-```julia
-    struct SA
-        a
-        b
-    end;
-    sa = SA(1, 2.0);
-
-    ft_1 = FT_test([1, 2, 3], Float64);
-    ft_2 = FT_test(Any[1, 1.0f0, 1.0e0], Float64);
-    ft_3 = FT_test([1, 2.0, "a"], Float64);
-    ft_4 = FT_test(sa, Float64);
-```
-
 """
 function FT_test end;
+
+FT_test(para::Number, FT) = (
+    # fail if para is float but not FT
+    if typeof(para) <: AbstractFloat
+        return typeof(para) == FT
+    end;
+
+    return true
+);
 
 FT_test(para::Array, FT) = (
     # fail if para is float but not FT
@@ -44,31 +39,31 @@ FT_test(para::Array, FT) = (
     return all(FT_test.(para, FT))
 );
 
-FT_test(para::Number, FT) = (
-    # fail if para is float but not FT
-    if typeof(para) <: AbstractFloat
-        return typeof(para) == FT
-    end;
+FT_test(para::Tuple, FT) = all(FT_test.(para, FT));
 
-    return true
-);
+FT_test(para::DataType, FT) = true;
 
 FT_test(para::Union{Function, Module, String, Symbol}, FT) = true;
 
-FT_test(para::Any, FT) = (
-    # try to detech struct
-    if !(typeof(para) <: DataType)
-        try
-            arr = [];
-            for fn in fieldnames( typeof(para) )
-                push!(arr, FT_test(getfield(para, fn), FT));
-            end;
-
-            return all(arr)
-        catch e
-            nothing
-        end;
+FT_test(para::Union{Dict,OrderedDict}, FT) = (
+    arr = [];
+    for (_,v) in para
+        push!(arr, FT_test(v, FT));
     end;
 
-    return true
+    return all(arr)
+);
+
+FT_test(para::ST, FT) where {ST} = (
+    # try to detech struct
+    if isstructtype(ST)
+        arr = [];
+        for fn in fieldnames( typeof(para) )
+            push!(arr, FT_test(getfield(para, fn), FT));
+        end;
+
+        return all(arr)
+    end;
+
+    return error("Unsupported type by FT_test!")
 );

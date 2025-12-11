@@ -1,5 +1,7 @@
 module RecursiveTools
 
+using OrderedCollections: OrderedDict
+
 
 include("nan-test.jl");
 include("number-test.jl");
